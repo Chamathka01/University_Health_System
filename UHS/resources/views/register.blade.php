@@ -72,14 +72,13 @@
     @endif
     <form method="POST" action="{{ route('register.store') }}">
         @csrf
-        <input type="text" name="firstname" placeholder="First Name" required>
-         <input type="text" name="lastname" placeholder="Last Name" required>
-         <input type="date" name="dob">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password"  placeholder="Password" required>
-        <input type="password" id="password_confirmation" name="password_confirmation">
-         <input type="text" name="phone"  placeholder="Phone Number">
-         <input type="email" name="email"  placeholder="Email Address">
+        <input type="text" name="firstname" class="form-control" placeholder="First Name" required>
+         <input type="text" name="lastname" class="form-control" placeholder="Last Name" required>
+         <input type="date" name="dob" class="form-control">
+        <input type="text" name="username" class="form-control" placeholder="Username" required>
+        <input type="password" name="password" class="form-control"  placeholder="Password" required>
+         <input type="text" name="phone" class="form-control" placeholder="Phone Number">
+         <input type="email" name="email" class="form-control"  placeholder="Email Address">
 
          <div>
             <select name="role" required>
@@ -90,7 +89,7 @@
             </select>
         </div>
 
-        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" required>
+        <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
 
 
         <div>

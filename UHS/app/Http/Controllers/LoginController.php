@@ -34,9 +34,10 @@ class LoginController extends Controller
                 return redirect('/student/dashboard');
             }
 
+        return back()->with('error', 'Invalid Login');
         }
 
-        return back()->with('error', 'Invalid Login');
+
     }
 
     public function logout()
