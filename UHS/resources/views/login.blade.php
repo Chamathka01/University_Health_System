@@ -87,12 +87,12 @@
             </div>
         @endif
 
-     <form>
+     <form method="POST" action="{{route('login.check')}}">
         @csrf
         <input type="text" name="username" placeholder="Username" required>
 
         <div class="position-relative">
-        <input type="password" name="password"  placeholder="Password" required>
+        <input type="password" id="login_password" class="form-control" name="password"  placeholder="Password" required>
         <span class="fa fa-eye field-icon" onclick="togglePassword('login_password', this)"></span>
         </div>
     <div class="text-right mb-3">

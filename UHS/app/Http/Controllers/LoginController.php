@@ -22,10 +22,16 @@ class LoginController extends Controller
 
             Session::put('user', $user);
 
-            if ($user->role == 'admin') {
-                return redirect('/users');
-            } else {
-                return redirect('/home');
+            if ($user->role == 'doctor') {
+                return redirect('/doctor/dashboard');
+            }
+
+            if ($user->role == 'nurse') {
+                return redirect('/nurse/dashboard');
+            }
+
+            if ($user->role == 'student') {
+                return redirect('/student/dashboard');
             }
 
         }

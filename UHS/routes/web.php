@@ -16,3 +16,14 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('register');
 });
+
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+Route::post('/login', [LoginController::class, 'login'])->name('login.check');
+
+Route::get('/users', function () {
+    $users = Register::all();
+    return view('users', ['users' => $users]);
+});
+
+Route::get('/logout', [LoginController::class, 'logout']);

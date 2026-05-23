@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('faculty');
             $table->string('department');
             $table->string('degree');
-            $table->string('regno');
+            $table->string('regno')->unique();
             $table->string('username')->unique();
             $table->string('role');
             $table->string('password');

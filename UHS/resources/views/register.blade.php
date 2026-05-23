@@ -70,22 +70,23 @@
         </ul>
     </div>
     @endif
-    <form>
+    <form method="POST" action="{{ route('register.store') }}">
         @csrf
         <input type="text" name="firstname" placeholder="First Name" required>
          <input type="text" name="lastname" placeholder="Last Name" required>
          <input type="date" name="dob">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password"  placeholder="Password" required>
+        <input type="password" id="password_confirmation" name="password_confirmation">
          <input type="text" name="phone"  placeholder="Phone Number">
          <input type="email" name="email"  placeholder="Email Address">
 
          <div>
             <select name="role" required>
                 <option value="">Select Role</option>
-                <option value="doctor">Admin</option>
+                <option value="doctor">Doctor</option>
                 <option value="nurse">Nurse</option>
-                <option value="student">Doctor</option>
+                <option value="student">Student</option>
             </select>
         </div>
 
@@ -121,7 +122,7 @@
         </div>
 
 
-         <input type="regno" name="regno"  placeholder="Registration Number">
+         <input type="text" class="form-control" name="regno"  placeholder="Registration Number" required>
 
         <button type="submit" class="btn btn-primary btn-block" >Register </button>
 
