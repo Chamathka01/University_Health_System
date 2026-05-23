@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('faculty');
             $table->string('department');
+            $table->string('degree');
             $table->string('regno');
             $table->string('username')->unique();
             $table->string('role');
