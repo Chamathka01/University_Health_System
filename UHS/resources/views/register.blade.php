@@ -106,6 +106,7 @@
                 <option value="">Department</option>
                 <option value="physicalscience">Physical Science</option>
                 <option value="bioscience">Bio Science</option>
+                <option value="ict">ICT</option>
             </select>
         </div>
 
@@ -115,6 +116,7 @@
                 <option value="it">Information Technology</option>
                 <option value="amc">Applied Mathematics and computing</option>
                 <option value="bio">Environmental Science</option>
+                <option value="bio">Information and Communication Technology</option>
             </select>
         </div>
 

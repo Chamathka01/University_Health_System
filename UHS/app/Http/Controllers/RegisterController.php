@@ -19,9 +19,9 @@ class RegisterController extends Controller
             'username' => 'required|min:4|max:20|unique:registers,username',
             'role' => 'required|in:doctor,nurse,student',
             'password' => 'required|min:8',
-            //'faculty' => 'required|in:doctor,nurse,student',
-            //'department' => 'required|in:doctor,nurse,student',
-            //'degree' => 'required|in:doctor,nurse,student',
+            //'faculty' =>
+            //'department' =>
+            //'degree' => 
             'regno' => 'required|string|max:20',
         ]);
 
