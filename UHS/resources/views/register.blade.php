@@ -20,8 +20,8 @@
             <select name="role" required>
                 <option value="">Select Role</option>
                 <option value="doctor">Admin</option>
-                <option value="nurse">User</option>
-                <option value="student">User</option>
+                <option value="nurse">Nurse</option>
+                <option value="student">Doctor</option>
             </select>
         </div>
 
