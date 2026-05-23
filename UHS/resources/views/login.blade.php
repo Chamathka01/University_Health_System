@@ -7,6 +7,18 @@
     <title>Login Page</title>
 </head>
 <body>
+    <form>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password"  placeholder="Password" required>
 
+
+    <a href="/forgot-password">Forgot Password?</a>
+
+    <button type="submit">Login</button>
+    </form>
+
+    <div class="mt-4">
+            <p class="mb-0">Don't have an account? <a href="/">Register</a></p>
+    </div>
 </body>
 </html>
