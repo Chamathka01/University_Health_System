@@ -27,3 +27,15 @@ Route::get('/users', function () {
 });
 
 Route::get('/logout', [LoginController::class, 'logout']);
+
+Route::get('/doctor/dashboard', function () {
+    return view('doctor.dashboard');
+});
+
+Route::get('/nurse/dashboard', function () {
+    return view('nurse.dashboard');
+});
+
+Route::get('/student/dashboard', function () {
+    return view('student.dashboard');
+});

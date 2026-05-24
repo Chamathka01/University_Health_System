@@ -22,7 +22,7 @@ class RegisterController extends Controller
             //'faculty' =>
             //'department' =>
             //'degree' =>
-            'regno' => 'required|string|max:20',
+            'regno' => 'required|string|max:20|unique:registers,regno',
         ]);
 
         $user = new Register();
