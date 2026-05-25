@@ -27,7 +27,7 @@ class Register extends Model
         'regno',
     ];
 
-    public function visits()
+    public function studentvisits()
     {
     return $this->hasMany(Visit::class, 'student_id');
     }
