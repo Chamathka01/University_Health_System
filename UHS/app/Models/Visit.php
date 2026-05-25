@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\MedicalRecord;
 
 class Visit extends Model
 {
@@ -13,4 +14,9 @@ class Visit extends Model
         'visit_date',
         'status'
     ];
+
+    public function medicalRecord()
+    {
+        return $this->hasOne(MedicalRecord::class);
+    }
 }

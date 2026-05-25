@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Register;
 use App\Models\Visit;
+use Illuminate\Support\Facades\Session;
 
 class NurseController extends Controller
 {
@@ -28,5 +29,21 @@ class NurseController extends Controller
 
         // 4. Send to view
         return view('nurse.student_profile', compact('student', 'visits'));
+    }
+
+    public function createVisit($student_id)
+    {
+        $nurse = Session::get('user');
+
+        Visit::create([
+            'student_id' => $student_id,
+            'nurse_id' => $nurse['id'],
+            'doctor_id' => null,
+            'visit_date' => now(),
+            'status' => 'waiting'
+        ]);
+
+        return redirect('/nurse/scan')
+            ->with('success', 'Visit created successfully');
     }
 }

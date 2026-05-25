@@ -45,5 +45,10 @@
     <p>No previous visits found.</p>
 @endif
 
+<a href="/nurse/visit/create/{{ $student->id }}"
+   style="padding:10px;background:green;color:white;text-decoration:none;">
+   Create Visit
+</a>
+
 </body>
 </html>
