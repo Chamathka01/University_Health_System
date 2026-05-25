@@ -34,10 +34,8 @@ class LoginController extends Controller
                 return redirect('/student/dashboard');
             }
 
-        return back()->with('error', 'Invalid Login');
+            return back()->with('error', 'Invalid Login');
         }
-
-
     }
 
     public function logout()
@@ -45,4 +43,7 @@ class LoginController extends Controller
         Session::forget('user');
         return redirect('/login');
     }
+
+
 }
+

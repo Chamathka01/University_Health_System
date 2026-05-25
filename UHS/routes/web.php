@@ -5,9 +5,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Models\Register;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+    //return view('welcome');
+//});
 
 Route::get('/login', function () {
     return view('login');
@@ -38,4 +38,8 @@ Route::get('/nurse/dashboard', function () {
 
 Route::get('/student/dashboard', function () {
     return view('student.dashboard');
+});
+
+Route::get('/nurse/scan', function () {
+    return view('nurse.scan');
 });

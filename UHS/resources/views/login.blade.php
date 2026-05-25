@@ -89,7 +89,7 @@
 
      <form method="POST" action="{{route('login.check')}}">
         @csrf
-        <input type="text" name="username" placeholder="Username" required>
+        <input type="text" name="username" class="form-control" placeholder="Username" required>
 
         <div class="position-relative">
         <input type="password" id="login_password" class="form-control" name="password"  placeholder="Password" required>
@@ -103,7 +103,7 @@
     </form>
 
     <div class="mt-4">
-            <p class="mb-0">Don't have an account? <a href="/">Register</a></p>
+            <p class="mb-0">Don't have an account? <a href="/register">Register</a></p>
     </div>
 
     <script>
