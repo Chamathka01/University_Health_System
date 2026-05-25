@@ -7,8 +7,8 @@
 
 <h1>Doctor Dashboard</h1>
 
-<a href="/doctor/scan">
-    Scan Student
+<a href="/doctor/patients">
+    Waiting Patients
 </a>
 
 <br><br>

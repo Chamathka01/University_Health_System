@@ -22,6 +22,7 @@ class Register extends Model
         'password',
         'faculty',
         'department',
+        'degree',
         'regno',
     ];
 }
