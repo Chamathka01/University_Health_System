@@ -31,4 +31,14 @@ class Register extends Model
     {
     return $this->hasMany(Visit::class, 'student_id');
     }
+
+    public function nurseVisits()
+    {
+    return $this->hasMany(Visit::class, 'nurse_id');
+    }
+
+    public function doctorVisits()
+    {
+    return $this->hasMany(Visit::class, 'doctor_id');
+    }
 }
