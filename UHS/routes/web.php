@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
+use App\Http\Controllers\DoctorController;
 use App\Models\Register;
 
 //Route::get('/', function () {
@@ -48,3 +49,7 @@ Route::get('/nurse/scan', function () {
 Route::get('/nurse/student/{regno}', [NurseController::class, 'showStudent']);
 
 Route::get('/nurse/visit/create/{student_id}', [NurseController::class, 'createVisit']);
+
+Route::get('/doctor/dashboard', [DoctorController::class, 'dashboard']);
+Route::get('/doctor/consult/{visit_id}', [DoctorController::class, 'consult']);
+Route::post('/doctor/save-consultation', [DoctorController::class, 'saveConsultation']);
