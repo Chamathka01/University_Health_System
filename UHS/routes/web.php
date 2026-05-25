@@ -46,3 +46,4 @@ Route::get('/nurse/scan', function () {
 });
 
 Route::get('/nurse/student/{regno}', [NurseController::class, 'showStudent']);
+
