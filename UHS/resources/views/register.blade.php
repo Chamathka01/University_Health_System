@@ -77,6 +77,7 @@
          <input type="date" name="dob" class="form-control">
         <input type="text" name="username" class="form-control" placeholder="Username" required>
         <input type="password" name="password" class="form-control"  placeholder="Password" required>
+        <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
          <input type="text" name="phone" class="form-control" placeholder="Phone Number">
          <input type="email" name="email" class="form-control"  placeholder="Email Address">
 
@@ -88,9 +89,6 @@
                 <option value="student">Student</option>
             </select>
         </div>
-
-        <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
-
 
         <div id="studentFields" style="display:none;">
             <select name="faculty" class="form-control">
