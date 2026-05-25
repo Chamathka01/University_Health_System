@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('nurse_id');
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->dateTime('visit_date');
-            $table->string('status');
+            $table->string('status')->default('waiting');
 
             $table->timestamps();
         });
