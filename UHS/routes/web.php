@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\NurseController;
 use App\Models\Register;
 
 //Route::get('/', function () {
@@ -43,3 +44,5 @@ Route::get('/student/dashboard', function () {
 Route::get('/nurse/scan', function () {
     return view('nurse.scan');
 });
+
+Route::get('/nurse/student/{regno}', [NurseController::class, 'showStudent']);
