@@ -81,7 +81,7 @@
          <input type="email" name="email" class="form-control"  placeholder="Email Address">
 
          <div>
-            <select name="role" required>
+            <select name="role" id="role" class="form-control" required onchange="toggleStudentFields()">
                 <option value="">Select Role</option>
                 <option value="doctor">Doctor</option>
                 <option value="nurse">Nurse</option>
@@ -92,37 +92,31 @@
         <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
 
 
-        <div>
-            <select name="faculty" required>
+        <div id="studentFields" style="display:none;">
+            <select name="faculty" class="form-control">
                 <option value="">Faculty</option>
                 <option value="appliedscience">Applied Science</option>
                 <option value="technologicalstudies">Technological Studies</option>
                 <option value="businessstudies">Business Studies</option>
             </select>
-        </div>
 
-        <div>
-            <select name="department" required>
+            <select name="department" class="form-control">
                 <option value="">Department</option>
                 <option value="physicalscience">Physical Science</option>
                 <option value="bioscience">Bio Science</option>
                 <option value="ict">ICT</option>
             </select>
-        </div>
 
-        <div>
-            <select name="degree" required>
+            <select name="degree" class="form-control">
                 <option value="">Degree</option>
                 <option value="it">Information Technology</option>
                 <option value="amc">Applied Mathematics and computing</option>
                 <option value="bio">Environmental Science</option>
-                <option value="bio">Information and Communication Technology</option>
+                <option value="ict_degree">Information and Communication Technology</option>
             </select>
+
+         <input type="text" class="form-control" name="regno"  placeholder="Registration Number">
         </div>
-
-
-         <input type="text" class="form-control" name="regno"  placeholder="Registration Number" required>
-
         <button type="submit" class="btn btn-primary btn-block" >Register </button>
 
     </form>
@@ -148,6 +142,30 @@ function togglePassword(fieldId, icon) {
         icon.classList.add("fa-eye");
     }
 }
+
+function toggleStudentFields()
+{
+    let role =
+        document.getElementById('role').value;
+
+    let studentFields =
+        document.getElementById('studentFields');
+
+    if(role === 'student')
+    {
+        studentFields.style.display = 'block';
+    }
+    else
+    {
+        studentFields.style.display = 'none';
+    }
+}
+
+window.onload = function()
+{
+    toggleStudentFields();
+}
+
 </script>
 
 </body>

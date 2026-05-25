@@ -13,15 +13,19 @@ return new class extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->id();
+
             $table->string('firstname');
             $table->string('lastname');
             $table->date('dob')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->unique();
-            $table->string('faculty');
-            $table->string('department');
-            $table->string('degree');
-            $table->string('regno')->unique();
+
+            $table->string('faculty')->nullable();
+            $table->string('department')->nullable();
+            $table->string('degree')->nullable();
+            $table->string('regno')->nullable()->unique();
+
+
             $table->string('username')->unique();
             $table->string('role');
             $table->string('password');

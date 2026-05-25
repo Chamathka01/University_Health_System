@@ -19,13 +19,21 @@ class RegisterController extends Controller
             'username' => 'required|min:4|max:20|unique:registers,username',
             'role' => 'required|in:doctor,nurse,student',
             'password' => 'required|min:8|confirmed',
-            //'faculty' =>
-            //'department' =>
-            //'degree' =>
+        ]);
+
+        if ($request->role == 'student') {
+
+        $request->validate([
+            'faculty' => 'required',
+            'department' => 'required',
+            'degree' => 'required',
             'regno' => 'required|string|max:20|unique:registers,regno',
         ]);
 
+    }
+
         $user = new Register();
+
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->dob = $request->dob;
@@ -34,6 +42,7 @@ class RegisterController extends Controller
         $user->username = $request->username;
         $user->role = $request->role;
         $user->password = Hash::make($request->password);
+        
         $user->faculty = $request->faculty;
         $user->department = $request->department;
         $user->degree = $request->degree;
