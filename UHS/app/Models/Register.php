@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Visit;
 
 class Register extends Model
 {
@@ -25,4 +26,9 @@ class Register extends Model
         'degree',
         'regno',
     ];
+
+    public function visits()
+    {
+    return $this->hasMany(Visit::class, 'student_id');
+    }
 }
