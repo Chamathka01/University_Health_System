@@ -13,7 +13,7 @@ class StudentController extends Controller
         $student = Session::get('user');
 
         $visits = Visit::with('medicalRecord')
-                    ->where('student_id', $student->id)
+                    ->where('student_id', $student['id'])
                     ->orderBy('visit_date', 'desc')
                     ->get();
 

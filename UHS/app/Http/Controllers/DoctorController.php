@@ -24,7 +24,14 @@ class DoctorController extends Controller
 {
     $visit = Visit::with('student')->findOrFail($visit_id);
 
-    return view('doctor.consult', compact('visit'));
+    $history = Visit::with('medicalRecord')
+                ->where('student_id', $visit->student_id)
+                ->where('id', '!=', $visit->id)
+                ->whereNotNull('doctor_id')
+                ->orderBy('visit_date', 'desc')
+                ->get();
+
+    return view('doctor.consult', compact('visit','history'));
 }
 
     public function saveConsultation(Request $request)
