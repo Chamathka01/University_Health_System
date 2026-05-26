@@ -55,5 +55,24 @@ html5QrcodeScanner.render(onScanSuccess);
 
 </script>
 
+<hr>
+
+<h3>Search by Registration Number</h3>
+
+<form method="POST" action="/nurse/search-student">
+
+    @csrf
+
+    <input type="text"
+           name="regno"
+           placeholder="Enter Registration Number"
+           required>
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
 </body>
 </html>
