@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\StudentController;
 use App\Models\Register;
 
 //Route::get('/', function () {
@@ -56,3 +57,5 @@ Route::post('/doctor/save-consultation', [DoctorController::class, 'saveConsulta
 
 Route::get('/nurse/prescriptions', [NurseController::class, 'prescriptions']);
 Route::get('/nurse/complete/{visit_id}', [NurseController::class, 'completeVisit']);
+
+Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
