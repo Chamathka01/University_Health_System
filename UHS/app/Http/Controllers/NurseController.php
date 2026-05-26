@@ -68,4 +68,13 @@ class NurseController extends Controller
     return redirect('/nurse/prescriptions')
             ->with('success', 'Medicine issued successfully');
     }
+
+    public function searchStudent(Request $request)
+{
+    $request->validate([
+        'regno' => 'required'
+    ]);
+
+    return redirect('/nurse/student/' . $request->regno);
+}
 }

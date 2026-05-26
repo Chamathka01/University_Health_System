@@ -59,3 +59,5 @@ Route::get('/nurse/prescriptions', [NurseController::class, 'prescriptions']);
 Route::get('/nurse/complete/{visit_id}', [NurseController::class, 'completeVisit']);
 
 Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+
+Route::post('/nurse/search-student', [NurseController::class, 'searchStudent']);
