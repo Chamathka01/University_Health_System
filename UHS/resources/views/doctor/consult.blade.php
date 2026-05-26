@@ -14,6 +14,51 @@
 
 <p>Reg No: {{ $visit->student->regno }}</p>
 
+<hr>
+
+<h3>Previous Medical History</h3>
+
+@if($history->count() == 0)
+
+    <p>No previous records found.</p>
+
+@else
+
+<table border="1" cellpadding="10">
+
+    <tr>
+        <th>Visit Date</th>
+        <th>Diagnosis</th>
+        <th>Prescription</th>
+        <th>Status</th>
+    </tr>
+
+    @foreach($history as $record)
+
+    <tr>
+
+        <td>{{ $record->visit_date }}</td>
+
+        <td>
+            {{ $record->medicalRecord->diagnosis ?? '-' }}
+        </td>
+
+        <td>
+            {{ $record->medicalRecord->prescription ?? '-' }}
+        </td>
+
+        <td>{{ $record->status }}</td>
+
+    </tr>
+
+    @endforeach
+
+</table>
+
+@endif
+
+<hr>
+
 <form method="POST" action="/doctor/save-consultation">
 
     @csrf
