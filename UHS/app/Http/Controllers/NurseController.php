@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Register;
 use App\Models\Visit;
+use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\Session;
 
 class NurseController extends Controller
@@ -45,5 +46,26 @@ class NurseController extends Controller
 
         return redirect('/nurse/scan')
             ->with('success', 'Visit created successfully');
+    }
+
+    public function prescriptions()
+    {
+    $visits = Visit::with(['student', 'medicalRecord'])
+                ->where('status', 'prescription_ready')
+                ->get();
+
+    return view('nurse.prescriptions', compact('visits'));
+    }
+
+    public function completeVisit($visit_id)
+    {
+    $visit = Visit::findOrFail($visit_id);
+
+    $visit->status = 'completed';
+
+    $visit->save();
+
+    return redirect('/nurse/prescriptions')
+            ->with('success', 'Medicine issued successfully');
     }
 }
