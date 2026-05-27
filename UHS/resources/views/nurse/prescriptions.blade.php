@@ -60,7 +60,7 @@
 
     <td>
         <a href="/nurse/complete/{{ $visit->id }}">
-            Give Medicine
+            Dispense Medicine
         </a>
     </td>
 

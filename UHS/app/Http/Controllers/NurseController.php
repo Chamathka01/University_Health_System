@@ -51,7 +51,7 @@ class NurseController extends Controller
     public function prescriptions()
     {
     $visits = Visit::with(['student', 'medicalRecord'])
-                ->where('status', 'prescription_ready')
+                ->where('status', 'prescription-ready')
                 ->get();
 
     return view('nurse.prescriptions', compact('visits'));
@@ -76,5 +76,10 @@ class NurseController extends Controller
     ]);
 
     return redirect('/nurse/student/' . $request->regno);
+}
+
+    public function scan()
+{
+    return view('nurse.scan');
 }
 }
