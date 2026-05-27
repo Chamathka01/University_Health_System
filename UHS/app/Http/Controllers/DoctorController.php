@@ -54,7 +54,7 @@ class DoctorController extends Controller
     $visit = Visit::find($request->visit_id);
 
     $visit->doctor_id = $doctor['id'];
-    $visit->status = 'prescription_ready';
+    $visit->status = 'prescription-ready';
     $visit->save();
 
     return redirect('/doctor/dashboard')
