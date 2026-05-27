@@ -13,8 +13,22 @@ class RoleMiddleware
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
+
+        $user = Session::get('user');
+
+        // Not logged in
+        if (!$user) {
+            return redirect('/login');
+        }
+
+        // Wrong role
+        if ($user['role'] != $role) {
+            return redirect('/login')
+                ->with('error', 'Unauthorized Access');
+        }
+        
         return $next($request);
     }
 }
