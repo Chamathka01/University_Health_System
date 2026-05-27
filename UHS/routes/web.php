@@ -61,3 +61,31 @@ Route::get('/nurse/complete/{visit_id}', [NurseController::class, 'completeVisit
 Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
 
 Route::post('/nurse/search-student', [NurseController::class, 'searchStudent']);
+
+
+//Middleware routes
+Route::middleware('role:doctor')->group(function () {
+
+    Route::get('/doctor/dashboard', [DoctorController::class, 'dashboard']);
+
+    Route::get('/doctor/consult/{id}', [DoctorController::class, 'consult']);
+
+});
+
+
+Route::middleware('role:nurse')->group(function () {
+
+    Route::get('/nurse/scan', [NurseController::class, 'scan']);
+
+    Route::get('/nurse/student/{regno}', [NurseController::class, 'showStudent']);
+
+    Route::post('/nurse/create-visit/{student_id}', [NurseController::class, 'createVisit']);
+
+});
+
+
+Route::middleware('role:student')->group(function () {
+
+    Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+
+});
