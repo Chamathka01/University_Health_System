@@ -18,7 +18,7 @@ class SendOtpMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(string $code)
     {
         $this->code = $code; // Pass the OTP when creating the Mailable
     }
