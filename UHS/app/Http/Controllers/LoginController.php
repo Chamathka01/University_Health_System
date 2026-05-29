@@ -43,7 +43,5 @@ class LoginController extends Controller
         Session::forget('user');
         return redirect('/login');
     }
-
-
 }
 
