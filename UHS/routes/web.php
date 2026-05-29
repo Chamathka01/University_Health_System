@@ -90,3 +90,11 @@ Route::middleware('role:student')->group(function () {
 
 });
 
+
+// forgot page
+Route::get('/forgot-password', function () {
+    return view('forgot-password');
+});
+// send code
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLink'])->name('password.send');
+
