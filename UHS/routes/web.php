@@ -89,3 +89,10 @@ Route::middleware('role:student')->group(function () {
     Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
 
 });
+
+
+Route::get('/forgot-password', [LoginController::class, 'showForgot']);
+Route::post('/forgot-password', [LoginController::class, 'sendResetLink']);
+
+Route::get('/reset-password/{token}', [LoginController::class, 'showResetForm']);
+Route::post('/reset-password', [LoginController::class, 'resetPassword']);
