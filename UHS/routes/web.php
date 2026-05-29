@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Models\Register;
 
 //Route::get('/', function () {
@@ -98,3 +99,10 @@ Route::get('/forgot-password', function () {
 // send code
 Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLink'])->name('password.send');
 
+
+// reset page
+Route::get('/reset-password', function () {
+    return view('reset-password');
+});
+// reset action
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
