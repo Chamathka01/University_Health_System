@@ -5,81 +5,73 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Register;
 use App\Models\Visit;
-use App\Models\MedicalRecord;
 use Illuminate\Support\Facades\Session;
 
 class NurseController extends Controller
 {
-    public function showStudent($regno)
+    /* ===================== */
+    /* DASHBOARD */
+    /* ===================== */
+
+    public function dashboard()
     {
-        // 1. Find student by barcode (regno)
-        $student = Register::where('regno', $regno)
-                    ->where('role', 'student')
-                    ->first();
+        $pending = Visit::with('student')
+            ->where('status', 'prescription-ready')
+            ->orderBy('visit_date', 'desc')
+            ->get();
 
-        // 2. If not found
-        if (!$student) {
-            return redirect('/nurse/scan')
-                ->with('error', 'Student not found');
-        }
-
-        // 3. Get previous visits
-        $visits = Visit::where('student_id', $student->id)
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-
-        // 4. Send to view
-        return view('nurse.student_profile', compact('student', 'visits'));
+        return view('nurse.dashboard', compact('pending'));
     }
 
-    public function createVisit($student_id)
+    /* ===================== */
+    /* SCAN STUDENT (AJAX) */
+    /* ===================== */
+
+    public function scanStudent(Request $request)
     {
+        $request->validate([
+            'regno' => 'required'
+        ]);
+
+        $student = Register::where('regno', $request->regno)
+            ->where('role', 'student')
+            ->first();
+
+        if (!$student) {
+            return response()->json([
+                'error' => 'Student not found'
+            ]);
+        }
+
         $nurse = Session::get('user');
 
-        Visit::create([
-            'student_id' => $student_id,
+        // create visit when scanned
+        $visit = Visit::create([
+            'student_id' => $student->id,
             'nurse_id' => $nurse['id'],
             'doctor_id' => null,
             'visit_date' => now(),
             'status' => 'waiting'
         ]);
 
-        return redirect('/nurse/scan')
-            ->with('success', 'Visit created successfully');
+        return response()->json([
+            'student' => $student,
+            'visit' => $visit
+        ]);
     }
 
-    public function prescriptions()
+    /* ===================== */
+    /* COMPLETE VISIT */
+    /* ===================== */
+
+    public function completeVisit($id)
     {
-    $visits = Visit::with(['student', 'medicalRecord'])
-                ->where('status', 'prescription-ready')
-                ->get();
+        $visit = Visit::findOrFail($id);
 
-    return view('nurse.prescriptions', compact('visits'));
-    }
+        $visit->status = 'completed';
+        $visit->save();
 
-    public function completeVisit($visit_id)
-    {
-    $visit = Visit::findOrFail($visit_id);
-
-    $visit->status = 'completed';
-
-    $visit->save();
-
-    return redirect('/nurse/prescriptions')
+        return redirect()->back()
             ->with('success', 'Medicine issued successfully');
     }
-
-    public function searchStudent(Request $request)
-{
-    $request->validate([
-        'regno' => 'required'
-    ]);
-
-    return redirect('/nurse/student/' . $request->regno);
-}
-
-    public function scan()
-{
-    return view('nurse.scan');
-}
 }

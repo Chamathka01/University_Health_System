@@ -9,9 +9,9 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Models\Register;
 
-//Route::get('/', function () {
-    //return view('welcome');
-//});
+/* ===================== */
+/* AUTH PAGES */
+/* ===================== */
 
 Route::get('/login', function () {
     return view('login');
@@ -22,87 +22,63 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
-
 Route::post('/login', [LoginController::class, 'login'])->name('login.check');
-
-Route::get('/users', function () {
-    $users = Register::all();
-    return view('users', ['users' => $users]);
-});
-
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/doctor/dashboard', function () {
-    return view('doctor.dashboard');
-});
+/* ===================== */
+/* DOCTOR MODULE */
+/* ===================== */
 
-Route::get('/nurse/dashboard', function () {
-    return view('nurse.dashboard');
-});
-
-Route::get('/student/dashboard', function () {
-    return view('student.dashboard');
-});
-
-Route::get('/nurse/scan', function () {
-    return view('nurse.scan');
-});
-
-Route::get('/nurse/student/{regno}', [NurseController::class, 'showStudent']);
-
-Route::get('/nurse/visit/create/{student_id}', [NurseController::class, 'createVisit']);
-
-Route::get('/doctor/dashboard', [DoctorController::class, 'dashboard']);
-Route::get('/doctor/consult/{visit_id}', [DoctorController::class, 'consult']);
-Route::post('/doctor/save-consultation', [DoctorController::class, 'saveConsultation']);
-
-Route::get('/nurse/prescriptions', [NurseController::class, 'prescriptions']);
-Route::get('/nurse/complete/{visit_id}', [NurseController::class, 'completeVisit']);
-
-Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
-
-Route::post('/nurse/search-student', [NurseController::class, 'searchStudent']);
-
-
-//Middleware routes
 Route::middleware('role:doctor')->group(function () {
 
     Route::get('/doctor/dashboard', [DoctorController::class, 'dashboard']);
 
     Route::get('/doctor/consult/{id}', [DoctorController::class, 'consult']);
 
+    Route::post('/doctor/save-consultation', [DoctorController::class, 'saveConsultation']);
 });
 
+/* ===================== */
+/* NURSE MODULE (FINAL CLEAN SYSTEM) */
+/* ===================== */
 
 Route::middleware('role:nurse')->group(function () {
 
-    Route::get('/nurse/scan', [NurseController::class, 'scan']);
+    Route::get('/nurse/dashboard', [NurseController::class, 'dashboard']);
 
-    Route::get('/nurse/student/{regno}', [NurseController::class, 'showStudent']);
+    Route::post('/nurse/scan', [NurseController::class, 'scanStudent']);
 
-    Route::post('/nurse/create-visit/{student_id}', [NurseController::class, 'createVisit']);
+    Route::get('/nurse/visit/create/{student_id}', [NurseController::class, 'createVisit']);
 
+    Route::get('/nurse/complete/{id}', [NurseController::class, 'completeVisit']);
 });
-
+/* ===================== */
+/* STUDENT MODULE */
+/* ===================== */
 
 Route::middleware('role:student')->group(function () {
 
     Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
-
 });
 
+/* ===================== */
+/* FORGOT PASSWORD (OTP SYSTEM) */
+/* ===================== */
 
-// forgot page
+// show forgot password form
 Route::get('/forgot-password', function () {
     return view('forgot-password');
 });
-// send code
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLink'])->name('password.send');
 
+// send OTP
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLink'])
+    ->name('password.send');
 
-// reset page
+// reset password form
 Route::get('/reset-password', function () {
     return view('reset-password');
 });
-// reset action
-Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.reset');
+
+// reset password action
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])
+    ->name('password.reset');
