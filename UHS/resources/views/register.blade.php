@@ -78,7 +78,7 @@
         <input type="text" name="username" class="form-control mb-3" placeholder="Username" value="{{ old('username') }}" required>
         <input type="password" name="password" class="form-control mb-3"  placeholder="Password" required>
         <input type="password" id="password_confirmation" class="form-control mb-3" name="password_confirmation" placeholder="Confirm Password" required>
-         <input type="text" name="phone" class="form-control mb-3" placeholder="Phone Number" value="{{ old('phone') }}">
+         <input type="text" name="phone" class="form-control mb-3" placeholder="Phone Number (07xxxxxxxx)" value="{{ old('phone') }}">
          <input type="email" name="email" class="form-control mb-3"  placeholder="Email Address" value="{{ old('email') }}">
 
          <div>
@@ -113,7 +113,7 @@
                 <option value="ict_degree" {{ old('degree') == 'ict_degree' ? 'selected' : '' }}>Information and Communication Technology</option>
             </select>
 
-         <input type="text" class="form-control mb-3" name="regno"  placeholder="Registration Number" value="{{ old('regno') }}">
+         <input type="text" class="form-control mb-3" name="regno"  placeholder="Registration Number (eg:- 2020ICTxx)" value="{{ old('regno') }}">
         </div>
         <button type="submit" class="btn btn-primary btn-block" >Register </button>
 
