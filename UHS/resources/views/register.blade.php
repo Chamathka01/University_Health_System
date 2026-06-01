@@ -72,48 +72,48 @@
     @endif
     <form method="POST" action="{{ route('register.store') }}">
         @csrf
-        <input type="text" name="firstname" class="form-control" placeholder="First Name" required>
-         <input type="text" name="lastname" class="form-control" placeholder="Last Name" required>
-         <input type="date" name="dob" class="form-control">
-        <input type="text" name="username" class="form-control" placeholder="Username" required>
-        <input type="password" name="password" class="form-control"  placeholder="Password" required>
-        <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="Confirm Password" required>
-         <input type="text" name="phone" class="form-control" placeholder="Phone Number">
-         <input type="email" name="email" class="form-control"  placeholder="Email Address">
+        <input type="text" name="firstname" class="form-control mb-3" placeholder="First Name" value="{{ old('firstname') }}" required>
+         <input type="text" name="lastname" class="form-control mb-3" placeholder="Last Name" value="{{ old('lastname') }}" required>
+         <input type="date" name="dob" class="form-control mb-3" value="{{ old('dob') }}">
+        <input type="text" name="username" class="form-control mb-3" placeholder="Username" value="{{ old('username') }}" required>
+        <input type="password" name="password" class="form-control mb-3"  placeholder="Password" required>
+        <input type="password" id="password_confirmation" class="form-control mb-3" name="password_confirmation" placeholder="Confirm Password" required>
+         <input type="text" name="phone" class="form-control mb-3" placeholder="Phone Number" value="{{ old('phone') }}">
+         <input type="email" name="email" class="form-control mb-3"  placeholder="Email Address" value="{{ old('email') }}">
 
          <div>
-            <select name="role" id="role" class="form-control" required onchange="toggleStudentFields()">
+            <select name="role" id="role" class="form-control mb-3" required onchange="toggleStudentFields()">
                 <option value="">Select Role</option>
-                <option value="doctor">Doctor</option>
-                <option value="nurse">Nurse</option>
-                <option value="student">Student</option>
+                <option value="doctor" {{ old('role') == 'doctor' ? 'selected' : '' }}>Doctor</option>
+                <option value="nurse" {{ old('role') == 'nurse' ? 'selected' : '' }}>Nurse</option>
+                <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
             </select>
         </div>
 
         <div id="studentFields" style="display:none;">
-            <select name="faculty" class="form-control">
+            <select name="faculty" class="form-control mb-3">
                 <option value="">Faculty</option>
-                <option value="appliedscience">Applied Science</option>
-                <option value="technologicalstudies">Technological Studies</option>
-                <option value="businessstudies">Business Studies</option>
+                <option value="appliedscience" {{ old('faculty') == 'appliedscience' ? 'selected' : '' }}>Applied Science</option>
+                <option value="technologicalstudies" {{ old('faculty') == 'technologicalstudies' ? 'selected' : '' }}>Technological Studies</option>
+                <option value="businessstudies" {{ old('faculty') == 'businessstudies' ? 'selected' : '' }}>Business Studies</option>
             </select>
 
-            <select name="department" class="form-control">
+            <select name="department" class="form-control mb-3">
                 <option value="">Department</option>
-                <option value="physicalscience">Physical Science</option>
-                <option value="bioscience">Bio Science</option>
-                <option value="ict">ICT</option>
+                <option value="physicalscience" {{ old('department') == 'physicalscience' ? 'selected' : '' }}>Physical Science</option>
+                <option value="bioscience" {{ old('department') == 'bioscience' ? 'selected' : '' }}>Bio Science</option>
+                <option value="ict" {{ old('department') == 'ict' ? 'selected' : '' }}>ICT</option>
             </select>
 
-            <select name="degree" class="form-control">
+            <select name="degree" class="form-control mb-3">
                 <option value="">Degree</option>
-                <option value="it">Information Technology</option>
-                <option value="amc">Applied Mathematics and computing</option>
-                <option value="bio">Environmental Science</option>
-                <option value="ict_degree">Information and Communication Technology</option>
+                <option value="it" {{ old('degree') == 'it' ? 'selected' : '' }}>Information Technology</option>
+                <option value="amc" {{ old('degree') == 'amc' ? 'selected' : '' }}>Applied Mathematics and computing</option>
+                <option value="bio" {{ old('degree') == 'bio' ? 'selected' : '' }}>Environmental Science</option>
+                <option value="ict_degree" {{ old('degree') == 'ict_degree' ? 'selected' : '' }}>Information and Communication Technology</option>
             </select>
 
-         <input type="text" class="form-control" name="regno"  placeholder="Registration Number">
+         <input type="text" class="form-control mb-3" name="regno"  placeholder="Registration Number" value="{{ old('regno') }}">
         </div>
         <button type="submit" class="btn btn-primary btn-block" >Register </button>
 
