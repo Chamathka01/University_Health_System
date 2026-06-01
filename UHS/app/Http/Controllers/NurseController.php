@@ -15,7 +15,7 @@ class NurseController extends Controller
 
     public function dashboard()
     {
-        $pending = Visit::with('student')
+        $pending = Visit::with(['student', 'medicalRecord'])
             ->where('status', 'prescription-ready')
             ->orderBy('visit_date', 'desc')
             ->get();
@@ -24,7 +24,7 @@ class NurseController extends Controller
     }
 
     /* ===================== */
-    /* SCAN STUDENT (AJAX) */
+    /* SCAN STUDENT */
     /* ===================== */
 
     public function scanStudent(Request $request)
@@ -43,21 +43,29 @@ class NurseController extends Controller
             ]);
         }
 
+        return response()->json([
+            'student' => $student
+        ]);
+    }
+
+    /* ===================== */
+    /* CREATE VISIT */
+    /* ===================== */
+
+    public function createVisit($student_id)
+    {
         $nurse = Session::get('user');
 
-        // create visit when scanned
-        $visit = Visit::create([
-            'student_id' => $student->id,
+        Visit::create([
+            'student_id' => $student_id,
             'nurse_id' => $nurse['id'],
             'doctor_id' => null,
             'visit_date' => now(),
             'status' => 'waiting'
         ]);
 
-        return response()->json([
-            'student' => $student,
-            'visit' => $visit
-        ]);
+        return redirect('/nurse/dashboard')
+            ->with('success', 'Visit created successfully');
     }
 
     /* ===================== */
