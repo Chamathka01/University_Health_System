@@ -35,6 +35,10 @@
             justify-content: center;
             padding: 48px 40px;
             color: white;
+            border: 2px solid black;
+            border-right: none;
+            border-top-left-radius: 18px;
+            border-bottom-left-radius: 18px;
         }
 
         .login-panel-left .logo-icon {
@@ -75,6 +79,10 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            border: 2px solid black;
+            border-left: none;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
         }
 
         .login-panel-right h4 {
@@ -106,6 +114,7 @@
             font-size: 14px;
             padding: 0 38px 0 12px;
             transition: border-color 0.15s, box-shadow 0.15s;
+            border: 1px solid black;
         }
         .form-control:focus {
             border-color: #1a6fc4;

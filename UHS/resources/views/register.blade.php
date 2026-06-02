@@ -25,6 +25,7 @@
             width: 100%;
             max-width: 620px;
             box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            border: 2px solid black;
         }
 
         .card-logo {
@@ -41,7 +42,7 @@
 
         .form-label { font-size: 12.5px; font-weight: 500; color: #374151; margin-bottom: 4px; }
         .form-control, .form-select {
-            border: 1px solid #e2e8f0;
+            border: 1px solid black;
             border-radius: 8px;
             height: 42px;
             font-size: 13.5px;
@@ -78,6 +79,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.15s;
+            border: 1px solid black;
         }
         .role-option:hover { border-color: #1a6fc4; background: #eff6ff; }
         .role-option.selected { border-color: #1a6fc4; background: #eff6ff; }

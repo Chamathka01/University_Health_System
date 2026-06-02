@@ -175,10 +175,13 @@
         .page-body { padding: 24px 28px; }
 
         .card {
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
+            /*border: 1px solid var(--gray-200);
+            border-radius: var(--radius);*/
             background: white;
             box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid black;
+            border-radius: 18px;
+            overflow: hidden;
         }
 
         .card-header {
