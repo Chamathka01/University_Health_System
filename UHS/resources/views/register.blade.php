@@ -142,7 +142,7 @@
     <form method="POST" action="{{ route('register.store') }}">
         @csrf
 
-        <div class="section-title">Step 1 — Select your role</div>
+        <div class="section-title">Select your role</div>
         <div class="role-selector">
             <label class="role-option {{ old('role') == 'student' ? 'selected' : '' }}" onclick="selectRole('student')">
                 <input type="radio" name="role" value="student" {{ old('role') == 'student' ? 'checked' : '' }}>
@@ -167,7 +167,7 @@
         </div>
 
 
-        <div class="section-title">Step 2 — Personal information</div>
+        <div class="section-title">Personal information</div>
         <div class="row g-2 mb-2">
             <div class="col-6">
                 <label class="form-label">First Name</label>
@@ -205,7 +205,7 @@
 
         <!-- Student Fields -->
         <div id="studentFields" style="display:none;">
-            <div class="section-title">Step 3 — Student details</div>
+            <div class="section-title">Student details</div>
             <div class="mb-2">
                 <label class="form-label">Registration Number</label>
                 <input type="text" name="regno" id="regno" class="form-control"
@@ -249,7 +249,7 @@
 
         <!-- Staff Fields -->
         <div id="staffFields" style="display:none;">
-            <div class="section-title">Step 3 — Staff details</div>
+            <div class="section-title">Staff details</div>
             <div class="row g-2 mb-2">
                 <div class="col-6">
                     <label class="form-label">Staff ID</label>
@@ -276,7 +276,7 @@
         </div>
 
 
-        <div class="section-title">Step 4 — Account credentials</div>
+        <div class="section-title">Account credentials</div>
 
         <div class="mb-2">
             <label class="form-label">Username</label>
