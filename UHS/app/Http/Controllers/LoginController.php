@@ -34,7 +34,11 @@ class LoginController extends Controller
                 return redirect('/student/dashboard');
             }
 
-            return back()->with('error', 'Invalid Login');
+            if ($user->role == 'staff') {
+                return redirect('/student/dashboard');
+            }
+
+            return back()->with('error', 'Invalid username or password.');
         }
     }
 
