@@ -17,20 +17,26 @@ class RegisterController extends Controller
             'phone' => 'nullable|digits:10',
             'email' => 'required|email|unique:registers,email',
             'username' => 'required|min:4|max:20|unique:registers,username',
-            'role' => 'required|in:doctor,nurse,student',
+            'role' => 'required|in:doctor,nurse,student','staff',
             'password' => 'required|min:8|confirmed',
         ]);
 
         if ($request->role == 'student') {
 
-        $request->validate([
-            'faculty' => 'required',
-            'department' => 'required',
-            'degree' => 'required',
-            'regno' => 'required|string|max:20|unique:registers,regno',
-        ]);
+            $request->validate([
+                'faculty' => 'required',
+                'department' => 'required',
+                'degree' => 'required',
+                'regno' => 'required|string|max:20|unique:registers,regno',
+            ]);
+        }
 
-    }
+        if ($request->role == 'staff') {
+            $request->validate([
+                'staff_id' => 'required|string|max:20|unique:registers,staff_id',
+                'staff_department' => 'required|string|max:100',
+            ]);
+        }
 
         $user = new Register();
 
@@ -42,11 +48,14 @@ class RegisterController extends Controller
         $user->username = $request->username;
         $user->role = $request->role;
         $user->password = Hash::make($request->password);
-        
+
         $user->faculty = $request->faculty;
         $user->department = $request->department;
         $user->degree = $request->degree;
         $user->regno = $request->regno;
+
+        $user->staff_id = $request->staff_id;
+        $user->staff_department = $request->staff_department;
 
         $user->save();
 
