@@ -10,7 +10,7 @@ class StudentController extends Controller
 {
     public function dashboard()
     {
-        $student = Session::get('user');
+        $user = Session::get('user');
 
         $visits = Visit::with('medicalRecord')
                     ->where('student_id', $user['id'])

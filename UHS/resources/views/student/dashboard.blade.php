@@ -1,71 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Dashboard</title>
+@extends('layouts.app')
 
-    <style>
+@section('content')
 
-        body{
-            font-family: Arial, sans-serif;
-            margin:20px;
-        }
+<div class="page-header">
+    <div>
+        <h4><i class="fa-solid fa-notes-medical me-2 text-primary"></i>My Health Records</h4>
+        <div class="breadcrumb-text">View your previous health records</div>
+    </div>
+</div>
 
-        table{
-            width:100%;
-            border-collapse: collapse;
-        }
+<div class="page-body">
 
-        th, td{
-            border:1px solid #ccc;
-            padding:10px;
-        }
+<div class="row g-4">
 
-        th{
-            background:#f2f2f2;
-        }
+    <!-- Visit Records -->
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="fa-solid fa-clock-rotate-left" style="color:#1a6fc4;"></i>
+                Visit History
+            </div>
 
-    </style>
-</head>
-<body>
+            @if(count($visits) == 0)
+                <div class="card-body text-center py-5">
+                    <i class="fa-solid fa-clipboard-list fa-2x mb-3" style="color:#cbd5e1;"></i>
+                    <p class="text-muted mb-1">No medical records yet.</p>
+                    <p style="font-size:13px;color:#94a3b8;">
+                        Visit the Health Center to get your first record.
+                    </p>
+                </div>
+            @else
+            <div class="table-responsive">
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Visit Date</th>
+                        <th>Diagnosis</th>
+                        <th>Prescription</th>
+                        <th>Report</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
 
-<h2>My Medical History</h2>
+                <tbody>
+                    @foreach($visits as $visit)
+                    <tr>
+                        <td style="font-size:13px;white-space:nowrap;">
+                            {{ \Carbon\Carbon::parse($visit->visit_date)->format('d M Y') }}
+                            <div style="font-size:11px;color:#94a3b8;">
+                                {{ \Carbon\Carbon::parse($visit->visit_date)->format('h:i A') }}
+                            </div>
+                        </td>
 
-@if(count($visits) == 0)
+                        <td style="font-size:13px;max-width:180px;">
+                            {{ $visit->medicalRecord->diagnosis ?? '—' }}
+                        </td>
 
-    <p>No medical records found.</p>
+                        <td style="font-size:13px;max-width:180px;">
+                            {{ $visit->medicalRecord->prescription ?? '—' }}
+                        </td>
 
-@else
+                        <td>
+                            @if($visit->medicalRecord && $visit->medicalRecord->report_path)
+                                <a href="{{ asset('storage/'.$visit->medicalRecord->report_path) }}"
+                                   target="_blank"
+                                   class="btn btn-outline-primary btn-sm">
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </a>
+                            @else
+                                <span style="color:#cbd5e1;">—</span>
+                            @endif
+                        </td>
 
-<table>
+                        <td>
+                            @php $s = $visit->status; @endphp
+                            <span class="badge-status {{ $s }}">
+                                {{ ucfirst(str_replace('-', ' ', $s)) }}
+                            </span>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
 
-    <tr>
-        <th>Visit Date</th>
-        <th>Diagnosis</th>
-        <th>Prescription</th>
-        <th>Status</th>
-    </tr>
+            </table>
+            </div>
+            @endif
 
-    @foreach($visits as $visit)
+        </div>
+    </div>
 
-    <tr>
-        <td>{{ $visit->visit_date }}</td>
+</div>
 
-        <td>
-            {{ $visit->medicalRecord->diagnosis ?? '-' }}
-        </td>
+</div>
 
-        <td>
-            {{ $visit->medicalRecord->prescription ?? '-' }}
-        </td>
-
-        <td>
-            {{ $visit->status }}
-        </td>
-
-    </tr>
-    @endforeach
-</table>
-@endif
-
-</body>
-</html>
+@endsection
