@@ -21,11 +21,33 @@ class Register extends Model
         'username',
         'role',
         'password',
+        // Student fields
         'faculty',
         'department',
         'degree',
         'regno',
+        // Staff fields
+        'staff_id',
+        'staff_department',
     ];
+
+    // Returns the display ID (regno for students, staff_id for staff)
+    public function getDisplayIdAttribute(): string
+    {
+        return $this->regno ?? $this->staff_id ?? 'N/A';
+    }
+
+    // Returns full name
+    public function getFullNameAttribute(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
+
+    // Returns the value to encode in barcode
+    public function getBarcodeValueAttribute(): string
+    {
+        return $this->regno ?? $this->staff_id ?? (string) $this->id;
+    }
 
     public function studentvisits()
     {
