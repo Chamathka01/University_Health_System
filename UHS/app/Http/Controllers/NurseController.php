@@ -9,10 +9,7 @@ use Illuminate\Support\Facades\Session;
 
 class NurseController extends Controller
 {
-    /* ===================== */
-    /* DASHBOARD */
-    /* ===================== */
-
+    // Dashboard
     public function dashboard()
     {
         $pending = Visit::with(['student', 'medicalRecord'])
@@ -23,9 +20,7 @@ class NurseController extends Controller
         return view('nurse.dashboard', compact('pending'));
     }
 
-    /* ===================== */
-    /* SCAN STUDENT */
-    /* ===================== */
+    // Scan students and staff
 
     public function scanStudent(Request $request)
     {
@@ -33,31 +28,45 @@ class NurseController extends Controller
             'regno' => 'required'
         ]);
 
-        $student = Register::where('regno', $request->regno)
-            ->where('role', 'student')
+        $searchValue = $request->regno;
+
+        // Search by regno (students) OR staff_id (staff)
+
+        $patient = Register::where(function ($query) use ($searchValue) {
+            $query->where('regno', $searchValue)
+                  ->orWhere('staff_id', $searchValue);
+            })
+            ->whereIn('role', ['student','staff'])
             ->first();
 
-        if (!$student) {
+        if (!$patient) {
             return response()->json([
-                'error' => 'Student not found'
+                'error' => 'Patient not found. Check the ID and try again.'
             ]);
         }
 
         return response()->json([
-            'student' => $student
+            'patient' => [
+                'id'         => $patient->id,
+                'name'       => $patient->full_name,
+                'display_id' => $patient->display_id,
+                'role'       => $patient->role,
+                'email'      => $patient->email,
+                'phone'      => $patient->phone,
+                'faculty'    => $patient->faculty,
+                'department' => $patient->staff_department ?? $patient->department,
+            ]
         ]);
     }
 
-    /* ===================== */
-    /* CREATE VISIT */
-    /* ===================== */
+    // Create Visit
 
-    public function createVisit($student_id)
+    public function createVisit($patient_id)
     {
         $nurse = Session::get('user');
 
         Visit::create([
-            'student_id' => $student_id,
+            'student_id' => $patient_id,
             'nurse_id' => $nurse['id'],
             'doctor_id' => null,
             'visit_date' => now(),
@@ -68,9 +77,7 @@ class NurseController extends Controller
             ->with('success', 'Visit created successfully');
     }
 
-    /* ===================== */
-    /* COMPLETE VISIT */
-    /* ===================== */
+    // Complete Visit
 
     public function completeVisit($id)
     {
