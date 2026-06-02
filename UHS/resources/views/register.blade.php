@@ -57,7 +57,7 @@
         .section-title {
             font-size: 11.5px;
             font-weight: 600;
-            color: #94a3b8;
+            color: #7b8798;
             text-transform: uppercase;
             letter-spacing: 0.07em;
             margin: 20px 0 12px;

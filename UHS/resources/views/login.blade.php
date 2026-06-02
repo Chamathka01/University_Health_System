@@ -104,7 +104,8 @@
         .input-icon-wrap i.field-icon {
             position: absolute; top: 50%; right: 13px;
             transform: translateY(-50%);
-            color: #94a3b8; cursor: pointer; font-size: 14px;
+            color: #31353a; cursor: pointer; font-size: 14px;
+
         }
 
         .form-control {

@@ -200,12 +200,15 @@
 
         .stat-card {
             background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: var(--radius);
+            /*border: 1px solid var(--gray-200);
+            border-radius: var(--radius);*/
             padding: 18px 20px;
             display: flex;
             align-items: center;
             gap: 16px;
+            border: 1px solid black;
+            border-radius: 18px;
+            overflow: hidden;
         }
 
         .stat-icon {
@@ -233,8 +236,9 @@
             text-transform: uppercase;
             letter-spacing: 0.04em;
             color: var(--gray-600);
-            border-bottom: 1px solid var(--gray-200);
+            border-bottom: 1px solid black;
             padding: 10px 14px;
+
         }
         .table tbody td { padding: 12px 14px; vertical-align: middle; border-color: var(--gray-200); }
         .table tbody tr:hover { background: var(--gray-50); }
@@ -261,6 +265,7 @@
             padding: 9px 12px;
             font-size: 14px;
             transition: border-color 0.15s, box-shadow 0.15s;
+            border: 1px solid black;
         }
         .form-control:focus, .form-select:focus {
             border-color: var(--primary);
