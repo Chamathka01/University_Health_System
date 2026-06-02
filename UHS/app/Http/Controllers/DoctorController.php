@@ -24,7 +24,6 @@ class DoctorController extends Controller
 {
     $visit = Visit::with('student')->findOrFail($visit_id);
 
-    // If student is waiting, mark consultation as started
     if ($visit->status == 'waiting') {
 
         $visit->status = 'in-progress';
