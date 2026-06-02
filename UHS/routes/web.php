@@ -9,9 +9,9 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Models\Register;
 
-/* ===================== */
-/* AUTH PAGES */
-/* ===================== */
+//Auth pages
+
+Route::get('/', fn() => redirect('/login'));
 
 Route::get('/login', function () {
     return view('login');
@@ -25,9 +25,7 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::post('/login', [LoginController::class, 'login'])->name('login.check');
 Route::get('/logout', [LoginController::class, 'logout']);
 
-/* ===================== */
-/* DOCTOR MODULE */
-/* ===================== */
+// Doctor Module
 
 Route::middleware('role:doctor')->group(function () {
 
@@ -38,9 +36,7 @@ Route::middleware('role:doctor')->group(function () {
     Route::post('/doctor/save-consultation', [DoctorController::class, 'saveConsultation']);
 });
 
-/* ===================== */
-/* NURSE MODULE (FINAL CLEAN SYSTEM) */
-/* ===================== */
+// Nurse Module
 
 Route::middleware('role:nurse')->group(function () {
 
@@ -48,22 +44,19 @@ Route::middleware('role:nurse')->group(function () {
 
     Route::post('/nurse/scan', [NurseController::class, 'scanStudent']);
 
-    Route::get('/nurse/visit/create/{student_id}', [NurseController::class, 'createVisit']);
+    Route::get('/nurse/visit/create/{patient_id}', [NurseController::class, 'createVisit']);
 
     Route::get('/nurse/complete/{id}', [NurseController::class, 'completeVisit']);
 });
-/* ===================== */
-/* STUDENT MODULE */
-/* ===================== */
 
-Route::middleware('role:student')->group(function () {
+// Student + Staff Module
+
+Route::middleware('role:student,staff')->group(function () {
 
     Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
 });
 
-/* ===================== */
-/* FORGOT PASSWORD (OTP SYSTEM) */
-/* ===================== */
+// Forgot Password
 
 // show forgot password form
 Route::get('/forgot-password', function () {
