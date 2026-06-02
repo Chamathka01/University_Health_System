@@ -142,7 +142,6 @@
     <form method="POST" action="{{ route('register.store') }}">
         @csrf
 
-        <!-- STEP 1: Role Selection -->
         <div class="section-title">Step 1 — Select your role</div>
         <div class="role-selector">
             <label class="role-option {{ old('role') == 'student' ? 'selected' : '' }}" onclick="selectRole('student')">
@@ -167,7 +166,7 @@
             </label>
         </div>
 
-        <!-- STEP 2: Personal Info -->
+
         <div class="section-title">Step 2 — Personal information</div>
         <div class="row g-2 mb-2">
             <div class="col-6">
@@ -202,7 +201,7 @@
                    placeholder="you@example.com" value="{{ old('email') }}" required>
         </div>
 
-        <!-- STEP 3: Role-specific fields -->
+
 
         <!-- Student Fields -->
         <div id="studentFields" style="display:none;">
@@ -276,7 +275,7 @@
             </div>
         </div>
 
-        <!-- STEP 4: Account credentials -->
+
         <div class="section-title">Step 4 — Account credentials</div>
 
         <div class="mb-2">
@@ -311,7 +310,7 @@
 </div>
 
 <script>
-// ── Role selection UI ──
+// Role selection UI
 function selectRole(role) {
     document.querySelectorAll('.role-option').forEach(el => el.classList.remove('selected'));
     const selected = document.querySelector(`.role-option input[value="${role}"]`);
@@ -324,7 +323,7 @@ function selectRole(role) {
     autoFillUsername();
 }
 
-// ── Auto-fill username ──
+// Auto-fill username
 function autoFillUsername() {
     const firstname = document.getElementById('firstname').value.trim().toLowerCase();
     const lastname  = document.getElementById('lastname').value.trim().toLowerCase();
@@ -342,7 +341,7 @@ function autoFillUsername() {
     }
 }
 
-// ── Password toggle ──
+//  Password toggle
 function togglePw(fieldId, icon) {
     const input = document.getElementById(fieldId);
     if (input.type === 'password') {
@@ -354,7 +353,7 @@ function togglePw(fieldId, icon) {
     }
 }
 
-// Init on page load (handles validation errors returning old values)
+// Handles validation errors returning old values
 window.onload = function() {
     const role = document.querySelector('input[name="role"]:checked')?.value || '';
     if (role) selectRole(role);

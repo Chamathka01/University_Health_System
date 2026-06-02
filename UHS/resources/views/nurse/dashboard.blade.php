@@ -1,255 +1,267 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Nurse Dashboard</title>
+@extends('layouts.app')
 
-    <script src="https://unpkg.com/html5-qrcode"></script>
+@section('content')
 
-    <style>
-        body { font-family: Arial; background:#fff; color:#000; }
-        .container { padding:20px; }
-
-        .box {
-            border:1px solid #000;
-            padding:15px;
-            margin-bottom:20px;
-        }
-
-        input {
-            padding:8px;
-            width:250px;
-        }
-
-        button {
-            padding:8px 12px;
-            border:1px solid #000;
-            background:#fff;
-            cursor:pointer;
-        }
-
-        button:hover {
-            background:#000;
-            color:#fff;
-        }
-
-        table {
-            width:100%;
-            border-collapse:collapse;
-        }
-
-        th,td {
-            border:1px solid #000;
-            padding:10px;
-        }
-
-        .topbar {
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-         }
-        .prescription-box {
-            font-size: 13px;
-        }
-
-    </style>
-</head>
-
-<body>
-
-<div class="container">
-
-    <!-- TOP BAR -->
-    <div class="topbar">
-        <h2>Nurse Dashboard</h2>
-
-        <a href="/logout">
-            <button>Logout</button>
-        </a>
+<div class="page-header">
+    <div>
+        <h4><i class="fa-solid fa-stethoscope me-2 text-primary"></i>Nurse Dashboard</h4>
+        <div class="breadcrumb-text">Scan patients and manage prescriptions</div>
     </div>
-
-    <!-- CAMERA SCANNER -->
-    <div class="box">
-        <h3>Camera Scan</h3>
-
-        <button onclick="startScanner()">Start Camera Scan</button>
-
-        <div id="reader" style="width:300px; margin-top:10px;"></div>
+    <div>
+        <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2" style="border-radius:8px; font-size:12px; background:#dbeafe !important; color:#1d4ed8 !important;">
+            <i class="fa-solid fa-circle-dot me-1" style="color:#22c55e;"></i> On Duty
+        </span>
     </div>
+</div>
 
-    <!-- MANUAL SEARCH -->
-    <div class="box">
-        <h3>Search Student</h3>
+<div class="page-body">
 
-        <input type="text" id="regno" placeholder="Enter Reg No">
-        <button onclick="searchStudent()">Search</button>
+    @if(session('success'))
+        <div class="alert alert-success mb-4"><i class="fa-solid fa-circle-check me-2"></i>{{ session('success') }}</div>
+    @endif
 
-        <div id="studentBox"></div>
+    <div class="row g-4">
+
+        <!--Patient Scanner -->
+        <div class="col-md-5">
+
+            <!-- Camera Scan -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa-solid fa-camera" style="color:#1a6fc4;"></i> Camera Scanner
+                </div>
+                <div class="card-body text-center">
+                    <div id="reader" style="width:100%; max-width:280px; margin:0 auto;"></div>
+                    <button class="btn btn-outline-primary btn-sm mt-3 px-4" onclick="startScanner()">
+                        <i class="fa-solid fa-qrcode me-1"></i> Start Camera
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm mt-3 ms-2 px-4" onclick="stopScanner()" id="stopBtn" style="display:none;">
+                        Stop
+                    </button>
+                </div>
+            </div>
+
+            <!-- Manual Search -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa-solid fa-magnifying-glass" style="color:#1a6fc4;"></i> Search Patient
+                </div>
+                <div class="card-body">
+                    <label class="form-label">Student Reg No or Staff ID</label>
+                    <div class="input-group">
+                        <input type="text" id="searchInput" class="form-control"
+                               placeholder="e.g. 2020ICT01 or STAFF001"
+                               onkeydown="if(event.key==='Enter') searchPatient()">
+                        <button class="btn btn-primary" onclick="searchPatient()">
+                            <i class="fa-solid fa-search"></i>
+                        </button>
+                    </div>
+
+                    <!-- Patient Found Card -->
+                    <div id="patientBox" class="mt-3" style="display:none;">
+                        <div class="patient-card">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div style="width:46px;height:46px;border-radius:50%;background:#1a6fc4;display:flex;align-items:center;justify-content:center;color:white;font-size:18px;font-weight:700;" id="patientAvatar">K</div>
+                                <div>
+                                    <div style="font-weight:600;font-size:15px;color:#0f172a;" id="patientName"></div>
+                                    <div style="font-size:12px;color:#475569;" id="patientId"></div>
+                                </div>
+                                <span id="patientRoleBadge" class="badge-status ms-auto" style="font-size:11px;"></span>
+                            </div>
+                            <div style="font-size:13px;color:#475569;" id="patientInfo"></div>
+                            <div class="mt-3">
+                                <a id="createVisitBtn" href="#" class="btn btn-success btn-sm w-100">
+                                    <i class="fa-solid fa-plus me-1"></i> Create Visit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="patientError" class="alert alert-danger mt-3" style="display:none; font-size:13px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Prescriptions -->
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="fa-solid fa-prescription-bottle-medical" style="color:#1a6fc4;"></i> Pending Prescriptions</span>
+                    <span class="badge rounded-pill" style="background:#fee2e2;color:#991b1b;font-size:12px;padding:4px 10px;">
+                        {{ count($pending) }} pending
+                    </span>
+                </div>
+
+                @if(count($pending) == 0)
+                    <div class="card-body text-center py-5">
+                        <i class="fa-solid fa-check-circle fa-2x mb-3" style="color:#22c55e;"></i>
+                        <p class="text-muted mb-0">No pending prescriptions</p>
+                    </div>
+                @else
+                <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>ID</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($pending as $visit)
+                        <tr>
+                            <td>
+                                <div style="font-weight:500;font-size:13.5px;">
+                                    {{ $visit->student->firstname }} {{ $visit->student->lastname }}
+                                </div>
+                                <div style="font-size:12px;color:#64748b;">{{ ucfirst($visit->student->role) }}</div>
+                            </td>
+                            <td>
+                                <code style="font-size:12px;background:#f1f5f9;padding:2px 7px;border-radius:5px;">
+                                    {{ $visit->student->display_id }}
+                                </code>
+                            </td>
+                            <td>
+                                <span class="badge-status prescription-ready">
+                                    <i class="fa-solid fa-circle-dot fa-xs"></i> Ready
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm me-1"
+                                    onclick="viewPrescription(
+                                        '{{ $visit->student->firstname }} {{ $visit->student->lastname }}',
+                                        '{{ $visit->student->display_id }}',
+                                        `{{ addslashes($visit->medicalRecord->diagnosis ?? '-') }}`,
+                                        `{{ addslashes($visit->medicalRecord->prescription ?? '-') }}`,
+                                        `{{ addslashes($visit->medicalRecord->notes ?? '-') }}`,
+                                        '{{ $visit->medicalRecord->report_path ? asset("storage/".$visit->medicalRecord->report_path) : "" }}'
+                                    )">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                                <a href="/nurse/complete/{{ $visit->id }}" class="btn btn-success btn-sm">
+                                    <i class="fa-solid fa-pills me-1"></i> Dispense
+                                </a>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                </div>
+                @endif
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- PENDING PRESCRIPTIONS -->
-    <div class="box">
-        <h3>Pending Prescriptions</h3>
+<!-- Prescription Modal -->
+<div id="modalBackdrop" style="display:none; min-height:400px; background:rgba(0,0,0,0.45); position:fixed; top:0;left:0;right:0;bottom:0; z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:white;width:460px;max-width:92vw;border-radius:14px;padding:28px;position:relative;">
+        <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:18px;color:#94a3b8;cursor:pointer;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <h5 style="font-size:16px;font-weight:700;margin-bottom:16px;color:#0f172a;">
+            <i class="fa-solid fa-file-medical me-2 text-primary"></i>Prescription Details
+        </h5>
+        <div class="section-divider" style="margin:0 0 14px;"></div>
 
-        <table>
-    <tr>
-        <th>Student</th>
-        <th>Reg No</th>
-        <th>Status</th>
-        <th>View</th>
-        <th>Action</th>
-    </tr>
+        <table style="width:100%;font-size:13.5px;">
+            <tr><td style="color:#64748b;padding:5px 0;width:120px;">Patient</td><td style="font-weight:500;" id="m_name"></td></tr>
+            <tr><td style="color:#64748b;padding:5px 0;">ID</td><td><code id="m_id" style="background:#f1f5f9;padding:2px 7px;border-radius:5px;"></code></td></tr>
+            <tr><td style="color:#64748b;padding:5px 0;vertical-align:top;">Diagnosis</td><td id="m_diag" style="white-space:pre-wrap;"></td></tr>
+            <tr><td style="color:#64748b;padding:5px 0;vertical-align:top;">Prescription</td><td id="m_pres" style="white-space:pre-wrap;"></td></tr>
+            <tr><td style="color:#64748b;padding:5px 0;vertical-align:top;">Notes</td><td id="m_notes" style="white-space:pre-wrap;"></td></tr>
+        </table>
 
-    @foreach($pending as $visit)
-    <tr>
-
-        <td>{{ $visit->student->firstname }}</td>
-
-        <td>{{ $visit->student->regno }}</td>
-
-        <td>{{ $visit->status }}</td>
-
-        <td>
-            <button onclick="viewPrescription(
-                '{{ $visit->student->firstname }}',
-                '{{ $visit->student->regno }}',
-                `{{ $visit->medicalRecord->diagnosis ?? '-' }}`,
-                `{{ $visit->medicalRecord->prescription ?? '-' }}`,
-                `{{ $visit->medicalRecord->notes ?? '-' }}`
-            )">
-                View
-            </button>
-        </td>
-
-        <td>
-            <a href="/nurse/complete/{{ $visit->id }}">
-                <button>Give Medicine</button>
+        <div id="m_report_wrap" class="mt-3" style="display:none;">
+            <a id="m_report_link" href="#" target="_blank" class="btn btn-outline-primary btn-sm w-100">
+                <i class="fa-solid fa-file-pdf me-1"></i> Download Blood Report PDF
             </a>
-        </td>
-
-    </tr>
-    @endforeach
-
-</table>
-    </div>
-
-</div>
-
-<!-- PRESCRIPTION MODAL -->
-<div id="modal" style="
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.5);
-">
-
-    <div style="
-        background:#fff;
-        width:400px;
-        margin:100px auto;
-        padding:20px;
-        border:1px solid #000;
-    ">
-
-        <h3>Prescription Details</h3>
-
-        <p><strong>Student:</strong> <span id="m_student"></span></p>
-        <p><strong>Reg No:</strong> <span id="m_regno"></span></p>
-        <p><strong>Diagnosis:</strong><br> <span id="m_diag"></span></p>
-        <p><strong>Prescription:</strong><br> <span id="m_pres"></span></p>
-        <p><strong>Notes:</strong><br> <span id="m_notes"></span></p>
-
-        <button onclick="closeModal()">Close</button>
-
+        </div>
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script src="https://unpkg.com/html5-qrcode"></script>
 <script>
-
-/* ===================== */
-/* CAMERA SCANNER */
-/* ===================== */
-
 let scanner = new Html5Qrcode("reader");
+let scannerActive = false;
 
-function startScanner()
-{
-
+function startScanner() {
     Html5Qrcode.getCameras().then(devices => {
-
-        if(devices.length){
-
+        if (devices.length) {
             scanner.start(
                 devices[0].id,
-                { fps: 10, qrbox: 250 },
+                { fps: 10, qrbox: 220 },
                 (text) => {
-
-                    document.getElementById('regno').value = text;
-
-                    scanner.stop();
-
-                    searchStudent();
+                    document.getElementById('searchInput').value = text;
+                    scanner.stop().then(() => { scannerActive = false; document.getElementById('stopBtn').style.display='none'; });
+                    searchPatient();
                 }
             );
+            scannerActive = true;
+            document.getElementById('stopBtn').style.display = 'inline-block';
         }
     });
 }
 
-/* ===================== */
-/* MANUAL SEARCH*/
-/* ===================== */
+function stopScanner() {
+    if (scannerActive) scanner.stop().then(() => { scannerActive = false; document.getElementById('stopBtn').style.display='none'; });
+}
 
-function searchStudent()
-{
-    let regno = document.getElementById('regno').value;
+function searchPatient() {
+    const val = document.getElementById('searchInput').value.trim();
+    if (!val) return;
+
+    document.getElementById('patientBox').style.display = 'none';
+    document.getElementById('patientError').style.display = 'none';
 
     fetch('/nurse/scan', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        body: JSON.stringify({ regno: regno })
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+        body: JSON.stringify({ regno: val })
     })
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
-
-        if(data.error)
-        {
-            document.getElementById('studentBox').innerHTML =
-                "<p style='color:red'>" + data.error + "</p>";
-        }
-        else
-        {
-            document.getElementById('studentBox').innerHTML =
-                "<h4>Student Found</h4>" +
-                "<p>Name: " + data.student.firstname + "</p>" +
-                "<p>Reg No: " + data.student.regno + "</p>" +
-                "<a href='/nurse/visit/create/" + data.student.id + "'>" +
-                "<button>Create Visit</button></a>";
+        if (data.error) {
+            document.getElementById('patientError').innerText = data.error;
+            document.getElementById('patientError').style.display = 'block';
+        } else {
+            const p = data.patient;
+            document.getElementById('patientName').innerText  = p.name;
+            document.getElementById('patientId').innerText    = p.display_id;
+            document.getElementById('patientAvatar').innerText = p.name.charAt(0).toUpperCase();
+            document.getElementById('patientInfo').innerHTML  =
+                (p.department ? `<i class='fa-solid fa-building me-1'></i>${p.department}<br>` : '') +
+                (p.phone      ? `<i class='fa-solid fa-phone me-1'></i>${p.phone}`             : '');
+            const badge = document.getElementById('patientRoleBadge');
+            badge.innerText = p.role.charAt(0).toUpperCase() + p.role.slice(1);
+            badge.className = `badge-status ${p.role}`;
+            document.getElementById('createVisitBtn').href = `/nurse/visit/create/${p.id}`;
+            document.getElementById('patientBox').style.display = 'block';
         }
     });
 }
 
-function viewPrescription(name, regno, diagnosis, prescription, notes)
-{
-    document.getElementById('m_student').innerText = name;
-    document.getElementById('m_regno').innerText = regno;
-    document.getElementById('m_diag').innerText = diagnosis;
-    document.getElementById('m_pres').innerText = prescription;
+function viewPrescription(name, id, diag, pres, notes, reportUrl) {
+    document.getElementById('m_name').innerText  = name;
+    document.getElementById('m_id').innerText    = id;
+    document.getElementById('m_diag').innerText  = diag;
+    document.getElementById('m_pres').innerText  = pres;
     document.getElementById('m_notes').innerText = notes;
-
-    document.getElementById('modal').style.display = "block";
+    if (reportUrl) {
+        document.getElementById('m_report_link').href = reportUrl;
+        document.getElementById('m_report_wrap').style.display = 'block';
+    } else {
+        document.getElementById('m_report_wrap').style.display = 'none';
+    }
+    document.getElementById('modalBackdrop').style.display = 'flex';
 }
 
-function closeModal()
-{
-    document.getElementById('modal').style.display = "none";
+function closeModal() {
+    document.getElementById('modalBackdrop').style.display = 'none';
 }
-
 </script>
-
-</body>
-</html>
+@endsection
