@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visit;
-
 use App\Models\MedicalRecord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {
@@ -46,16 +46,25 @@ class DoctorController extends Controller
     $request->validate([
         'visit_id' => 'required',
         'diagnosis' => 'required',
-        'prescription' => 'required'
+        'prescription' => 'required',
+        'report' => 'nullable|file|mimes:pdf|max:5120',
     ]);
 
     $doctor = Session::get('user');
+
+    // Handle PDF upload
+        $reportPath = null;
+        if ($request->hasFile('report') && $request->file('report')->isValid()) {
+            $reportPath = $request->file('report')
+                            ->store('reports', 'public');
+        }
 
     MedicalRecord::create([
         'visit_id' => $request->visit_id,
         'diagnosis' => $request->diagnosis,
         'prescription' => $request->prescription,
-        'notes' => $request->notes
+        'notes' => $request->notes,
+        'report_path'  => $reportPath,
     ]);
 
     $visit = Visit::find($request->visit_id);
