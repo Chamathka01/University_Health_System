@@ -25,9 +25,8 @@ class RoleMiddleware
         }
 
         // Wrong role
-        if ($user['role'] != $role) {
-            return redirect('/login')
-                ->with('error', 'Unauthorized Access');
+        if (!in_array($user['role'], $roles)) {
+            return redirect('/login')->with('error', 'Access denied.');
         }
 
         return $next($request);
