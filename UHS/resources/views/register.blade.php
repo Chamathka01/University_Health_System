@@ -251,7 +251,7 @@
             <input type="text" name="regno" class="form-control"
                    placeholder="e.g. 2020ICT01"
                    value="{{ old('regno') }}">
-            <p class="hint"><i class="fa-solid fa-circle-info me-1"></i>Your university registration number</p>
+            <!--<p class="hint"><i class="fa-solid fa-circle-info me-1"></i>Your university registration number</p>-->
         </div>
 
         <!-- 3. Staff ID (shown only for staff) -->
@@ -260,14 +260,14 @@
             <input type="text" name="staff_id" class="form-control"
                    placeholder="e.g. STAFF001"
                    value="{{ old('staff_id') }}">
-            <p class="hint"><i class="fa-solid fa-circle-info me-1"></i>Your university staff ID</p>
+          <!--  <p class="hint"><i class="fa-solid fa-circle-info me-1"></i>Your university staff ID</p>-->
         </div>
 
         <!-- 4. Email -->
         <div class="mb-3">
             <label class="form-label">Email Address</label>
             <input type="email" name="email" class="form-control"
-                   placeholder="you@university.lk"
+                   placeholder="name@gmail.com"
                    value="{{ old('email') }}" required>
         </div>
 

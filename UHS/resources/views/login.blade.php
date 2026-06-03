@@ -249,7 +249,7 @@
             <div class="mb-3">
                 <label class="form-label">Email Address</label>
                 <input type="email" name="email" class="form-control"
-                       placeholder="you@university.lk"
+                       placeholder="Enter your Email"
                        value="{{ old('email') }}" required autofocus>
             </div>
 
