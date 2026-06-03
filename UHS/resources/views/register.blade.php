@@ -16,6 +16,7 @@
                 align-items:center;
                 justify-content:center;
                 padding:24px;
+
             }
 
             .reg-card{
@@ -25,6 +26,7 @@
                 width:100%;
                 max-width:500px;
                 box-shadow:0 25px 60px rgba(0,0,0,0.3);
+                border: 2px solid black;
             }
 
             .logo{
@@ -68,6 +70,7 @@
                 text-align:center;
                 cursor:pointer;
                 transition:all 0.15s;
+                border: 1px solid black;
             }
 
             .role-opt:hover{
@@ -119,6 +122,7 @@
                 font-size:14px;
                 padding:0 14px;
                 transition:border-color 0.15s,box-shadow 0.15s;
+                border: 1px solid black;
             }
 
             .form-control:focus{

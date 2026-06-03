@@ -22,6 +22,7 @@
             width:820px;
             max-width:95vw;
             border-radius:18px;
+            border: 2px solid black;
             overflow:hidden;
             box-shadow:0 25px 60px rgba(0,0,0,0.35);
         }
@@ -34,6 +35,12 @@
             justify-content:center;
             padding:48px 40px;
             color:white;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 18;
+            border-bottom-left-radius: 18;
+            overflow: hidden;
+
         }
 
         .panel-left .logo{
@@ -83,12 +90,17 @@
 
         .panel-right{
             background:white;
-            width:340px;
+            flex:1;
             flex-shrink:0;
             padding:48px 36px;
             display:flex;
             flex-direction:column;
             justify-content:center;
+            border-top-right-radius: 18px;
+            border-bottom-right-radius: 18px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            overflow: hidden;
         }
 
         .panel-right h4{
@@ -137,6 +149,7 @@
             font-size:14px;
             padding:0 12px;
             transition:border-color 0.15s,box-shadow 0.15s;
+            border: 1px solid black;
         }
 
         .form-control:focus{

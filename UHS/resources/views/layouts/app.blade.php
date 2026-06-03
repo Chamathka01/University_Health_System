@@ -219,6 +219,9 @@
             border-radius:var(--radius);
             background:white;
             box-shadow:0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid black;
+            border-radius: 18px;
+            overflow: hidden;
         }
 
         .card-header{
@@ -246,6 +249,9 @@
             display:flex;
             align-items:center;
             gap:16px;
+            border: 1px solid black;
+            border-radius: 18px;
+            overflow: hidden;
         }
 
         .stat-icon{
