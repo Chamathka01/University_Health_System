@@ -48,9 +48,9 @@ class NurseController extends Controller
         return response()->json([
             'patient' => [
                 'id'         => $patient->id,
-                'display_id' => $patient->display_id,
                 'role'       => $patient->role,
                 'email'      => $patient->email,
+                'display_id' => $patient->role == 'student' ? $patient->regno : $patient->staff_id,
             ]
         ]);
     }

@@ -11,50 +11,6 @@
 <div class="page-body">
 <div class="row g-4">
 
-    <!-- Health ID card with barcode -->
-    <div class="col-md-4">
-        <div class="card mb-4">
-            <div class="card-header"><i class="fa-solid fa-id-card" style="color:#1a6fc4;"></i> My Health ID</div>
-            <div class="card-body text-center">
-
-                <!-- Avatar -->
-                <div style="width:60px;height:60px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#1d4ed8;font-size:22px;font-weight:700;margin:0 auto 12px;">
-                    {{ strtoupper(substr($user['display_id'] ?? $user['email'], 0, 1)) }}
-                </div>
-
-                <div style="font-weight:600;font-size:15px;color:#0f172a;">
-                    {{ $user['display_id'] ?? 'N/A' }}
-                </div>
-                <div style="font-size:12px;color:#64748b;margin:3px 0 8px;">{{ $user['email'] }}</div>
-                <span class="badge-status {{ $user['role'] }}">{{ ucfirst($user['role']) }}</span>
-
-                <!-- Barcode -->
-                <div class="barcode-wrapper mt-3">
-                    <svg id="barcode"></svg>
-                    <div style="font-size:11px;color:#64748b;margin-top:6px;">
-                        Show to the nurse at the Health Center
-                    </div>
-                </div>
-
-                <!-- Visit stats -->
-                <div class="row g-2 mt-3">
-                    <div class="col-6">
-                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;">
-                            <div style="font-size:22px;font-weight:700;color:#0f172a;">{{ $visits->count() }}</div>
-                            <div style="font-size:11.5px;color:#64748b;">Total Visits</div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px;">
-                            <div style="font-size:22px;font-weight:700;color:#22c55e;">{{ $visits->where('status','completed')->count() }}</div>
-                            <div style="font-size:11.5px;color:#64748b;">Completed</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Visit records -->
     <div class="col-md-8">
         <div class="card">
