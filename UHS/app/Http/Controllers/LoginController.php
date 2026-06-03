@@ -12,11 +12,11 @@ class LoginController extends Controller
         public function login(Request $request)
         {
             $request->validate([
-            'username' => 'required',
+            'email'    => 'required|email',
             'password' => 'required'
         ]);
 
-        $user = Register::where('username', $request->username)->first();
+        $user = Register::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
 
@@ -31,15 +31,17 @@ class LoginController extends Controller
             }
 
             if ($user->role == 'student') {
-                return redirect('/student/dashboard');
+                return redirect('/patient/dashboard');
             }
 
             if ($user->role == 'staff') {
-                return redirect('/student/dashboard');
+                return redirect('/patient/dashboard');
             }
 
-            return back()->with('error', 'Invalid username or password.');
+            return back()->with('error', 'Unknown role.');
         }
+        return back()->with('error', 'Invalid email or password.')
+                     ->withInput(['email' => $request->email]);
     }
 
     public function logout()
