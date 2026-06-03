@@ -5,7 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Models\Register;
 

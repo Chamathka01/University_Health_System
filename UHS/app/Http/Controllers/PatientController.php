@@ -17,6 +17,6 @@ class PatientController extends Controller
                     ->orderBy('visit_date', 'desc')
                     ->get();
 
-        return view('patient.dashboard', compact('visits'));
+        return view('patient.dashboard', compact('visits','user'));
     }
 }
