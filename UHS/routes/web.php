@@ -53,7 +53,7 @@ Route::middleware('role:nurse')->group(function () {
 
 Route::middleware('role:student,staff')->group(function () {
 
-    Route::get('/student/dashboard', [StudentController::class, 'dashboard']);
+    Route::get('/student/dashboard', [PatientController::class, 'dashboard']);
 });
 
 // Forgot Password

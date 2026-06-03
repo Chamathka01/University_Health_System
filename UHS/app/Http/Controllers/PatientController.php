@@ -6,17 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Models\Visit;
 
-class StudentController extends Controller
+class PatientController extends Controller
 {
     public function dashboard()
     {
         $user = Session::get('user');
 
         $visits = Visit::with('medicalRecord')
-                    ->where('student_id', $user['id'])
+                    ->where('patient_id', $user['id'])
                     ->orderBy('visit_date', 'desc')
                     ->get();
 
-        return view('student.dashboard', compact('visits'));
+        return view('patient.dashboard', compact('visits'));
     }
 }

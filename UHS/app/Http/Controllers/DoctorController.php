@@ -12,7 +12,7 @@ class DoctorController extends Controller
 {
     public function dashboard()
     {
-        $visits = Visit::with('student')
+        $visits = Visit::with('patient')
                     ->where('status', ['waiting', 'in-progress'])
                     ->orderBy('visit_date')
                     ->get();
@@ -22,7 +22,7 @@ class DoctorController extends Controller
 
     public function consult($visit_id)
 {
-    $visit = Visit::with('student')->findOrFail($visit_id);
+    $visit = Visit::with('patient')->findOrFail($visit_id);
 
     if ($visit->status == 'waiting') {
 
@@ -32,7 +32,7 @@ class DoctorController extends Controller
     }
 
     $history = Visit::with('medicalRecord')
-                ->where('student_id', $visit->student_id)
+                ->where('patient_id', $visit->patient_id)
                 ->where('id', '!=', $visit->id)
                 ->whereNotNull('doctor_id')
                 ->orderBy('visit_date', 'desc')

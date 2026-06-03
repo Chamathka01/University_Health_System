@@ -12,7 +12,7 @@ class NurseController extends Controller
     // Dashboard
     public function dashboard()
     {
-        $pending = Visit::with(['student', 'medicalRecord'])
+        $pending = Visit::with(['patient', 'medicalRecord'])
             ->where('status', 'prescription-ready')
             ->orderBy('visit_date', 'desc')
             ->get();
@@ -22,19 +22,19 @@ class NurseController extends Controller
 
     // Scan students and staff
 
-    public function scanStudent(Request $request)
+    public function scanPatient(Request $request)
     {
         $request->validate([
             'regno' => 'required'
         ]);
 
-        $searchValue = $request->regno;
+        $value = $request->regno;
 
         // Search by regno (students) OR staff_id (staff)
 
-        $patient = Register::where(function ($query) use ($searchValue) {
-            $query->where('regno', $searchValue)
-                  ->orWhere('staff_id', $searchValue);
+        $patient = Register::where(function ($q) use ($value) {
+            $q->where('regno', $value)
+                  ->orWhere('staff_id', $value);
             })
             ->whereIn('role', ['student','staff'])
             ->first();
@@ -48,13 +48,9 @@ class NurseController extends Controller
         return response()->json([
             'patient' => [
                 'id'         => $patient->id,
-                'name'       => $patient->full_name,
                 'display_id' => $patient->display_id,
                 'role'       => $patient->role,
                 'email'      => $patient->email,
-                'phone'      => $patient->phone,
-                'faculty'    => $patient->faculty,
-                'department' => $patient->staff_department ?? $patient->department,
             ]
         ]);
     }
@@ -66,7 +62,7 @@ class NurseController extends Controller
         $nurse = Session::get('user');
 
         Visit::create([
-            'student_id' => $patient_id,
+            'patient_id' => $patient_id,
             'nurse_id' => $nurse['id'],
             'doctor_id' => null,
             'visit_date' => now(),
