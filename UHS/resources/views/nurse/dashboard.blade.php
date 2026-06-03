@@ -113,13 +113,13 @@
                         <tr>
                             <td>
                                 <div style="font-weight:500;font-size:13.5px;">
-                                    {{ $visit->student->firstname }} {{ $visit->student->lastname }}
+                                    {{ $visit->patient->email ?? 'No Email Provided' }}
                                 </div>
-                                <div style="font-size:12px;color:#64748b;">{{ ucfirst($visit->student->role) }}</div>
+                                <div style="font-size:12px;color:#64748b;">{{ ucfirst($visit->patient->role ?? 'N/A') }}</div>
                             </td>
                             <td>
                                 <code style="font-size:12px;background:#f1f5f9;padding:2px 7px;border-radius:5px;">
-                                    {{ $visit->student->display_id }}
+                                    {{ $visit->patient->regno ?? $visit->patient->staff_id ?? 'No ID' }}
                                 </code>
                             </td>
                             <td>
@@ -130,8 +130,8 @@
                             <td>
                                 <button class="btn btn-outline-primary btn-sm me-1"
                                     onclick="viewPrescription(
-                                        '{{ $visit->student->firstname }} {{ $visit->student->lastname }}',
-                                        '{{ $visit->student->display_id }}',
+                                        '{{ $visit->patient->firstname }} {{ $visit->patient->lastname }}',
+                                        '{{ $visit->patient->display_id }}',
                                         `{{ addslashes($visit->medicalRecord->diagnosis ?? '-') }}`,
                                         `{{ addslashes($visit->medicalRecord->prescription ?? '-') }}`,
                                         `{{ addslashes($visit->medicalRecord->notes ?? '-') }}`,

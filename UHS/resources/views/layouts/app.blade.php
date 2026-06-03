@@ -370,6 +370,7 @@
         .form-select{
             border:1px solid var(--gray-200);
             border-radius:8px;
+            border: 0.5px solid black;
             padding:9px 12px;
             font-size:14px;
             transition:border-color 0.15s,box-shadow 0.15s;
