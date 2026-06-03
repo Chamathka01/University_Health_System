@@ -13,34 +13,24 @@ class Register extends Model
     protected $table = 'registers';
 
     protected $fillable = [
-        'firstname',
-        'lastname',
-        'dob',
-        'phone',
-        'email',
-        'username',
         'role',
+        'email',
         'password',
-        // Student fields
-        'faculty',
-        'department',
-        'degree',
         'regno',
-        // Staff fields
         'staff_id',
-        'staff_department',
     ];
+
+    protected $hidden = ['password'];
+
+    public function isPatient(): bool
+    {
+        return in_array($this->role, ['student', 'staff']);
+    }
 
     // Returns the display ID (regno for students, staff_id for staff)
     public function getDisplayIdAttribute(): string
     {
         return $this->regno ?? $this->staff_id ?? 'N/A';
-    }
-
-    // Returns full name
-    public function getFullNameAttribute(): string
-    {
-        return $this->firstname . ' ' . $this->lastname;
     }
 
     // Returns the value to encode in barcode
@@ -49,9 +39,15 @@ class Register extends Model
         return $this->regno ?? $this->staff_id ?? (string) $this->id;
     }
 
-    public function studentvisits()
+    // Display name: use the ID since we no longer collect name
+    public function getDisplayNameAttribute(): string
     {
-    return $this->hasMany(Visit::class, 'student_id');
+        return $this->display_id;
+    }
+
+    public function patientvisits()
+    {
+    return $this->hasMany(Visit::class, 'patient_id');
     }
 
     public function nurseVisits()

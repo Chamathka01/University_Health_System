@@ -9,7 +9,7 @@ use App\Models\Register;
 class Visit extends Model
 {
     protected $fillable = [
-        'student_id',
+        'patient_id',
         'nurse_id',
         'doctor_id',
         'visit_date',
@@ -21,9 +21,9 @@ class Visit extends Model
         return $this->hasOne(MedicalRecord::class);
     }
 
-    public function student()
+    public function patient()
     {
-        return $this->belongsTo(Register::class, 'student_id');
+        return $this->belongsTo(Register::class, 'patient_id');
     }
 
     public function nurse()
