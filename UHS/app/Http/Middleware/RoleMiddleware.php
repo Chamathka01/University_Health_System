@@ -14,7 +14,7 @@ class RoleMiddleware
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
 
         $user = Session::get('user');
@@ -26,7 +26,7 @@ class RoleMiddleware
 
         // Wrong role
 
-        if ($user['role'] !== $role){
+        if (!in_array($user['role'], $roles)) {
             return redirect('/login')->with('error', 'Access denied.');
         }
 
