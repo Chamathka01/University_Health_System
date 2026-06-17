@@ -50,7 +50,7 @@
                     <label class="form-label">Student Reg No or Staff ID</label>
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control"
-                               placeholder="e.g. 2020ICT01 or STAFF001"
+                               placeholder="e.g. 2020/ICT/01 or STAFF/001"
                                onkeydown="if(event.key==='Enter') searchPatient()">
                         <button class="btn btn-primary" onclick="searchPatient()">
                             <i class="fa-solid fa-search"></i>

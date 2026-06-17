@@ -215,7 +215,7 @@
 
     <div class="logo"><i class="fa-solid fa-hospital-user"></i></div>
     <h4>Create account</h4>
-    <p class="subtitle">Quick registration — just a few fields</p>
+    <p class="subtitle">Quick registration </p>
 
     @if($errors->any())
         <div class="alert alert-danger mb-3">
@@ -253,7 +253,7 @@
         <div class="id-field mb-3 {{ old('role') == 'student' ? 'visible' : '' }}" id="regnoField">
             <label class="form-label">Registration Number</label>
             <input type="text" name="regno" class="form-control"
-                   placeholder="e.g. 2020ICT01"
+                   placeholder="e.g. 2020/ICT/01"
                    value="{{ old('regno') }}">
             <!--<p class="hint"><i class="fa-solid fa-circle-info me-1"></i>Your university registration number</p>-->
         </div>
@@ -262,7 +262,7 @@
         <div class="id-field mb-3 {{ old('role') == 'staff' ? 'visible' : '' }}" id="staffField">
             <label class="form-label">Staff ID</label>
             <input type="text" name="staff_id" class="form-control"
-                   placeholder="e.g. STAFF001"
+                   placeholder="e.g. STAFF/001"
                    value="{{ old('staff_id') }}">
           <!--  <p class="hint"><i class="fa-solid fa-circle-info me-1"></i>Your university staff ID</p>-->
         </div>

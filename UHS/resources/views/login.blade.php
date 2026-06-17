@@ -232,7 +232,7 @@
     <div class="panel-left">
         <div class="logo"><i class="fa-solid fa-hospital-user"></i></div>
         <h2>University Health System</h2>
-        <p>Manage patient visits, consultations, and prescriptions — all in one place.</p>
+        <p>Manage patient visits, consultations, and prescriptions </p>
         <ul class="features">
             <li><i class="fa-solid fa-circle-check"></i> Student & Staff patient records</li>
             <li><i class="fa-solid fa-circle-check"></i> Doctor consultations & PDF reports</li>
