@@ -186,7 +186,19 @@
 @section('scripts')
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script>
-let scanner = new Html5Qrcode("reader");
+// FIX: Force library to compile with support for both QR codes and 1D Barcodes
+let scanner = new Html5Qrcode("reader", {
+    formatsToSupport: [
+        Html5QrcodeSupportedFormats.QR_CODE,
+        Html5QrcodeSupportedFormats.CODE_128,
+        Html5QrcodeSupportedFormats.CODE_39,
+        Html5QrcodeSupportedFormats.EAN_13,
+        Html5QrcodeSupportedFormats.EAN_8,
+        Html5QrcodeSupportedFormats.UPC_A,
+        Html5QrcodeSupportedFormats.UPC_E,
+        Html5QrcodeSupportedFormats.ITF
+    ]
+});
 let scannerActive = false;
 
 function startScanner() {
@@ -194,16 +206,22 @@ function startScanner() {
         if (devices.length) {
             scanner.start(
                 devices[0].id,
-                { fps: 10, qrbox: 220 },
+                {
+                    fps: 15, qrbox: { width: 250, height: 150 }
+                },
                 (text) => {
                     document.getElementById('searchInput').value = text;
                     scanner.stop().then(() => { scannerActive = false; document.getElementById('stopBtn').style.display='none'; });
                     searchPatient();
                 }
-            );
+                ).catch(err => {
+                console.error("Scanner failed to start: ", err);
+            });
             scannerActive = true;
             document.getElementById('stopBtn').style.display = 'inline-block';
         }
+    }).catch(err => {
+        console.error("No camera devices found: ", err);
     });
 }
 
