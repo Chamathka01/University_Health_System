@@ -58,7 +58,7 @@
                         <div style="font-size:12px;color:#475569;">{{ Str::limit($h->medicalRecord->prescription, 80) }}</div>
                         @if($h->medicalRecord->report_path)
                             <a href="{{ asset('storage/'.$h->medicalRecord->report_path) }}" target="_blank" style="font-size:11.5px;color:#1a6fc4;">
-                                <i class="fa-solid fa-file-pdf"></i> Blood report
+                                <i class="fa-solid fa-file-pdf"></i> Report
                             </a>
                         @endif
                     @endif
@@ -102,7 +102,7 @@
                     <div class="mb-4" style="background:#fafafa;border:1px dashed #cbd5e1;border-radius:10px;padding:16px;">
                         <label class="form-label">
                             <i class="fa-solid fa-file-pdf me-1" style="color:#ef4444;"></i>
-                            Upload Blood / Lab Report (PDF, max 5 MB) — optional
+                            Upload Blood / Lab Report (PDF, max 5 MB)
                         </label>
                         <input type="file" name="report" class="form-control" accept=".pdf">
                         <div style="font-size:12px;color:#64748b;margin-top:6px;">
