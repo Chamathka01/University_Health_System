@@ -44,8 +44,8 @@
         }
 
         .panel-left .logo{
-            width:54px;
-            height:54px;
+            width:60px;
+            height:60px;
             background:#1a6fc4;
             border-radius:14px;
             display:flex;
@@ -56,14 +56,14 @@
         }
 
         .panel-left h2{
-            font-size:22px;
+            font-size:30px;
             font-weight:700;
             margin-bottom:10px;
         }
 
         .panel-left p{
             color:#b8cde6;
-            font-size:13.5px;
+            font-size:13px;
             line-height:1.7;
             margin:0;
         }
@@ -104,20 +104,20 @@
         }
 
         .panel-right h4{
-            font-size:20px;
+            font-size:25px;
             font-weight:700;
             color:#0f172a;
             margin-bottom:4px;
         }
 
         .subtitle{
-            font-size:13px;
+            font-size:14px;
             color:#64748b;
             margin-bottom:28px;
         }
 
         .form-label{
-            font-size:12.5px;
+            font-size:15px;
             font-weight:500;
             color:#374151;
             margin-bottom:5px;
@@ -164,7 +164,7 @@
             border-radius:8px;
             height:44px;
             font-weight:600;
-            font-size:14px;
+            font-size:15px;
             width:100%;
             margin-top:6px;
             transition:background 0.15s;
@@ -176,7 +176,7 @@
         }
 
         .forgot-link{
-            font-size:12.5px;
+            font-size:13px;
             color:#1a6fc4;
             text-decoration:none;
         }

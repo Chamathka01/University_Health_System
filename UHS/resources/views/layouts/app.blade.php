@@ -31,6 +31,7 @@
 
         body{
             font-family:'Inter',sans-serif;
+            font-size: 15.5px;
             background:var(--gray-100);
             color:#1e293b;
             display:flex;
@@ -39,7 +40,7 @@
 
         /* SIDEBAR */
         .sidebar{
-            width:240px;
+            width:300px;
             background:var(--sidebar-bg);
             display:flex;
             flex-direction:column;
@@ -65,13 +66,13 @@
             align-items:center;
             justify-content:center;
             color:white;
-            font-size:18px;
+            font-size:20px;
             margin-bottom:10px;
         }
 
         .sidebar-brand h6{
             color:white;
-            font-size:13px;
+            font-size:20px;
             font-weight:600;
             line-height:1.3;
             margin:0;
@@ -79,7 +80,7 @@
 
         .sidebar-brand p{
             color:var(--sidebar-text);
-            font-size:11px;
+            font-size:12px;
             margin:2px 0 0;
         }
 
@@ -90,7 +91,7 @@
 
         .nav-label{
             color:rgba(184,205,230,0.5);
-            font-size:10px;
+            font-size:12px;
             font-weight:600;
             letter-spacing:0.1em;
             text-transform:uppercase;
@@ -102,11 +103,11 @@
             display:flex;
             align-items:center;
             gap:10px;
-            padding:9px 12px;
+            padding:11px 14px;
             border-radius:8px;
             color:var(--sidebar-text);
             text-decoration:none;
-            font-size:13.5px;
+            font-size:15px;
             margin-bottom:2px;
             transition:all 0.15s;
         }
@@ -125,7 +126,7 @@
         .sidebar-nav a i{
             width:18px;
             text-align:center;
-            font-size:14px;
+            font-size:16px;
         }
 
         .sidebar-user{
@@ -145,7 +146,7 @@
             align-items:center;
             justify-content:center;
             color:white;
-            font-size:13px;
+            font-size:14px;
             font-weight:600;
             flex-shrink:0;
         }
@@ -157,7 +158,7 @@
 
         .user-info .uid{
             color:white;
-            font-size:12px;
+            font-size:13.5px;
             font-weight:500;
             white-space:nowrap;
             overflow:hidden;
@@ -166,13 +167,13 @@
 
         .user-info .role{
             color:var(--sidebar-text);
-            font-size:11px;
+            font-size:14px;
             text-transform:capitalize;
         }
 
         .sidebar-user a.logout{
             color:var(--sidebar-text);
-            font-size:14px;
+            font-size:20px;
             text-decoration:none;
         }
 
@@ -182,7 +183,7 @@
 
         /* MAIN */
         .main-content{
-            margin-left:240px;
+            margin-left:300px;
             flex:1;
             min-height:100vh;
         }
@@ -197,14 +198,14 @@
         }
 
         .page-header h4{
-            font-size:17px;
+            font-size:25px;
             font-weight:600;
             color:#0f172a;
             margin:0;
         }
 
         .page-header .breadcrumb-text{
-            font-size:12px;
+            font-size:13px;
             color:var(--gray-600);
             margin:2px 0 0;
         }
@@ -227,8 +228,8 @@
         .card-header{
             background:white;
             border-bottom:1px solid var(--gray-200);
-            padding:14px 20px;
-            font-size:14px;
+            padding:16px 20px;
+            font-size:15.5px;
             font-weight:600;
             border-radius:var(--radius) var(--radius) 0 0 !important;
             display:flex;
@@ -237,7 +238,7 @@
         }
 
         .card-body{
-            padding:20px;
+            padding:22px 20px;
         }
 
         /* STAT CARDS */
@@ -255,13 +256,13 @@
         }
 
         .stat-icon{
-            width:46px;
-            height:46px;
+            width:52px;
+            height:52px;
             border-radius:10px;
             display:flex;
             align-items:center;
             justify-content:center;
-            font-size:20px;
+            font-size:22px;
             flex-shrink:0;
         }
 
@@ -286,36 +287,36 @@
         }
 
         .stat-value{
-            font-size:24px;
+            font-size:28px;
             font-weight:700;
             color:#0f172a;
             line-height:1;
         }
 
         .stat-label{
-            font-size:12px;
+            font-size:13.5px;
             color:var(--gray-600);
             margin-top:3px;
         }
 
         /* TABLE */
         .table{
-            font-size:13.5px;
+            font-size:15px;
         }
 
         .table thead th{
             background:var(--gray-50);
             font-weight:600;
-            font-size:12px;
+            font-size:13px;
             text-transform:uppercase;
             letter-spacing:0.04em;
             color:var(--gray-600);
             border-bottom:1px solid var(--gray-200);
-            padding:10px 14px;
+            padding:12px 14px;
         }
 
         .table tbody td{
-            padding:12px 14px;
+            padding:14px 14px;
             vertical-align:middle;
             border-color:var(--gray-200);
         }
@@ -329,9 +330,9 @@
             display:inline-flex;
             align-items:center;
             gap:5px;
-            padding:4px 10px;
+            padding:6px 14px;
             border-radius:20px;
-            font-size:11.5px;
+            font-size:13px;
             font-weight:500;
         }
 
@@ -371,8 +372,8 @@
             border:1px solid var(--gray-200);
             border-radius:8px;
             border: 0.5px solid black;
-            padding:9px 12px;
-            font-size:14px;
+            padding:11px 14px;
+            font-size:15px;
             transition:border-color 0.15s,box-shadow 0.15s;
         }
 
@@ -384,7 +385,7 @@
         }
 
         .form-label{
-            font-size:13px;
+            font-size:14px;
             font-weight:500;
             color:#374151;
             margin-bottom:5px;
@@ -396,7 +397,8 @@
             border-color:var(--primary);
             font-weight:500;
             border-radius:8px;
-            font-size:14px;
+            font-size:15px;
+            padding:8px 16px;
         }
 
         .btn-primary:hover{
@@ -408,7 +410,8 @@
             color:var(--primary);
             border-color:var(--primary);
             border-radius:8px;
-            font-size:13.5px;
+            font-size:14.5px;
+            padding:7px 14px;
             font-weight:500;
         }
 
@@ -421,19 +424,21 @@
             background:#1b9c65;
             border-color:#1b9c65;
             border-radius:8px;
-            font-size:13.5px;
+            font-size:14.5px;
+            padding:7px 14px;
         }
 
         .btn-sm{
-            padding:5px 12px;
-            font-size:12.5px;
+            padding:6px 14px;
+            font-size:13.5px;
         }
 
         /* ALERTS */
         .alert{
             border-radius:8px;
-            font-size:13.5px;
+            font-size:14.5px;
             border:none;
+            padding:14px 18px;
         }
 
         .alert-success{

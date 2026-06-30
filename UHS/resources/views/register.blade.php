@@ -30,8 +30,8 @@
             }
 
             .logo{
-                width:46px;
-                height:46px;
+                width:60px;
+                height:60px;
                 background:#1a6fc4;
                 border-radius:12px;
                 display:flex;
@@ -43,14 +43,14 @@
             }
 
             h4{
-                font-size:20px;
+                font-size:25px;
                 font-weight:700;
                 color:#0f172a;
                 margin-bottom:4px;
             }
 
             .subtitle{
-                font-size:13px;
+                font-size:15px;
                 color:#64748b;
                 margin-bottom:28px;
             }
@@ -61,6 +61,7 @@
                 grid-template-columns:repeat(4,1fr);
                 gap:8px;
                 margin-bottom:20px;
+
             }
 
             .role-opt{
@@ -89,7 +90,7 @@
 
             .role-opt i{
                 display:block;
-                font-size:22px;
+                font-size:25px;
                 margin-bottom:6px;
                 color:#64748b;
             }
@@ -99,7 +100,7 @@
             }
 
             .role-opt span{
-                font-size:12px;
+                font-size:14px;
                 font-weight:500;
                 color:#374151;
             }
@@ -109,7 +110,7 @@
             }
 
             .form-label{
-                font-size:12.5px;
+                font-size:15px;
                 font-weight:500;
                 color:#374151;
                 margin-bottom:4px;
@@ -162,7 +163,7 @@
                 border-radius:9px;
                 height:44px;
                 font-weight:600;
-                font-size:14px;
+                font-size:15px;
                 width:100%;
                 margin-top:14px;
                 transition:background 0.15s;
@@ -173,7 +174,7 @@
             }
 
             .login-link{
-                font-size:13px;
+                font-size:14px;
                 color:#64748b;
                 margin-top:16px;
                 text-align:center;
