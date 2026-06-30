@@ -3,8 +3,8 @@
 @section('content')
 <div class="page-header">
     <div>
-        <h4><i class="fa-solid fa-notes-medical me-2 text-primary"></i>My Health Records</h4>
-        <div class="breadcrumb-text">Your visit history and prescriptions</div>
+        <h4><i class="fa-solid fa-notes-medical me-2 text-primary"></i>My Visits</h4>
+        <div class="breadcrumb-text">Your recent health center visit history</div>
     </div>
 </div>
 
@@ -25,25 +25,13 @@
             @else
             <div class="table-responsive">
             <table class="table mb-0">
-                <thead><tr><th>Date</th><th>Diagnosis</th><th>Prescription</th><th>Report</th><th>Status</th></tr></thead>
+                <thead><tr><th>Date & Time</th><th>Status</th></tr></thead>
                 <tbody>
                 @foreach($visits as $visit)
                 <tr>
                     <td style="white-space:nowrap;font-size:13px;color:#475569;">
                         {{ \Carbon\Carbon::parse($visit->visit_date)->format('d M Y') }}
                         <div style="font-size:11px;color:#94a3b8;">{{ \Carbon\Carbon::parse($visit->visit_date)->format('h:i A') }}</div>
-                    </td>
-                    <td style="font-size:13px;max-width:160px;">{{ $visit->medicalRecord->diagnosis ?? '—' }}</td>
-                    <td style="font-size:13px;max-width:160px;">{{ $visit->medicalRecord->prescription ?? '—' }}</td>
-                    <td>
-                        @if($visit->medicalRecord && $visit->medicalRecord->report_path)
-                            <a href="{{ asset('storage/'.$visit->medicalRecord->report_path) }}"
-                               target="_blank" class="btn btn-outline-primary btn-sm" title="Download PDF">
-                                <i class="fa-solid fa-file-pdf"></i>
-                            </a>
-                        @else
-                            <span style="color:#cbd5e1;">—</span>
-                        @endif
                     </td>
                     <td>
                         <span class="badge-status {{ $visit->status }}">
@@ -80,3 +68,5 @@
     });
 </script>
 @endsection
+
+                        
