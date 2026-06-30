@@ -122,7 +122,7 @@
                             </td>
                             <td>
                                 <span class="badge-status prescription-ready">
-                                    <i class="fa-solid fa-circle-dot fa-xs"></i> Ready
+                                    <i class="fa-solid fa-circle-dot fa-xs"></i> Prescription Ready
                                 </span>
                             </td>
                             <td>
@@ -170,7 +170,7 @@
                                         <th>Patient ID</th>
                                         <th>Email Address</th>
                                         <th>Type</th>
-                                        <th>Queue Status</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -181,10 +181,24 @@
                                             <td style="font-size:13px;">{{ $v->patient->email ?? '—' }}</td>
                                             <td><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
                                             <td>
-                                                <span class="badge-status {{ $v->status }}">
-                                                    {{ ucfirst(str_replace('-', ' ', $v->status)) }}
-                                                </span>
-                                            </td>
+    @if($v->status == 'waiting')
+        <span class="badge bg-secondary-subtle text-secondary px-2 py-1" style="border-radius: 6px; font-size: 12px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;">
+            <i class="fa-solid fa-clock me-1 text-muted"></i> Waiting in Queue
+        </span>
+    @elseif($v->status == 'in-progress')
+        <span class="badge bg-warning-subtle text-warning px-2 py-1" style="border-radius: 6px; font-size: 12px; background: #fffbeb; color: #b45309; border: 1px solid #fde68a;">
+            <i class="fa-solid fa-spinner fa-spin me-1 text-warning"></i> In Progress
+        </span>
+    @elseif($v->status == 'prescription-ready' || $v->status == 'ready')
+        <span class="badge bg-info-subtle text-info px-2 py-1" style="border-radius: 6px; font-size: 12px; background: #ecfeff; color: #0e7490; border: 1px solid #a5f3fc;">
+            <i class="fa-solid fa-notes-medical me-1 text-info"></i> Prescription Ready
+        </span>
+    @else
+        <span class="badge bg-success-subtle text-success px-2 py-1" style="border-radius: 6px; font-size: 12px; background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0;">
+            <i class="fa-solid fa-circle-check me-1 text-success"></i> Completed
+        </span>
+    @endif
+</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -218,7 +232,7 @@
 
         <div id="m_report_wrap" class="mt-3" style="display:none;">
             <a id="m_report_link" href="#" target="_blank" class="btn btn-outline-primary btn-sm w-100">
-                <i class="fa-solid fa-file-pdf me-1"></i> Download Blood Report PDF
+                <i class="fa-solid fa-file-pdf me-1"></i> Download Report PDF
             </a>
         </div>
     </div>
