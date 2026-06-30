@@ -46,12 +46,14 @@ class ForgotPasswordController extends Controller
             'password' => 'required|min:8|confirmed'
         ]);
 
-        $user = Register::where('email', $request->email)
-            ->where('reset_code', $request->code)
-            ->first();
+        $user = Register::where('email', $request->email)->first();
 
         if (!$user) {
-            return back()->with('error', 'Invalid code or email');
+            return back()->with('error', 'Email not found');
+        }
+
+        if ($user->reset_code !== $request->code) {
+            return back()->with('error', 'The OTP code you entered is incorrect.');
         }
 
         // Check expiry
