@@ -22,17 +22,21 @@
         }
 
         /* Sliding Background Images with Dark Transparent Overlay for Text Contrast */
+
         .slide-1 {
-            background: linear-gradient(rgba(15, 45, 82, 0.75), rgba(15, 45, 82, 0.75)),
-                        url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=1400') center/cover no-repeat;
+            background: linear-gradient(to right, rgba(10, 37, 64, 0.85) 30%, rgba(26, 111, 196, 0.4)),
+                        url('https://images.unsplash.com/photo-1758691463198-dc663b8a64e4?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
         }
+
         .slide-2 {
-            background: linear-gradient(rgba(15, 45, 82, 0.75), rgba(15, 45, 82, 0.75)),
+            background: linear-gradient(to right, rgba(10, 37, 64, 0.85) 20%, rgba(114, 170, 225, 0.4)),
                         url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1400') center/cover no-repeat;
         }
+
+
         .slide-3 {
-            background: linear-gradient(rgba(15, 45, 82, 0.75), rgba(15, 45, 82, 0.75)),
-                        url('https://images.unsplash.com/photo-1584515901387-a7a1a2f333de?auto=format&fit=crop&q=80&w=1400') center/cover no-repeat;
+            background: linear-gradient(to right, rgba(10, 37, 64, 0.85) 30%, rgba(26, 111, 196, 0.4)),
+                        url('https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
         }
 
         /* FIX: Shifted from 20% to 26% to close the large empty gap below the buttons */
@@ -58,10 +62,10 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 16px -6px rgba(0, 0, 0, 0.03);
             transition: transform 0.25s, box-shadow 0.25s;
         }
-        .premium-card:hover {
+        /*.premium-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.1);
-        }
+        }*/
         .icon-box {
             width: 50px;
             height: 50px;
@@ -151,9 +155,9 @@
                 <div class="container h-100 position-relative">
                     <div class="carousel-caption d-none d-md-block">
                         <span class="badge mb-3 px-3 py-2 text-uppercase fw-bold" style="background: rgba(255,255,255,0.2); color: #e8f1fb; font-size: 12px; letter-spacing: 0.05em;">
-                            Official Campus Medical Network
+                            Official University Medical Network
                         </span>
-                        <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Your Health. Our Priority. Seamless Digital Care.</h1>
+                        <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Your Health. Our Priority..</h1>
                         <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Welcome to the centralized medical portal for students, faculty, and clinical operators. Access treatment histories and manage triage profiles efficiently.</p>
                     </div>
                 </div>
@@ -217,6 +221,12 @@
                     <p class="text-muted small mb-0">Batch level control, low-quantity safety alerts, and automatic near-expiry notifications.</p>
                 </div>
             </div>
+        </div>
+        <div class="mt-5 pt-2 text-center">
+            <h4 class="fw-bold tracking-tight m-0" style="color: #0f172a; font-size: 22px;">
+                Our Integrated Clinical Solutions
+            </h4>
+            <p class="text-muted small mt-2">A unified digital care delivery framework engineered for campus safety and medical operational workflows.</p>
         </div>
     </section>
 
