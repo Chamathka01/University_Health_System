@@ -55,6 +55,12 @@
             z-index: 10;
         }
 
+        .navbar .container {
+            max-width: 100% !important;
+            padding-left: 4%;
+            padding-right: 4%;
+        }
+
         .premium-card {
             background: white;
             border: 1px solid rgba(226, 232, 240, 0.8);
@@ -158,8 +164,9 @@
                             Official University Medical Network
                         </span>
                         <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Your Health. Our Priority..</h1>
-                        <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Welcome to the centralized medical portal for students, faculty, and clinical operators. Access treatment histories and manage triage profiles efficiently.</p>
+                        <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Welcome to the centralized medical portal for University. Access and manage your health profiles</p>
                     </div>
+
                 </div>
             </div>
 
@@ -204,7 +211,7 @@
                 <div class="card premium-card p-4 h-100">
                     <div class="icon-box"><i class="fa-solid fa-qrcode"></i></div>
                     <h5 class="fw-bold" style="font-size: 16.5px; color: #0f172a;">Digital Check-in</h5>
-                    <p class="text-muted small mb-0">Instant triage workflow scanning via student ID codes or system-generated barcodes.</p>
+                    <p class="text-muted small mb-0">Instant triage workflow scanning via patient ID or barcodes.</p>
                 </div>
             </div>
             <div class="col-md-4">
@@ -226,7 +233,7 @@
             <h4 class="fw-bold tracking-tight m-0" style="color: #0f172a; font-size: 22px;">
                 Our Integrated Clinical Solutions
             </h4>
-            <p class="text-muted small mt-2">A unified digital care delivery framework engineered for campus safety and medical operational workflows.</p>
+            <p class="text-muted small mt-2">A unified digital care delivery framework engineered for university safety and medical operational workflows.</p>
         </div>
     </section>
 
