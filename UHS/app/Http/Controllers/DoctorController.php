@@ -14,10 +14,16 @@ class DoctorController extends Controller
     {
         $visits = Visit::with('patient')
                     ->where('status', ['waiting', 'in-progress'])
+                    ->whereMonth('visit_date', now()->month)
+                    ->whereYear('visit_date', now()->year)
                     ->orderBy('visit_date')
                     ->get();
 
-        return view('doctor.dashboard', compact('visits'));
+        $totalPatientsCount = Visit::whereMonth('visit_date', now()->month)
+                                    ->whereYear('visit_date', now()->year)
+                                    ->count();
+
+        return view('doctor.dashboard', compact('visits', 'totalPatientsCount'));
     }
 
     public function consult($visit_id)

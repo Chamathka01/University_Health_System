@@ -4,9 +4,13 @@
 <div class="page-header">
     <div>
         <h4><i class="fa-solid fa-user-doctor me-2 text-primary"></i>Doctor Dashboard</h4>
-        <div class="breadcrumb-text">Patients waiting for consultation</div>
+        <div class="breadcrumb-text">Patients waiting for consultation this month</div>
     </div>
     <div class="d-flex gap-2">
+        <div class="stat-card" style="padding:10px 16px; background:#f0fdf4; border: 1px solid #bbf7d0;">
+            <div class="stat-icon green" style="width:34px;height:34px;font-size:15px; background:#dcfce7; color:#16a34a; display:flex; align-items:center; justify-content:center; border-radius:50%;"><i class="fa-solid fa-users"></i></div>
+            <div><div class="stat-value" style="font-size:18px; color:#16a34a;">{{ $totalPatientsCount }}</div><div class="stat-label" style="font-size:11px; color:#475569;">Monthly Patients</div></div>
+        </div>
         <div class="stat-card" style="padding:10px 16px;">
             <div class="stat-icon blue" style="width:34px;height:34px;font-size:15px;"><i class="fa-solid fa-clock"></i></div>
             <div><div class="stat-value" style="font-size:18px;">{{ $visits->where('status','waiting')->count() }}</div><div class="stat-label">Waiting</div></div>
