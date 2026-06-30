@@ -9,7 +9,7 @@
     </div>
     <div class="d-flex align-items-center gap-2">
         <span class="badge fw-semibold px-3 py-2" style="border-radius:8px; font-size:12px; background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0;">
-            <i class="fa-solid fa-users me-1"></i> Today's Patients: {{ $totalPatientsCount }}
+            <i class="fa-solid fa-users me-1"></i> Today's Patients: {{ $todaysVisits->count() }}
         </span>
         <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2" style="border-radius:8px; font-size:12px; background:#dbeafe !important; color:#1d4ed8 !important;">
             <i class="fa-solid fa-circle-dot me-1" style="color:#22c55e;"></i> On Duty
@@ -25,10 +25,8 @@
 
     <div class="row g-4">
 
-        <!-- LEFT: Patient Scanner -->
         <div class="col-md-5">
 
-            <!-- Camera Scan -->
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fa-solid fa-camera" style="color:#1a6fc4;"></i> Camera Scanner
@@ -44,7 +42,6 @@
                 </div>
             </div>
 
-            <!-- Manual Search -->
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fa-solid fa-magnifying-glass" style="color:#1a6fc4;"></i> Search Patient
@@ -60,7 +57,6 @@
                         </button>
                     </div>
 
-                    <!-- Patient Found Card -->
                     <div id="patientBox" class="mt-3" style="display:none;">
                         <div class="patient-card">
                             <div class="d-flex align-items-center gap-3 mb-3">
@@ -85,7 +81,6 @@
             </div>
         </div>
 
-        <!-- RIGHT: Pending Prescriptions -->
         <div class="col-md-7">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
@@ -155,9 +150,54 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4" id="todaysPatientsSection">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <span><i class="fa-solid fa-calendar-day text-success me-2"></i>Today's Total Registered Patients Log</span>
+                    <span class="badge bg-success text-white px-2 py-1 rounded">{{ $todaysVisits->count() }} Records</span>
+                </div>
+                <div class="card-body p-0">
+                    @if($todaysVisits->isEmpty())
+                        <div class="text-center py-4 text-muted">No patients checked in yet today.</div>
+                    @else
+                        <div class="table-responsive">
+                            <table class="table mb-0 align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Time</th>
+                                        <th>Patient ID</th>
+                                        <th>Email Address</th>
+                                        <th>Type</th>
+                                        <th>Queue Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($todaysVisits as $v)
+                                        <tr>
+                                            <td style="font-size:13px; color:#475569;">{{ \Carbon\Carbon::parse($v->visit_date)->format('h:i A') }}</td>
+                                            <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $v->patient->regno ?? $v->patient->staff_id ?? 'N/A' }}</code></td>
+                                            <td style="font-size:13px;">{{ $v->patient->email ?? '—' }}</td>
+                                            <td><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
+                                            <td>
+                                                <span class="badge-status {{ $v->status }}">
+                                                    {{ ucfirst(str_replace('-', ' ', $v->status)) }}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
-<!-- Prescription Modal (faux-viewport pattern, no fixed) -->
 <div id="modalBackdrop" style="display:none; min-height:400px; background:rgba(0,0,0,0.45); position:fixed; top:0;left:0;right:0;bottom:0; z-index:1000; align-items:center; justify-content:center;">
     <div style="background:white;width:460px;max-width:92vw;border-radius:14px;padding:28px;position:relative;">
         <button onclick="closeModal()" style="position:absolute;top:14px;right:16px;background:none;border:none;font-size:18px;color:#94a3b8;cursor:pointer;">
@@ -189,7 +229,6 @@
 @section('scripts')
 <script src="https://unpkg.com/html5-qrcode"></script>
 <script>
-// FIX: Force library to compile with support for both QR codes and 1D Barcodes
 let scanner = new Html5Qrcode("reader", {
     formatsToSupport: [
         Html5QrcodeSupportedFormats.QR_CODE,
@@ -252,24 +291,16 @@ function searchPatient() {
     } else {
         const p = data.patient;
 
-        // Use Email as the Name since Name doesn't exist
         document.getElementById('patientName').innerText  = p.email;
         document.getElementById('patientId').innerText    = p.display_id;
-
-        // Avatar icon will show the first letter of the email
         document.getElementById('patientAvatar').innerText = p.email.charAt(0).toUpperCase();
-
-        // Clear out the info section since we aren't using phone/dept
         document.getElementById('patientInfo').innerHTML = `<i class="fa-solid fa-tag me-1"></i> ID: ${p.display_id}`;
 
         const badge = document.getElementById('patientRoleBadge');
         badge.innerText = p.role.charAt(0).toUpperCase() + p.role.slice(1);
         badge.className = `badge-status ${p.role}`;
 
-        // Set the link for the "Create Visit" button
         document.getElementById('createVisitBtn').href = `/nurse/visit/create/${p.id}`;
-
-        // Show the box
         document.getElementById('patientBox').style.display = 'block';
     }
 });

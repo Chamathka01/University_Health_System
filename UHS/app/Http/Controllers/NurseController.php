@@ -18,10 +18,12 @@ class NurseController extends Controller
             ->orderBy('visit_date', 'desc')
             ->get();
 
-        $totalPatientsCount = Visit::whereDate('visit_date', now()->toDateString())
-                                    ->count();
+        $todaysVisits = Visit::with('patient')
+            ->whereDate('visit_date', now()->toDateString())
+            ->orderBy('visit_date', 'desc')
+            ->get();
 
-        return view('nurse.dashboard', compact('pending','totalPatientsCount'));
+        return view('nurse.dashboard', compact('pending','todaysVisits'));
     }
 
     // Scan students and staff
