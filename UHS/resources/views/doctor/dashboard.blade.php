@@ -9,7 +9,10 @@
     <div class="d-flex gap-2">
         <div class="stat-card" style="padding:10px 16px; background:#f0fdf4; border: 1px solid #bbf7d0;">
             <div class="stat-icon green" style="width:34px;height:34px;font-size:15px; background:#dcfce7; color:#16a34a; display:flex; align-items:center; justify-content:center; border-radius:50%;"><i class="fa-solid fa-users"></i></div>
-            <div><div class="stat-value" style="font-size:18px; color:#16a34a;">{{ $totalPatientsCount }}</div><div class="stat-label" style="font-size:11px; color:#475569;">Monthly Patients</div></div>
+            <div>
+                <div class="stat-value" style="font-size:18px; color:#16a34a;">{{ $monthlyVisitsLog->count() }}</div>
+                <div class="stat-label" style="font-size:11px; color:#475569;">Monthly Patients</div>
+            </div>
         </div>
         <div class="stat-card" style="padding:10px 16px;">
             <div class="stat-icon blue" style="width:34px;height:34px;font-size:15px;"><i class="fa-solid fa-clock"></i></div>
@@ -79,5 +82,47 @@
         </div>
         @endif
     </div>
+
+    <div class="card mt-4">
+        <div class="card-header bg-light"><i class="fa-solid fa-history" style="color:#16a34a;"></i> Monthly Operations Log (Current Month)</div>
+        <div class="card-body p-0">
+            @if($monthlyVisitsLog->isEmpty())
+                <div class="text-center py-4 text-muted">No patient visits recorded during this calendar month.</div>
+            @else
+                <div class="table-responsive">
+                    <table class="table mb-0" style="vertical-align: middle;">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date / Time</th>
+                                <th>Patient ID</th>
+                                <th>Email Address</th>
+                                <th>Role</th>
+                                <th>Final Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($monthlyVisitsLog as $log)
+                                <tr>
+                                    <td style="font-size:13px; color:#475569;">
+                                        {{ \Carbon\Carbon::parse($log->visit_date)->format('d M Y') }}
+                                        <div style="font-size:11px; color:#94a3b8;">{{ \Carbon\Carbon::parse($log->visit_date)->format('h:i A') }}</div>
+                                    </td>
+                                    <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $log->patient->regno ?? $log->patient->staff_id ?? 'N/A' }}</code></td>
+                                    <td style="font-size:13px;">{{ $log->patient->email }}</td>
+                                    <td><span class="badge-status {{ $log->patient->role }}">{{ ucfirst($log->patient->role) }}</span></td>
+                                    <td>
+                                        <span class="badge-status {{ $log->status }}">
+                                            {{ ucfirst(str_replace('-', ' ', $log->status)) }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        </div>
+    </div>
+
 </div>
 @endsection

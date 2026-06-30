@@ -19,11 +19,13 @@ class DoctorController extends Controller
                     ->orderBy('visit_date')
                     ->get();
 
-        $totalPatientsCount = Visit::whereMonth('visit_date', now()->month)
-                                    ->whereYear('visit_date', now()->year)
-                                    ->count();
+        $monthlyVisitsLog = Visit::with('patient')
+                    ->whereMonth('visit_date', now()->month)
+                    ->whereYear('visit_date', now()->year)
+                    ->orderBy('visit_date', 'desc')
+                    ->get();
 
-        return view('doctor.dashboard', compact('visits', 'totalPatientsCount'));
+        return view('doctor.dashboard', compact('visits', 'monthlyVisitsLog'));
     }
 
     public function consult($visit_id)
