@@ -11,7 +11,9 @@ use App\Models\Register;
 
 //Auth pages
 
-Route::get('/', fn() => redirect('/login'));
+Route::get('/', function () {
+    return view('home');
+});
 
 Route::get('/login', function () {
     return view('login');
