@@ -74,7 +74,7 @@
         }
 
         .btn-submit:hover {
-            background: #0f2d52;
+            background:#155ba0;
         }
 
         .back-link {
