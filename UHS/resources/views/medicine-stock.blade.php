@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@block('content')
+@section('content')
 <div class="page-header">
     <div>
         <h4>Medicine Stock Management</h4>
@@ -120,4 +120,4 @@
         </div>
     </div>
 </div>
-@endblock
+@endsection

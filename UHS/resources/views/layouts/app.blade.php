@@ -216,8 +216,6 @@
 
         /* CARDS */
         .card{
-            border:1px solid var(--gray-200);
-            border-radius:var(--radius);
             background:white;
             box-shadow:0 1px 3px rgba(0,0,0,0.04);
             border: 1px solid black;
@@ -244,8 +242,6 @@
         /* STAT CARDS */
         .stat-card{
             background:white;
-            border:1px solid var(--gray-200);
-            border-radius:var(--radius);
             padding:18px 20px;
             display:flex;
             align-items:center;
@@ -369,9 +365,8 @@
         /* FORMS */
         .form-control,
         .form-select{
-            border:1px solid var(--gray-200);
-            border-radius:8px;
             border: 0.5px solid black;
+            border-radius:8px;
             padding:11px 14px;
             font-size:15px;
             transition:border-color 0.15s,box-shadow 0.15s;
@@ -483,43 +478,16 @@
         <h6>University Health System</h6>
         <p>Patient Management</p>
     </div>
+
     <nav class="sidebar-nav">
         <div class="nav-label">Navigation</div>
-        @if($user && $user['role'] == 'nurse')
-            <a href="/nurse/dashboard" class="{{ request()->is('nurse/dashboard') ? 'active' : '' }}">
-                <i class="fa-solid fa-gauge-high"></i> Dashboard
-            </a>
-        @endif
-        @if($user && $user['role'] == 'doctor')
-            <a href="/doctor/dashboard" class="{{ request()->is('doctor/dashboard') ? 'active' : '' }}">
-                <i class="fa-solid fa-gauge-high"></i> Dashboard
-            </a>
-        @endif
-        @if($user && in_array($user['role'], ['student','staff']))
-            <a href="/patient/dashboard" class="{{ request()->is('patient/dashboard') ? 'active' : '' }}">
-                <i class="fa-solid fa-notes-medical"></i> My Records
-            </a>
-        @endif
-    </nav>
-    @if($user)
-    <div class="sidebar-user">
-        <div class="user-avatar">{{ strtoupper(substr($user['email'], 0, 1)) }}</div>
-        <div class="user-info">
-            <div class="uid">{{ $user['display_id'] ?? $user['email'] }}</div>
-            <div class="role">{{ $user['role'] }}</div>
-        </div>
-        <a href="/logout" class="logout" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
-    </div>
-    @endif
-</aside>
 
-<nav class="sidebar-nav">
-        <div class="nav-label">Navigation</div>
         @if($user && $user['role'] == 'nurse')
             <a href="/nurse/dashboard" class="{{ request()->is('nurse/dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-gauge-high"></i> Dashboard
             </a>
         @endif
+
         @if($user && $user['role'] == 'doctor')
             <a href="/doctor/dashboard" class="{{ request()->is('doctor/dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-gauge-high"></i> Dashboard
@@ -538,6 +506,18 @@
             </a>
         @endif
     </nav>
+
+    @if($user)
+    <div class="sidebar-user">
+        <div class="user-avatar">{{ strtoupper(substr($user['email'], 0, 1)) }}</div>
+        <div class="user-info">
+            <div class="uid">{{ $user['display_id'] ?? $user['email'] }}</div>
+            <div class="role">{{ $user['role'] }}</div>
+        </div>
+        <a href="/logout" class="logout" title="Logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+    </div>
+    @endif
+</aside>
 
 <main class="main-content">
     @yield('content')
