@@ -14,7 +14,6 @@
 <div class="page-body">
 <div class="row g-4">
 
-    <!-- Patient info + history -->
     <div class="col-md-4">
         <div class="card mb-4">
             <div class="card-header"><i class="fa-solid fa-user" style="color:#1a6fc4;"></i> Patient Info</div>
@@ -69,12 +68,10 @@
         </div>
     </div>
 
-    <!-- Consultation form -->
     <div class="col-md-8">
         <div class="card">
             <div class="card-header"><i class="fa-solid fa-file-medical" style="color:#1a6fc4;"></i> New Consultation</div>
             <div class="card-body">
-                {{-- enctype="multipart/form-data" is REQUIRED for PDF upload --}}
                 <form method="POST" action="/doctor/save-consultation" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="visit_id" value="{{ $visit->id }}">
@@ -87,16 +84,29 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Prescription <span style="color:#ef4444;">*</span></label>
-                        <textarea name="prescription" class="form-control" rows="4"
-                                  placeholder="List medicines, dosage, and instructions..."
-                                  required>{{ old('prescription') }}</textarea>
+                        <label class="form-label">Prescription / Medicine Selection <span style="color:#ef4444;">*</span></label>
+                        <div class="row g-2">
+                            <div class="col-md-8">
+                                <select name="medicine_id" class="form-select" required>
+                                    <option value="" disabled selected>-- Select Stock Medicine --</option>
+                                    @foreach($availableMedicines as $med)
+                                        <option value="{{ $med->id }}" {{ old('medicine_id') == $med->id ? 'selected' : '' }}>
+                                            {{ $med->name }} (Available: {{ $med->stock_quantity }} units)
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" name="quantity_given" class="form-control"
+                                       placeholder="Quantity (e.g. 15)" min="1" value="{{ old('quantity_given') }}" required>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Additional Notes</label>
                         <textarea name="notes" class="form-control" rows="3"
-                                  placeholder="Optional: follow-up, diet, rest...">{{ old('notes') }}</textarea>
+                                  placeholder="Optional: follow-up, dosage guidelines, diet, rest...">{{ old('notes') }}</textarea>
                     </div>
 
                     <div class="mb-4" style="background:#fafafa;border:1px dashed #cbd5e1;border-radius:10px;padding:16px;">
@@ -110,9 +120,17 @@
                         </div>
                     </div>
 
+                    @if(session('error'))
+                        <div class="alert alert-danger mb-3">
+                            <i class="fa-solid fa-triangle-exclamation me-2"></i>{{ session('error') }}
+                        </div>
+                    @endif
+
                     @if($errors->any())
                         <div class="alert alert-danger mb-3">
-                            @foreach($errors->all() as $e)<div>{{ $e }}</div>@endforeach
+                            <ul class="mb-0 ps-3">
+                                @foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach
+                            </ul>
                         </div>
                     @endif
 
