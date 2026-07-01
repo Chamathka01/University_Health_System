@@ -10,7 +10,18 @@ class MedicineStockController extends Controller
     public function index()
     {
         $medicines = Medicine::orderBy('name', 'asc')->get();
-        return view('medicine-stock', compact('medicines'));
+
+        $expiredCount = Medicine::where('expiry_date', '<', now()->toDateString())->count();
+
+        $nearExpiryCount = Medicine::where('expiry_date', '>=', now()->toDateString())
+                        ->where('expiry_date', '<=', now()->addDays(30)->toDateString())
+                        ->count();
+
+        $lowStockCount = Medicine::where('stock_quantity', '>', 0)
+                        ->whereRaw('stock_quantity <= min_required_alert')
+                        ->count();
+
+        return view('medicine-stock', compact('medicines','expiredCount', 'nearExpiryCount', 'lowStockCount'));
     }
 
     public function store(Request $request)

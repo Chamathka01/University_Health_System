@@ -36,8 +36,9 @@
                 <i class="fa-solid fa-circle-exclamation me-2 text-warning"></i>Attention: Inventory Risks Detected
             </h5>
             <p class="mb-0 text-secondary" style="font-size: 13.5px;">
-                Currently, there are <strong class="text-danger">{{ $expiredCount }} batches completely expired</strong> and
-                <strong class="text-warning text-dark">{{ $nearExpiryCount }} batches expiring within the next 30 days</strong>.
+                Currently, there are <strong class="text-danger">{{ $expiredCount }} batches completely expired</strong>,
+                <strong class="text-warning">{{ $nearExpiryCount }} batches expiring within the next 30 days</strong> and
+                <strong class="text-primary">{{ $lowStockCount }} batches running at low volume alert limits</strong>.
                 Please inspect highlighted rows below to ensure safe clinical distributions.
             </p>
         </div>
