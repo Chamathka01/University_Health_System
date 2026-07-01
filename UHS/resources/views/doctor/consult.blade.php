@@ -87,7 +87,7 @@
                         <label class="form-label">Prescription / Medicine Selection <span style="color:#ef4444;">*</span></label>
                         <div class="row g-2">
                             <div class="col-md-8">
-                                <select name="medicine_id" class="form-select" required>
+                                <select name="medicine_id" class="form-select searchable-medicine" required>
                                     <option value="" disabled selected>-- Select Stock Medicine --</option>
                                     @foreach($availableMedicines as $med)
                                         <option value="{{ $med->id }}" {{ old('medicine_id') == $med->id ? 'selected' : '' }}>
@@ -147,4 +147,23 @@
 
 </div>
 </div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize the searchable layout on the medicine dropdown class
+        $('.searchable-medicine').select2({
+            theme: 'bootstrap-5',
+            placeholder: '-- Type to search medicine --',
+            allowClear: false,
+            width: '100%'
+        });
+    });
+</script>
+
 @endsection
