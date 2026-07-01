@@ -49,7 +49,7 @@ class DoctorController extends Controller
                 ->get();
 
     // Pass the list of available medicines down to the form dropdown selection map
-    $availableMedicines = \App\Models\Medicine::where('stock_quantity', '>', 0)
+    $availableMedicines = Medicine::where('stock_quantity', '>', 0)
                                     ->orderBy('name', 'asc')
                                     ->get();
 
@@ -58,66 +58,61 @@ class DoctorController extends Controller
 
     public function saveConsultation(Request $request)
 {
+    // 1. Swapped 'prescription' rule for our actual dropdown form inputs
     $request->validate([
-        'visit_id' => 'required',
-        'diagnosis' => 'required',
-        'prescription' => 'required',
-        'medicine_id'    => 'required|exists:medicines,id',
-        'quantity_given' => 'required|integer|min:1',
-        'report' => 'nullable|file|mimes:pdf|max:5120',
+        'visit_id'       => 'required',
+        'diagnosis'      => 'required',
+        'medicine_id'    => 'required', // Matches the select name="medicine_id"
+        'quantity_given' => 'required|integer|min:1', // Matches the input name="quantity_given"
+        'report'         => 'nullable|file|mimes:pdf|max:5120',
     ]);
 
     $doctor = Session::get('user');
 
     // Handle PDF upload
-        $reportPath = null;
-        if ($request->hasFile('report') && $request->file('report')->isValid()) {
-            $reportPath = $request->file('report')
-                            ->store('reports', 'public');
-        }
+    $reportPath = null;
+    if ($request->hasFile('report') && $request->file('report')->isValid()) {
+        $reportPath = $request->file('report')->store('reports', 'public');
+    }
 
     try {
-            DB::transaction(function () use ($request, $reportPath, $doctor) {
+        DB::transaction(function () use ($request, $reportPath, $doctor) {
 
-                // 1. Fetch the medicine from stock to verify current inventory status
-                $medicine = Medicine::findOrFail($request->medicine_id);
+            $medicine = Medicine::findOrFail($request->medicine_id);
 
-                if ($medicine->stock_quantity < $request->quantity_given) {
-                    throw new \Exception("Insufficient stock available! Only {$medicine->stock_quantity} units left of {$medicine->name}.");
-                }
-
-                // 2. Decrement the inventory quantities automatically
-                $medicine->decrement('stock_quantity', $request->quantity_given);
-
-                // 3. Format prescription output string safely to log inside medical history records
-                $prescriptionString = $medicine->name . " (Qty: " . $request->quantity_given . " units)";
-
-                // 4. Record the medical consultation log details
-                MedicalRecord::create([
-                    'visit_id'     => $request->visit_id,
-                    'diagnosis'    => $request->diagnosis,
-                    'prescription' => $prescriptionString, // Automatically formatted descriptive entry
-                    'notes'        => $request->notes,
-                    'report_path'  => $reportPath,
-                ]);
-
-                // 5. Upgrade visit dispatch workflow states
-                $visit = Visit::findOrFail($request->visit_id);
-                $visit->doctor_id = $doctor['id'];
-                $visit->status = 'prescription-ready';
-                $visit->save();
-            });
-
-            return redirect('/doctor/dashboard')
-                    ->with('success', 'Consultation saved and medicine inventory count adjusted successfully.');
-
-        } catch (\Exception $e) {
-            // Revert paths uploaded if database interactions fails mid-execution
-            if ($reportPath) {
-                Storage::disk('public')->delete($reportPath);
+            if ($medicine->stock_quantity < $request->quantity_given) {
+                throw new \Exception("Insufficient stock available! Only {$medicine->stock_quantity} units left of {$medicine->name}.");
             }
 
-            return back()->with('error', $e->getMessage())->withInput();
+            $medicine->decrement('stock_quantity', $request->quantity_given);
+
+            $prescriptionString = $medicine->name . " - " . $request->quantity_given . " units";
+
+            MedicalRecord::create([
+                'visit_id'     => $request->visit_id,
+                'diagnosis'    => $request->diagnosis,
+                'prescription' => $prescriptionString, // Saves perfectly as text into your table row
+                'notes'        => $request->notes,
+                'report_path'  => $reportPath,
+            ]);
+
+            // 6. Complete visit processing workflow
+            $visit = Visit::find($request->visit_id);
+            $visit->doctor_id = $doctor['id'];
+            $visit->status = 'prescription-ready';
+            $visit->save();
+        });
+
+        return redirect('/doctor/dashboard')
+                ->with('success', 'Consultation saved and medicine stock updated successfully.');
+
+    } catch (\Exception $e) {
+        if ($reportPath) {
+            Storage::disk('public')->delete($reportPath);
         }
+
+        return back()->with('error', $e->getMessage())->withInput();
     }
+}
+
 }

@@ -21,7 +21,7 @@
 
     <div class="card">
         <div class="card-header bg-white fw-bold">
-            <i class="fa-solid fa-boxes-stacked me-2 text-primary"></i>Current Dispensation Dispensary List
+            <i class="fa-solid fa-boxes-stacked me-2 text-primary"></i>Current Dispensary List
         </div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">

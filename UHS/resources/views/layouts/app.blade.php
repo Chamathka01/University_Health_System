@@ -198,7 +198,7 @@
         }
 
         .page-header h4{
-            font-size:25px;
+            font-size:27px;
             font-weight:600;
             color:#0f172a;
             margin:0;
@@ -227,7 +227,7 @@
             background:white;
             border-bottom:1px solid var(--gray-200);
             padding:16px 20px;
-            font-size:15.5px;
+            font-size:18px;
             font-weight:600;
             border-radius:var(--radius) var(--radius) 0 0 !important;
             display:flex;
@@ -380,10 +380,11 @@
         }
 
         .form-label{
-            font-size:14px;
+            font-size:15px;
             font-weight:500;
             color:#374151;
             margin-bottom:5px;
+            font-weight: bold;
         }
 
         /* BUTTONS */
@@ -392,7 +393,7 @@
             border-color:var(--primary);
             font-weight:500;
             border-radius:8px;
-            font-size:15px;
+            font-size:16px;
             padding:8px 16px;
         }
 
