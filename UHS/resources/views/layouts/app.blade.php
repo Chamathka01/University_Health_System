@@ -513,6 +513,32 @@
     @endif
 </aside>
 
+<nav class="sidebar-nav">
+        <div class="nav-label">Navigation</div>
+        @if($user && $user['role'] == 'nurse')
+            <a href="/nurse/dashboard" class="{{ request()->is('nurse/dashboard') ? 'active' : '' }}">
+                <i class="fa-solid fa-gauge-high"></i> Dashboard
+            </a>
+        @endif
+        @if($user && $user['role'] == 'doctor')
+            <a href="/doctor/dashboard" class="{{ request()->is('doctor/dashboard') ? 'active' : '' }}">
+                <i class="fa-solid fa-gauge-high"></i> Dashboard
+            </a>
+        @endif
+
+        @if($user && in_array($user['role'], ['doctor', 'nurse']))
+            <a href="/medicine-stock" class="{{ request()->is('medicine-stock*') ? 'active' : '' }}">
+                <i class="fa-solid fa-pills"></i> Medicine Stock
+            </a>
+        @endif
+
+        @if($user && in_array($user['role'], ['student','staff']))
+            <a href="/patient/dashboard" class="{{ request()->is('patient/dashboard') ? 'active' : '' }}">
+                <i class="fa-solid fa-notes-medical"></i> My Records
+            </a>
+        @endif
+    </nav>
+
 <main class="main-content">
     @yield('content')
 </main>
