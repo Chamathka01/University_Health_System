@@ -19,6 +19,30 @@
         </div>
     @endif
 
+    @php
+        $nearExpiryCount = $medicines->filter(function($item) {
+            $expiry = \Carbon\Carbon::parse($item->expiry_date);
+            return !$expiry->isPast() && \Carbon\Carbon::now()->diffInDays($expiry) <= 30;
+        })->count();
+
+        $expiredCount = $medicines->filter(function($item) {
+            return \Carbon\Carbon::parse($item->expiry_date)->isPast();
+        })->count();
+    @endphp
+
+    @if($expiredCount > 0 || $nearExpiryCount > 0)
+        <div class="alert alert-warning border-start border-warning border-4 mb-4 shadow-sm p-3 bg-white">
+            <h5 class="alert-heading fw-bold text-dark mb-1">
+                <i class="fa-solid fa-circle-exclamation me-2 text-warning"></i>Attention: Inventory Risks Detected
+            </h5>
+            <p class="mb-0 text-secondary" style="font-size: 13.5px;">
+                Currently, there are <strong class="text-danger">{{ $expiredCount }} batches completely expired</strong> and
+                <strong class="text-warning text-dark">{{ $nearExpiryCount }} batches expiring within the next 30 days</strong>.
+                Please inspect highlighted rows below to ensure safe clinical distributions.
+            </p>
+        </div>
+    @endif
+
     <div class="card">
         <div class="card-header bg-white fw-bold">
             <i class="fa-solid fa-boxes-stacked me-2 text-primary"></i>Current Dispensary List
@@ -37,23 +61,43 @@
                 </thead>
                 <tbody>
                     @forelse($medicines as $item)
+                    @php
+                            $expiryDate = \Carbon\Carbon::parse($item->expiry_date);
+                            $daysRemaining = \Carbon\Carbon::now()->diffInDays($expiryDate, false);
+                        @endphp
                         <tr>
                             <td class="fw-semibold text-dark">{{ $item->name }}</td>
                             <td><code class="text-secondary small fw-bold">{{ $item->batch_number }}</code></td>
                             <td>
-                                <span class="{{ \Carbon\Carbon::parse($item->expiry_date)->isPast() ? 'text-danger fw-bold' : '' }}">
-                                    {{ $item->expiry_date }}
-                                </span>
-                            </td>
-                            <td>
-                                @if($item->stock_quantity <= 0)
-                                    <span class="badge-status red bg-danger text-white">Out of Stock</span>
-                                @elseif($item->stock_quantity <= $item->min_required_alert)
-                                    <span class="badge-status waiting text-warning fw-bold">Low Volume Alert</span>
+                                @if($expiryDate->isPast())
+                                    <span class="text-danger fw-bold" title="Expired!">
+                                        <i class="fa-solid fa-triangle-exclamation me-1"></i>{{ $item->expiry_date }}
+                                    </span>
+                                @elseif($daysRemaining <= 30)
+                                    <span class="text-warning fw-bold" title="Expires in {{ $daysRemaining }} days!">
+                                        <i class="fa-solid fa-hourglass-half me-1"></i>{{ $item->expiry_date }}
+                                    </span>
                                 @else
-                                    <span class="badge-status completed">Optimal Supply</span>
+                                    <span class="text-success">
+                                        {{ $item->expiry_date }}
+                                    </span>
                                 @endif
                             </td>
+
+                            <td>
+                                @if($expiryDate->isPast())
+                                    <span class="badge bg-danger text-white px-2 py-1" style="font-size: 11px; font-weight: 600;">EXPIRED</span>
+                                @elseif($daysRemaining <= 30)
+                                    <span class="badge bg-warning text-dark px-2 py-1" style="font-size: 11px; font-weight: 600;">Expiring Soon</span>
+                                @elseif($item->stock_quantity <= 0)
+                                    <span class="badge bg-danger text-white px-2 py-1" style="font-size: 11px; font-weight: 600;">Out of Stock</span>
+                                @elseif($item->stock_quantity <= $item->min_required_alert)
+                                    <span class="badge bg-info text-dark px-2 py-1" style="font-size: 11px; font-weight: 600;">Low Volume Alert</span>
+                                @else
+                                    <span class="badge bg-success text-white px-2 py-1" style="font-size: 11px; font-weight: 600;">Optimal Supply</span>
+                                @endif
+                            </td>
+
                             <td class="text-center fw-bold fs-5">{{ $item->stock_quantity }} units</td>
                             <td class="text-center">
                                 <form action="/medicine-stock/update/{{ $item->id }}" method="POST" class="d-inline-flex gap-2 align-items-center justify-content-center">
@@ -65,6 +109,7 @@
                                 </form>
                             </td>
                         </tr>
+
                     @empty
                         <tr>
                             <td colspan="6" class="text-center text-muted py-5">
