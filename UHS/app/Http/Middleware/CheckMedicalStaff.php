@@ -17,7 +17,6 @@ class CheckMedicalStaff
     {
         $user = session('user');
 
-        // Block entry if there is no session tracking active or if the user is not explicitly classified
         if (!$user || !in_array($user['role'], ['doctor', 'nurse'])) {
             return redirect('/login')->with('error', 'Access Restricted. Medical authorization validation clearance required.');
         }

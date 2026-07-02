@@ -279,7 +279,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-white bg-white border-bottom py-3 sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" style="color: #0f2d52; font-size: 30px;">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" style="color: #0f2d52; font-size: 35px;">
                 <i class="fa-solid fa-hospital-user text-primary"></i> University Health System
             </a>
             <div class="ms-auto d-flex align-items-center">

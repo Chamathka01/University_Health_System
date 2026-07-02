@@ -157,7 +157,7 @@
                         </label>
                         <input type="file" name="report" class="form-control" accept=".pdf">
                         <div style="font-size:12px;color:#64748b;margin-top:6px;">
-                            Attach the lab report if available. Patients can download it from their dashboard.
+                            Attach the lab report if available
                         </div>
                     </div>
 

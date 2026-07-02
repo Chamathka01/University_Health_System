@@ -29,7 +29,7 @@
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fa-solid fa-camera" style="color:#1a6fc4;"></i> Camera Scanner
+                    <i class="fa-solid fa-camera" style="color:#1a6fc4;"></i> Barcode Scanner
                 </div>
                 <div class="card-body text-center">
                     <div id="reader" style="width:100%; max-width:280px; margin:0 auto;"></div>
