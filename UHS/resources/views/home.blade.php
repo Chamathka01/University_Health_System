@@ -10,6 +10,7 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            font-size: 16.5px;
             background-color: #f8fafc;
             color: #1e293b;
             overflow-x: hidden;
@@ -154,7 +155,7 @@
 
         .nav-link-home {
             color: #475569;
-            font-size: 14px;
+            font-size: 15.5px;
             font-weight: 600;
             text-decoration: none;
             margin-right: 22px;
@@ -170,7 +171,7 @@
 
         .section-kicker {
             color: #1a6fc4;
-            font-size: 12px;
+            font-size: 13.5px;
             font-weight: 700;
             letter-spacing: 0.06em;
             text-transform: uppercase;
@@ -178,7 +179,7 @@
 
         .section-title {
             color: #0f172a;
-            font-size: 28px;
+            font-size: 31px;
             font-weight: 700;
             margin: 8px 0 10px;
         }
@@ -195,7 +196,7 @@
         .role-panel i,
         .process-step i {
             color: #1a6fc4;
-            font-size: 24px;
+            font-size: 26px;
             margin-bottom: 14px;
         }
 
@@ -208,8 +209,41 @@
             right: 18px;
             top: 16px;
             color: #cbd5e1;
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
+        }
+
+        .carousel-caption .badge {
+            font-size: 13px !important;
+        }
+
+        .carousel-caption .lead {
+            font-size: 20px !important;
+            line-height: 1.65;
+        }
+
+        .premium-card h5,
+        .role-panel h5,
+        .process-step h5 {
+            font-size: 18px !important;
+        }
+
+        .premium-card p,
+        .role-panel p,
+        .process-step p,
+        #services p,
+        footer .small {
+            font-size: 15.5px !important;
+            line-height: 1.6;
+        }
+
+        #services h4 {
+            font-size: 25px !important;
+        }
+
+        .support-band .info-pill div:last-child {
+            font-size: 15px !important;
+            line-height: 1.5;
         }
 
         .support-band {
@@ -351,29 +385,28 @@
         <div class="container">
             <div class="text-center mb-4">
                 <div class="section-kicker">Portal Access</div>
-                <h2 class="section-title">One system for every clinical role</h2>
-                <p class="text-muted mb-0">Students, staff, nurses, doctors, and dispensary teams work from the same visit record.</p>
+                <h2 class="section-title">One system for everyone</h2>
             </div>
             <div class="row g-4">
                 <div class="col-md-3">
                     <div class="role-panel">
                         <i class="fa-solid fa-user-graduate"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Students & Staff</h5>
-                        <p class="text-muted small mb-0">Access visit records, prescriptions, and uploaded lab reports from the patient dashboard.</p>
+                        <p class="text-muted small mb-0">Access visit records from the patient dashboard.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="role-panel">
                         <i class="fa-solid fa-user-nurse"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Nurses</h5>
-                        <p class="text-muted small mb-0">Scan patient IDs, create visits, monitor daily queues, and dispense ready prescriptions.</p>
+                        <p class="text-muted small mb-0">Scan patient IDs, create visits, monitor daily queues, and dispense prescriptions.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="role-panel">
                         <i class="fa-solid fa-user-doctor"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Doctors</h5>
-                        <p class="text-muted small mb-0">Review history, record diagnosis, add multiple medicines, and attach clinical reports.</p>
+                        <p class="text-muted small mb-0">Review medicalhistory of patients, record diagnosis, consultation, and attach clinical reports.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
@@ -431,7 +464,7 @@
         <div class="container">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-4">
-                    <h3 class="fw-bold mb-2" style="font-size:24px;">Campus medical support, organized.</h3>
+                    <h3 class="fw-bold mb-2" style="font-size:24px;">University medical support, organized.</h3>
                     <p class="mb-0" style="color:#cbd5e1;">Use the portal for daily medical operations, patient tracking, prescriptions, inventory, and reports.</p>
                 </div>
                 <div class="col-md-4 col-lg-3">

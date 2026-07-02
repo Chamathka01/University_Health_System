@@ -31,7 +31,7 @@
 
         body{
             font-family:'Inter',sans-serif;
-            font-size: 15.5px;
+            font-size: 16.5px;
             background:var(--gray-100);
             color:#1e293b;
             display:flex;
@@ -467,6 +467,33 @@
             padding:20px;
             text-align:center;
         }
+
+        /* Readability scale */
+        .sidebar-brand h6{ font-size:21px; }
+        .sidebar-brand p,
+        .nav-label{ font-size:13px; }
+        .sidebar-nav a{ font-size:16px; }
+        .sidebar-nav a i{ font-size:17px; }
+        .user-info .uid{ font-size:14.5px; }
+        .user-info .role{ font-size:15px; }
+        .page-header h4{ font-size:29px; }
+        .page-header .breadcrumb-text{ font-size:14px; }
+        .card-header{ font-size:19px; }
+        .stat-value{ font-size:30px; }
+        .stat-label{ font-size:14.5px; }
+        .table{ font-size:16px; }
+        .table thead th{ font-size:15.5px; }
+        .badge-status{ font-size:14px; }
+        .form-control,
+        .form-select,
+        .form-label{ font-size:16px; }
+        .btn-primary{ font-size:16.5px; }
+        .btn-outline-primary,
+        .btn-success{ font-size:15.5px; }
+        .btn-sm{ font-size:14.5px; }
+        .alert{ font-size:15.5px; }
+        .small,
+        small{ font-size:0.95em !important; }
     </style>
 </head>
 <body>
