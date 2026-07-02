@@ -12,7 +12,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         /* Premium Slider Configuration */
@@ -151,6 +151,94 @@
             padding-top: 0.75rem !important;
             padding-bottom: 0.75rem !important;
         }
+
+        .nav-link-home {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 22px;
+        }
+
+        .nav-link-home:hover {
+            color: #1a6fc4;
+        }
+
+        .home-section {
+            padding: 56px 0;
+        }
+
+        .section-kicker {
+            color: #1a6fc4;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            color: #0f172a;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 8px 0 10px;
+        }
+
+        .role-panel,
+        .process-step {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            height: 100%;
+            padding: 24px;
+        }
+
+        .role-panel i,
+        .process-step i {
+            color: #1a6fc4;
+            font-size: 24px;
+            margin-bottom: 14px;
+        }
+
+        .process-step {
+            position: relative;
+        }
+
+        .step-number {
+            position: absolute;
+            right: 18px;
+            top: 16px;
+            color: #cbd5e1;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .support-band {
+            background: #0f2d52;
+            color: #e8f1fb;
+            padding: 38px 0;
+        }
+
+        .support-band .info-pill {
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 12px;
+            padding: 16px 18px;
+            height: 100%;
+            background: rgba(255,255,255,0.06);
+        }
+
+        @media (max-width: 767px) {
+            .carousel-item {
+                height: 500px;
+            }
+
+            .nav-link-home {
+                display: none;
+            }
+
+            .navbar-brand {
+                font-size: 22px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -160,7 +248,10 @@
             <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" style="color: #0f2d52; font-size: 30px;">
                 <i class="fa-solid fa-hospital-user text-primary"></i> University Health System
             </a>
-            <div class="ms-auto">
+            <div class="ms-auto d-flex align-items-center">
+                <a href="#services" class="nav-link-home">Services</a>
+                <a href="#workflow" class="nav-link-home">Workflow</a>
+                <a href="#roles" class="nav-link-home">Access</a>
                 <a href="/login" class="btn btn-primary px-4 fw-medium" style="background: #1a6fc4; border-radius: 8px; font-size: 15px;">
                     <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
                 </a>
@@ -253,6 +344,112 @@
                 Our Integrated Clinical Solutions
             </h4>
             <p class="text-muted small mt-2">A unified digital care delivery framework engineered for university safety and medical operational workflows.</p>
+        </div>
+    </section>
+
+    <section id="roles" class="home-section bg-white">
+        <div class="container">
+            <div class="text-center mb-4">
+                <div class="section-kicker">Portal Access</div>
+                <h2 class="section-title">One system for every clinical role</h2>
+                <p class="text-muted mb-0">Students, staff, nurses, doctors, and dispensary teams work from the same visit record.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="role-panel">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <h5 class="fw-bold" style="font-size:16px;">Students & Staff</h5>
+                        <p class="text-muted small mb-0">Access visit records, prescriptions, and uploaded lab reports from the patient dashboard.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="role-panel">
+                        <i class="fa-solid fa-user-nurse"></i>
+                        <h5 class="fw-bold" style="font-size:16px;">Nurses</h5>
+                        <p class="text-muted small mb-0">Scan patient IDs, create visits, monitor daily queues, and dispense ready prescriptions.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="role-panel">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <h5 class="fw-bold" style="font-size:16px;">Doctors</h5>
+                        <p class="text-muted small mb-0">Review history, record diagnosis, add multiple medicines, and attach clinical reports.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="role-panel">
+                        <i class="fa-solid fa-prescription-bottle-medical"></i>
+                        <h5 class="fw-bold" style="font-size:16px;">Dispensary</h5>
+                        <p class="text-muted small mb-0">Track stock quantity, low-volume alerts, batch details, and expiry risk from one inventory view.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="workflow" class="home-section">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-4">
+                    <div class="section-kicker">Care Workflow</div>
+                    <h2 class="section-title">From check-in to completed visit</h2>
+                    <p class="text-muted mb-0">The system keeps each patient movement visible so medical staff can act faster and avoid duplicate manual records.</p>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <div class="process-step">
+                                <div class="step-number">01</div>
+                                <i class="fa-solid fa-qrcode"></i>
+                                <h5 class="fw-bold" style="font-size:15px;">Check In</h5>
+                                <p class="text-muted small mb-0">Nurse scans or searches the patient ID and creates the visit queue entry.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="process-step">
+                                <div class="step-number">02</div>
+                                <i class="fa-solid fa-stethoscope"></i>
+                                <h5 class="fw-bold" style="font-size:15px;">Consult</h5>
+                                <p class="text-muted small mb-0">Doctor records diagnosis, notes, medicine list, quantities, and PDF reports.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="process-step">
+                                <div class="step-number">03</div>
+                                <i class="fa-solid fa-circle-check"></i>
+                                <h5 class="fw-bold" style="font-size:15px;">Complete</h5>
+                                <p class="text-muted small mb-0">Nurse dispenses medicine and the completed visit stays in the patient history.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="support-band">
+        <div class="container">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-4">
+                    <h3 class="fw-bold mb-2" style="font-size:24px;">Campus medical support, organized.</h3>
+                    <p class="mb-0" style="color:#cbd5e1;">Use the portal for daily medical operations, patient tracking, prescriptions, inventory, and reports.</p>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="info-pill">
+                        <div class="fw-bold"><i class="fa-solid fa-clock me-2"></i>Daily Visit Log</div>
+                        <div style="font-size:13px;color:#cbd5e1;margin-top:4px;">Nurses can see current-day patients and final status.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-3">
+                    <div class="info-pill">
+                        <div class="fw-bold"><i class="fa-solid fa-calendar-days me-2"></i>Monthly Review</div>
+                        <div style="font-size:13px;color:#cbd5e1;margin-top:4px;">Doctors can review monthly patient operations.</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <a href="/login" class="btn btn-light w-100 fw-semibold" style="border-radius:8px;color:#0f2d52;">Sign In</a>
+                </div>
+            </div>
         </div>
     </section>
 
