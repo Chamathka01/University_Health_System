@@ -12,12 +12,13 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
+            overflow: hidden;
         }
 
         /* Premium Slider Configuration */
         .carousel-item {
-            height: 650px;
-            min-height: 500px;
+            height: 560px;
+            min-height: 430px;
             background: #0f2d52;
         }
 
@@ -39,7 +40,6 @@
                         url('https://plus.unsplash.com/premium_photo-1682130157004-057c137d96d5?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') center/cover no-repeat;
         }
 
-        /* FIX: Shifted from 20% to 26% to close the large empty gap below the buttons */
         .carousel-caption {
             top: 26%;
             bottom: auto;
@@ -50,7 +50,7 @@
 
         /* Floating Structural Overlay Grid Section */
         .overlapping-features {
-            margin-top: -60px; /* Adjusted slightly for perfect symmetry */
+            margin-top: -70px;
             position: relative;
             z-index: 10;
         }
@@ -85,13 +85,18 @@
             margin-bottom: 15px;
         }
 
+        .carousel-indicators {
+            bottom: 62px;
+            z-index: 11;
+            margin-bottom: 0;
+        }
+
         .carousel-indicators [data-bs-target] {
             width: 12px;
             height: 12px;
             border-radius: 50%;
             margin-left: 6px;
             margin-right: 6px;
-            bottom: 75px; /* Re-aligned dots to sit perfectly between slider content and cards */
         }
 
         /* 1. Style the naked arrows to be larger and clear */
@@ -131,6 +136,20 @@
         .carousel-control-prev:hover,
         .carousel-control-next:hover {
             opacity: 1;
+        }
+
+        #services {
+            margin-bottom: 1rem !important;
+        }
+
+        #services .mt-5 {
+            margin-top: 1.5rem !important;
+        }
+
+        footer {
+            margin-top: 0 !important;
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
         }
     </style>
 </head>
