@@ -83,25 +83,66 @@
                                   required>{{ old('diagnosis') }}</textarea>
                     </div>
 
+                    @php
+                        $oldMedicineIds = old('medicine_id', ['']);
+                        $oldQuantities = old('quantity_given', ['']);
+                    @endphp
+
                     <div class="mb-3">
                         <label class="form-label">Prescription / Medicine Selection <span style="color:#ef4444;">*</span></label>
-                        <div class="row g-2">
-                            <div class="col-md-8">
-                                <select name="medicine_id" class="form-select searchable-medicine" required>
+                        <div id="medicineRows">
+                            @foreach($oldMedicineIds as $index => $oldMedicineId)
+                            <div class="medicine-row row g-2 mb-2 align-items-start">
+                                <div class="col-md-7">
+                                    <select name="medicine_id[]" class="form-select searchable-medicine" required>
+                                        <option value="" disabled {{ $oldMedicineId ? '' : 'selected' }}>-- Select Stock Medicine --</option>
+                                        @foreach($availableMedicines as $med)
+                                            <option value="{{ $med->id }}" {{ (string) $oldMedicineId === (string) $med->id ? 'selected' : '' }}>
+                                                {{ $med->name }} (Available: {{ $med->stock_quantity }} units)
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="number" name="quantity_given[]" class="form-control"
+                                           placeholder="Quantity" min="1" value="{{ $oldQuantities[$index] ?? '' }}" required>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-outline-danger w-100 remove-medicine-row" title="Remove medicine">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                        <button type="button" id="addMedicineRow" class="btn btn-outline-primary btn-sm mt-1">
+                            <i class="fa-solid fa-plus me-1"></i>Add Another Medicine
+                        </button>
+                    </div>
+
+                    <template id="medicineRowTemplate">
+                        <div class="medicine-row row g-2 mb-2 align-items-start">
+                            <div class="col-md-7">
+                                <select name="medicine_id[]" class="form-select searchable-medicine" required>
                                     <option value="" disabled selected>-- Select Stock Medicine --</option>
                                     @foreach($availableMedicines as $med)
-                                        <option value="{{ $med->id }}" {{ old('medicine_id') == $med->id ? 'selected' : '' }}>
+                                        <option value="{{ $med->id }}">
                                             {{ $med->name }} (Available: {{ $med->stock_quantity }} units)
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-4">
-                                <input type="number" name="quantity_given" class="form-control"
-                                       placeholder="Quantity (e.g. 15)" min="1" value="{{ old('quantity_given') }}" required>
+                            <div class="col-md-3">
+                                <input type="number" name="quantity_given[]" class="form-control"
+                                       placeholder="Quantity" min="1" required>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-outline-danger w-100 remove-medicine-row" title="Remove medicine">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </div>
                         </div>
-                    </div>
+                    </template>
 
                     <div class="mb-3">
                         <label class="form-label">Additional Notes</label>
@@ -156,12 +197,38 @@
 
 <script>
     $(document).ready(function() {
-        // Initialize the searchable layout on the medicine dropdown class
-        $('.searchable-medicine').select2({
-            theme: 'bootstrap-5',
-            placeholder: '-- Type to search medicine --',
-            allowClear: false,
-            width: '100%'
+        function initializeMedicineSelect(selector) {
+            $(selector).select2({
+                theme: 'bootstrap-5',
+                placeholder: '-- Type to search medicine --',
+                allowClear: false,
+                width: '100%'
+            });
+        }
+
+        function updateRemoveButtons() {
+            const rowCount = $('.medicine-row').length;
+            $('.remove-medicine-row').prop('disabled', rowCount === 1);
+        }
+
+        initializeMedicineSelect('.searchable-medicine');
+        updateRemoveButtons();
+
+        $('#addMedicineRow').on('click', function() {
+            const row = $($('#medicineRowTemplate').html());
+            $('#medicineRows').append(row);
+            initializeMedicineSelect(row.find('.searchable-medicine'));
+            updateRemoveButtons();
+        });
+
+        $('#medicineRows').on('click', '.remove-medicine-row', function() {
+            if ($('.medicine-row').length === 1) {
+                return;
+            }
+
+            $(this).closest('.medicine-row').find('.searchable-medicine').select2('destroy');
+            $(this).closest('.medicine-row').remove();
+            updateRemoveButtons();
         });
     });
 </script>

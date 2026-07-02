@@ -58,12 +58,13 @@ class DoctorController extends Controller
 
     public function saveConsultation(Request $request)
 {
-    // 1. Swapped 'prescription' rule for our actual dropdown form inputs
     $request->validate([
         'visit_id'       => 'required',
         'diagnosis'      => 'required',
-        'medicine_id'    => 'required', // Matches the select name="medicine_id"
-        'quantity_given' => 'required|integer|min:1', // Matches the input name="quantity_given"
+        'medicine_id'    => 'required|array|min:1',
+        'medicine_id.*'  => 'required|exists:medicines,id',
+        'quantity_given' => 'required|array|min:1',
+        'quantity_given.*' => 'required|integer|min:1',
         'report'         => 'nullable|file|mimes:pdf|max:5120',
     ]);
 
@@ -78,25 +79,30 @@ class DoctorController extends Controller
     try {
         DB::transaction(function () use ($request, $reportPath, $doctor) {
 
-            $medicine = Medicine::findOrFail($request->medicine_id);
+            $prescriptionLines = [];
 
-            if ($medicine->stock_quantity < $request->quantity_given) {
-                throw new \Exception("Insufficient stock available! Only {$medicine->stock_quantity} units left of {$medicine->name}.");
+            foreach ($request->medicine_id as $index => $medicineId) {
+                $quantityGiven = (int) ($request->quantity_given[$index] ?? 0);
+                $medicine = Medicine::findOrFail($medicineId);
+
+                if ($medicine->stock_quantity < $quantityGiven) {
+                    throw new \Exception("Insufficient stock available! Only {$medicine->stock_quantity} units left of {$medicine->name}.");
+                }
+
+                $medicine->decrement('stock_quantity', $quantityGiven);
+                $prescriptionLines[] = $medicine->name . " - " . $quantityGiven . " units";
             }
 
-            $medicine->decrement('stock_quantity', $request->quantity_given);
-
-            $prescriptionString = $medicine->name . " - " . $request->quantity_given . " units";
+            $prescriptionString = implode("\n", $prescriptionLines);
 
             MedicalRecord::create([
                 'visit_id'     => $request->visit_id,
                 'diagnosis'    => $request->diagnosis,
-                'prescription' => $prescriptionString, // Saves perfectly as text into your table row
+                'prescription' => $prescriptionString,
                 'notes'        => $request->notes,
                 'report_path'  => $reportPath,
             ]);
 
-            // 6. Complete visit processing workflow
             $visit = Visit::find($request->visit_id);
             $visit->doctor_id = $doctor['id'];
             $visit->status = 'prescription-ready';
