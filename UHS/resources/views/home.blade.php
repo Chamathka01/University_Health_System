@@ -155,7 +155,7 @@
 
         .nav-link-home {
             color: #475569;
-            font-size: 15.5px;
+            font-size: 17px;
             font-weight: 600;
             text-decoration: none;
             margin-right: 22px;
@@ -286,7 +286,7 @@
                 <a href="#services" class="nav-link-home">Services</a>
                 <a href="#workflow" class="nav-link-home">Workflow</a>
                 <a href="#roles" class="nav-link-home">Access</a>
-                <a href="/login" class="btn btn-primary px-4 fw-medium" style="background: #1a6fc4; border-radius: 8px; font-size: 15px;">
+                <a href="/login" class="btn btn-primary px-4 fw-medium" style="background: #1a6fc4; border-radius: 8px; font-size: 17px;">
                     <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
                 </a>
             </div>
@@ -305,7 +305,7 @@
                 <div class="container h-100 position-relative">
                     <div class="carousel-caption d-none d-md-block">
                         <span class="badge mb-3 px-3 py-2 text-uppercase fw-bold" style="background: rgba(255,255,255,0.2); color: #e8f1fb; font-size: 12px; letter-spacing: 0.05em;">
-                            Official University Medical Network
+                            Official University Medical System Portal
                         </span>
                         <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Your Health. Our Priority..</h1>
                         <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Welcome to the centralized medical portal for University. Access and manage your health profiles</p>
@@ -318,10 +318,10 @@
                 <div class="container h-100 position-relative">
                     <div class="carousel-caption d-none d-md-block">
                         <span class="badge mb-3 px-3 py-2 text-uppercase fw-bold" style="background: rgba(26,111,196,0.4); color: #e8f1fb; font-size: 12px; letter-spacing: 0.05em;">
-                            Doctor & Nurse Gateway
+                            Clinical Staff Portal
                         </span>
-                        <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Advanced Tools For Clinical Providers.</h1>
-                        <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Empowering university medical staff with instantaneous digital check-ins, automated e-prescribing tools, and fluid patient log metrics.</p>
+                        <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Faster Care Coordination For Every Visit.</h1>
+                        <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Doctors and nurses can manage patient queues, consultations, prescriptions, reports, and daily visit records in one connected system.</p>
                     </div>
                 </div>
             </div>
@@ -332,7 +332,7 @@
                         <span class="badge mb-3 px-3 py-2 text-uppercase fw-bold" style="background: rgba(219,234,254,0.2); color: #e8f1fb; font-size: 12px; letter-spacing: 0.05em;">
                             Medical Dispensary
                         </span>
-                        <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Precision Pharmacy & Inventory Control.</h1>
+                        <h1 class="display-4 fw-bold mb-3" style="line-height: 1.2;">Inventory Management</h1>
                         <p class="lead mb-4" style="color: #cbd5e1; font-size: 18px;">Keep close track of clinical stock lines, real-time safety inventory minimum alerts, and secure digital prescription order collections.</p>
                     </div>
                 </div>
