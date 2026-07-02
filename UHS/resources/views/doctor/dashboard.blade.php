@@ -97,6 +97,10 @@
                                 <th>Patient ID</th>
                                 <th>Email Address</th>
                                 <th>Role</th>
+                                <th>Diagnosis</th>
+                                <th>Prescription</th>
+                                <th>Notes</th>
+                                <th>Report</th>
                                 <th>Final Status</th>
                             </tr>
                         </thead>
@@ -110,6 +114,18 @@
                                     <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $log->patient->regno ?? $log->patient->staff_id ?? 'N/A' }}</code></td>
                                     <td style="font-size:13px;">{{ $log->patient->email }}</td>
                                     <td><span class="badge-status {{ $log->patient->role }}">{{ ucfirst($log->patient->role) }}</span></td>
+                                    <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $log->medicalRecord->diagnosis ?? '-' }}</td>
+                                    <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $log->medicalRecord->prescription ?? '-' }}</td>
+                                    <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:160px;">{{ $log->medicalRecord->notes ?? '-' }}</td>
+                                    <td>
+                                        @if($log->medicalRecord && $log->medicalRecord->report_path)
+                                            <a href="{{ asset('storage/'.$log->medicalRecord->report_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                <i class="fa-solid fa-file-pdf me-1"></i>View
+                                            </a>
+                                        @else
+                                            <span style="font-size:12.5px;color:#94a3b8;">-</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <span class="badge-status {{ $log->status }}">
                                             {{ ucfirst(str_replace('-', ' ', $log->status)) }}

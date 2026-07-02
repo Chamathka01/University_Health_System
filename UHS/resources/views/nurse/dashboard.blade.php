@@ -170,6 +170,10 @@
                                         <th>Patient ID</th>
                                         <th>Email Address</th>
                                         <th>Type</th>
+                                        <th>Diagnosis</th>
+                                        <th>Prescription</th>
+                                        <th>Notes</th>
+                                        <th>Report</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -180,6 +184,18 @@
                                             <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $v->patient->regno ?? $v->patient->staff_id ?? 'N/A' }}</code></td>
                                             <td style="font-size:13px;">{{ $v->patient->email ?? '—' }}</td>
                                             <td><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
+                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->diagnosis ?? '-' }}</td>
+                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->prescription ?? '-' }}</td>
+                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:160px;">{{ $v->medicalRecord->notes ?? '-' }}</td>
+                                            <td>
+                                                @if($v->medicalRecord && $v->medicalRecord->report_path)
+                                                    <a href="{{ asset('storage/'.$v->medicalRecord->report_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                        <i class="fa-solid fa-file-pdf me-1"></i>View
+                                                    </a>
+                                                @else
+                                                    <span style="font-size:12.5px;color:#94a3b8;">-</span>
+                                                @endif
+                                            </td>
                                             <td>
     @if($v->status == 'waiting')
         <span class="badge bg-secondary-subtle text-secondary px-2 py-1" style="border-radius: 6px; font-size: 12px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;">

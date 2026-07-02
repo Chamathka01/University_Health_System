@@ -303,7 +303,7 @@
         .table thead th{
             background:var(--gray-50);
             font-weight:600;
-            font-size:13px;
+            font-size:15px;
             text-transform:uppercase;
             letter-spacing:0.04em;
             color:var(--gray-600);

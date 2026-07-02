@@ -18,7 +18,7 @@ class NurseController extends Controller
             ->orderBy('visit_date', 'desc')
             ->get();
 
-        $todaysVisits = Visit::with('patient')
+        $todaysVisits = Visit::with(['patient', 'medicalRecord'])
             ->whereDate('visit_date', now()->toDateString())
             ->orderBy('visit_date', 'desc')
             ->get();

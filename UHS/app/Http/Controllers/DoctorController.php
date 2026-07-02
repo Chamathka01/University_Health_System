@@ -21,7 +21,7 @@ class DoctorController extends Controller
                     ->orderBy('visit_date')
                     ->get();
 
-        $monthlyVisitsLog = Visit::with('patient')
+        $monthlyVisitsLog = Visit::with(['patient', 'medicalRecord'])
                     ->whereMonth('visit_date', now()->month)
                     ->whereYear('visit_date', now()->year)
                     ->orderBy('visit_date', 'desc')
