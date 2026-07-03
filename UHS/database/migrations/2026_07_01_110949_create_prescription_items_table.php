@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('prescription_items', function (Blueprint $table) {
             $table->foreignId('medical_record_id')->constrained('medical_records')->onDelete('cascade');
-            $table->unsignedBigInteger('medicine_id'); // Link to your medicine stock table ID
+            $table->unsignedBigInteger('medicine_id'); // Link to medicine stock table ID
             $table->integer('quantity_given');
         });
     }
