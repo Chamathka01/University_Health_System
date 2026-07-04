@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         Register::updateOrCreate([
             'email' => 'chamathkahettiarachchi@gmail.com',
         ], [
-            'role' => 'admin',
+            'role' => 'nurse',
             'password' => Hash::make(Str::random(32)),
             'regno' => null,
             'staff_id' => null,

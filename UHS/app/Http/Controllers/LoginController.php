@@ -38,10 +38,6 @@ class LoginController extends Controller
 
     private function redirectByRole(Register $user)
     {
-        if ($user->role == 'admin') {
-            return redirect('/medicine-stock');
-        }
-
         if ($user->role == 'doctor') {
             return redirect('/doctor/dashboard');
         }

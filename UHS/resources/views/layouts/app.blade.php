@@ -522,7 +522,7 @@
             </a>
         @endif
 
-        @if($user && in_array($user['role'], ['admin', 'doctor', 'nurse']))
+        @if($user && in_array($user['role'], ['doctor', 'nurse']))
             <a href="/medicine-stock" class="{{ request()->is('medicine-stock*') ? 'active' : '' }}">
                 <i class="fa-solid fa-pills"></i> Medicine Stock
             </a>
