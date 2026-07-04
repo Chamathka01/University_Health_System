@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Register;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -13,7 +14,6 @@ class RegisterController extends Controller
         $request->validate([
             'role' => 'required|in:doctor,nurse,student,staff',
             'email' => 'required|email|unique:registers,email',
-            'password' => 'required|min:8|confirmed',
         ]);
 
         if ($request->role == 'student') {
@@ -31,12 +31,12 @@ class RegisterController extends Controller
 
         Register::create([
             'role'     => $request->role,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'email'    => strtolower($request->email),
+            'password' => Hash::make(Str::random(32)),
             'regno'    => $request->role === 'student' ? $request->regno    : null,
             'staff_id' => $request->role === 'staff'   ? $request->staff_id : null,
         ]);
 
-        return redirect('/login')->with('success', 'Registration successful! Please login.');
+        return redirect('/login')->with('success', 'Registration successful! Please sign in with Google using the same email.');
     }
 }

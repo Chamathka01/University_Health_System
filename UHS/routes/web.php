@@ -6,9 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\MedicineStockController;
-use App\Models\Register;
 
 //Auth pages
 
@@ -25,7 +23,8 @@ Route::get('/register', function () {
 });
 
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
-Route::post('/login', [LoginController::class, 'login'])->name('login.check');
+Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('login.google.callback');
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Doctor Module
@@ -59,27 +58,23 @@ Route::middleware('role:student,staff')->group(function () {
     Route::get('/patient/dashboard', [PatientController::class, 'dashboard']);
 });
 
-// Forgot Password
-
-// show forgot password form
 Route::get('/forgot-password', function () {
-    return view('forgot-password');
+    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
 });
 
-// send OTP
-Route::post('/forgot-password', [ForgotPasswordController::class, 'sendLink'])
-    ->name('password.send');
+Route::post('/forgot-password', function () {
+    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
+})->name('password.send');
 
-// reset password form
 Route::get('/reset-password', function () {
-    return view('reset-password');
+    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
 });
 
-// reset password action
-Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])
-    ->name('password.reset');
+Route::post('/reset-password', function () {
+    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
+})->name('password.reset');
 
-// Medicine Inventory Module (Accessible strictly to Doctor and Nurse roles)
+// Medicine Inventory Module (Accessible to Admin, Doctor, and Nurse roles)
 Route::middleware(['medical.staff'])->group(function () {
     Route::get('/medicine-stock', [MedicineStockController::class, 'index'])->name('stock.index');
     Route::post('/medicine-stock', [MedicineStockController::class, 'store'])->name('stock.store');

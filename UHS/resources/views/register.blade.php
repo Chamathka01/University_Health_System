@@ -216,7 +216,7 @@
 
     <div class="logo"><i class="fa-solid fa-hospital-user"></i></div>
     <h4>Create account</h4>
-    <p class="subtitle">Quick registration </p>
+    <p class="subtitle">Register your role and sign in with Google</p>
 
     @if($errors->any())
         <div class="alert alert-danger mb-3">
@@ -276,25 +276,10 @@
                    value="{{ old('email') }}" required>
         </div>
 
-        <!-- 5. Password -->
-        <div class="row g-2">
-            <div class="col-6">
-                <label class="form-label">Password</label>
-                <div class="pw-wrap">
-                    <input type="password" name="password" id="pw1" class="form-control"
-                           placeholder="Min. 8 characters" required>
-                    <i class="fa-regular fa-eye pw-toggle" onclick="togglePw('pw1',this)"></i>
-                </div>
-            </div>
-            <div class="col-6">
-                <label class="form-label">Confirm Password</label>
-                <div class="pw-wrap">
-                    <input type="password" name="password_confirmation" id="pw2" class="form-control"
-                           placeholder="Repeat password" required>
-                    <i class="fa-regular fa-eye pw-toggle" onclick="togglePw('pw2',this)"></i>
-                </div>
-            </div>
-        </div>
+        <p class="hint">
+            <i class="fa-solid fa-circle-info me-1"></i>
+            Use the same email address when signing in with Google.
+        </p>
 
         <button type="submit" class="btn-register">
             <i class="fa-solid fa-user-plus me-2"></i>Create Account
@@ -314,12 +299,6 @@ function selectRole(role) {
     // Show / hide ID fields
     document.getElementById('regnoField').classList.toggle('visible', role === 'student');
     document.getElementById('staffField').classList.toggle('visible', role === 'staff');
-}
-
-function togglePw(id, icon) {
-    const el = document.getElementById(id);
-    if (el.type === 'password') { el.type = 'text';     icon.classList.replace('fa-eye','fa-eye-slash'); }
-    else                        { el.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); }
 }
 
 // Re-apply on validation error (old values)

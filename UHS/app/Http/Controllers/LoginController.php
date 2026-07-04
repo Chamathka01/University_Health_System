@@ -2,46 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Register;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Laravel\Socialite\Facades\Socialite;
+use Throwable;
 
 class LoginController extends Controller
 {
-        public function login(Request $request)
-        {
-            $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required'
-        ]);
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
 
-        $user = Register::where('email', $request->email)->first();
-
-        if ($user && Hash::check($request->password, $user->password)) {
-
-            Session::put('user', $user);
-
-            if ($user->role == 'doctor') {
-                return redirect('/doctor/dashboard');
-            }
-
-            if ($user->role == 'nurse') {
-                return redirect('/nurse/dashboard');
-            }
-
-            if ($user->role == 'student') {
-                return redirect('/patient/dashboard');
-            }
-
-            if ($user->role == 'staff') {
-                return redirect('/patient/dashboard');
-            }
-
-            return back()->with('error', 'Unknown role.');
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->user();
+        } catch (Throwable $e) {
+            return redirect('/login')->with('error', 'Google sign in failed. Please try again.');
         }
-        return back()->with('error', 'Invalid email or password.')
-                     ->withInput(['email' => $request->email]);
+
+        $email = strtolower($googleUser->getEmail());
+
+        $user = Register::where('email', $email)->first();
+
+        if (!$user) {
+            return redirect('/login')
+                ->with('error', 'This Google account is not registered in the University Health System.');
+        }
+
+        Session::put('user', $user);
+
+        return $this->redirectByRole($user);
+    }
+
+    private function redirectByRole(Register $user)
+    {
+        if ($user->role == 'admin') {
+            return redirect('/medicine-stock');
+        }
+
+        if ($user->role == 'doctor') {
+            return redirect('/doctor/dashboard');
+        }
+
+        if ($user->role == 'nurse') {
+            return redirect('/nurse/dashboard');
+        }
+
+        if ($user->role == 'student' || $user->role == 'staff') {
+            return redirect('/patient/dashboard');
+        }
+
+        return redirect('/login')->with('error', 'Unknown role.');
+    }
+
+    public function login()
+    {
+        return redirect()->route('login.google');
     }
 
     public function logout()
@@ -50,4 +68,3 @@ class LoginController extends Controller
         return redirect('/login');
     }
 }
-

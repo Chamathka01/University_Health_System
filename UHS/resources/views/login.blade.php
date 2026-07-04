@@ -244,7 +244,7 @@
     <!-- Right login form -->
     <div class="panel-right">
         <h4>Welcome back</h4>
-        <p class="subtitle">Sign in with your email and password</p>
+        <p class="subtitle">Sign in securely with your registered Google account</p>
 
         @if(session('error'))
             <div class="alert alert-danger mb-3">{{ session('error') }}</div>
@@ -256,43 +256,12 @@
             <div class="alert alert-danger mb-3">{{ $errors->first() }}</div>
         @endif
 
-        <form method="POST" action="{{ route('login.check') }}">
-            @csrf
-
-            <div class="mb-3">
-                <label class="form-label">Email Address</label>
-                <input type="email" name="email" class="form-control"
-                       placeholder="Enter your Email"
-                       value="{{ old('email') }}" required autofocus>
-            </div>
-
-            <div class="mb-2">
-                <label class="form-label">Password</label>
-                <div class="pw-wrap">
-                    <input type="password" name="password" id="pw" class="form-control"
-                           placeholder="Enter your password" required>
-                    <i class="fa-regular fa-eye pw-toggle" id="pwIcon" onclick="togglePw()"></i>
-                </div>
-            </div>
-
-            <div class="text-end mb-3">
-                <a href="/forgot-password" class="forgot-link">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="btn-login">Sign In</button>
-        </form>
+        <a href="{{ route('login.google') }}" class="btn-login d-flex align-items-center justify-content-center text-decoration-none">
+            <i class="fa-brands fa-google me-2"></i>Sign in with Google
+        </a>
 
         <p class="reg-link">Don't have an account? <a href="/register">Register here</a></p>
     </div>
 </div>
-
-<script>
-function togglePw() {
-    const pw   = document.getElementById('pw');
-    const icon = document.getElementById('pwIcon');
-    if (pw.type === 'password') { pw.type = 'text';     icon.classList.replace('fa-eye','fa-eye-slash'); }
-    else                        { pw.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); }
-}
-</script>
 </body>
 </html>

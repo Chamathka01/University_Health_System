@@ -17,7 +17,7 @@ class CheckMedicalStaff
     {
         $user = session('user');
 
-        if (!$user || !in_array($user['role'], ['doctor', 'nurse'])) {
+        if (!$user || !in_array($user['role'], ['admin', 'doctor', 'nurse'])) {
             return redirect('/login')->with('error', 'Access Restricted. Medical authorization validation clearance required.');
         }
 
