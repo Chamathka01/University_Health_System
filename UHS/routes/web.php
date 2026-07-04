@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
@@ -19,12 +18,16 @@ Route::get('/login', function () {
 });
 
 Route::get('/register', function () {
-    return view('register');
+    return redirect('/login')->with('error', 'Please sign in with Google and select your role.');
 });
 
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+Route::post('/register', function () {
+    return redirect('/login')->with('error', 'Please sign in with Google and select your role.');
+})->name('register.store');
 Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('login.google.callback');
+Route::get('/select-role', [LoginController::class, 'showRoleSelection'])->name('role.select');
+Route::post('/select-role', [LoginController::class, 'storeRoleSelection'])->name('role.store');
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Doctor Module

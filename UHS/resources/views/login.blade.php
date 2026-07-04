@@ -244,7 +244,7 @@
     <!-- Right login form -->
     <div class="panel-right">
         <h4>Welcome back</h4>
-        <p class="subtitle">Sign in securely with your registered Google account</p>
+        <p class="subtitle">Sign in with Google, then choose your system role</p>
 
         @if(session('error'))
             <div class="alert alert-danger mb-3">{{ session('error') }}</div>
@@ -260,7 +260,7 @@
             <i class="fa-brands fa-google me-2"></i>Sign in with Google
         </a>
 
-        <p class="reg-link">Don't have an account? <a href="/register">Register here</a></p>
+        <p class="reg-link">No password registration needed. Your role is selected after Google sign in.</p>
     </div>
 </div>
 </body>
