@@ -55,8 +55,8 @@
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
 <script>
-    // Barcode value = regno for students, staff_id for staff
-    const barcodeValue = "{{ $user['regno'] ?? $user['staff_id'] ?? $user['id'] }}";
+    // Barcode value = Google email
+    const barcodeValue = "{{ $user['email'] ?? $user['id'] }}";
     JsBarcode("#barcode", barcodeValue, {
         format:       "CODE128",
         width:        2,

@@ -5,8 +5,6 @@ namespace Database\Seeders;
 use App\Models\Register;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -21,9 +19,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'chamathkahettiarachchi@gmail.com',
         ], [
             'role' => 'nurse',
-            'password' => Hash::make(Str::random(32)),
-            'regno' => null,
-            'staff_id' => null,
         ]);
     }
 }

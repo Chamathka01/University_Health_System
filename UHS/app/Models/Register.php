@@ -15,28 +15,23 @@ class Register extends Model
     protected $fillable = [
         'role',
         'email',
-        'password',
-        'regno',
-        'staff_id',
     ];
-
-    protected $hidden = ['password'];
 
     public function isPatient(): bool
     {
         return in_array($this->role, ['student', 'staff']);
     }
 
-    // Returns the display ID (regno for students, staff_id for staff)
+    // Returns the display ID used across dashboards.
     public function getDisplayIdAttribute(): string
     {
-        return $this->regno ?? $this->staff_id ?? 'N/A';
+        return $this->email ?? 'N/A';
     }
 
     // Returns the value to encode in barcode
     public function getBarcodeValueAttribute(): string
     {
-        return $this->regno ?? $this->staff_id ?? (string) $this->id;
+        return $this->email ?? (string) $this->id;
     }
 
     // Display name: use the ID since we no longer collect name

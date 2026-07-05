@@ -514,6 +514,9 @@
             <a href="/nurse/dashboard" class="{{ request()->is('nurse/dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-gauge-high"></i> Dashboard
             </a>
+            <a href="/nurse/users/create" class="{{ request()->is('nurse/users*') ? 'active' : '' }}">
+                <i class="fa-solid fa-user-plus"></i> Create User
+            </a>
         @endif
 
         @if($user && $user['role'] == 'doctor')

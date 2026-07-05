@@ -31,17 +31,12 @@ class NurseController extends Controller
     public function scanPatient(Request $request)
     {
         $request->validate([
-            'regno' => 'required'
+            'email' => 'required|email'
         ]);
 
-        $value = $request->regno;
+        $value = strtolower($request->email);
 
-        // Search by regno (students) OR staff_id (staff)
-
-        $patient = Register::where(function ($q) use ($value) {
-            $q->where('regno', $value)
-                  ->orWhere('staff_id', $value);
-            })
+        $patient = Register::where('email', $value)
             ->whereIn('role', ['student','staff'])
             ->first();
 
@@ -56,7 +51,7 @@ class NurseController extends Controller
                 'id'         => $patient->id,
                 'role'       => $patient->role,
                 'email'      => $patient->email,
-                'display_id' => $patient->role == 'student' ? $patient->regno : $patient->staff_id,
+                'display_id' => $patient->email,
             ]
         ]);
     }

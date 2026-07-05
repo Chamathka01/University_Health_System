@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
@@ -26,8 +27,6 @@ Route::post('/register', function () {
 })->name('register.store');
 Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback'])->name('login.google.callback');
-Route::get('/select-role', [LoginController::class, 'showRoleSelection'])->name('role.select');
-Route::post('/select-role', [LoginController::class, 'storeRoleSelection'])->name('role.store');
 Route::get('/logout', [LoginController::class, 'logout']);
 
 // Doctor Module
@@ -52,6 +51,10 @@ Route::middleware('role:nurse')->group(function () {
     Route::get('/nurse/visit/create/{patient_id}', [NurseController::class, 'createVisit']);
 
     Route::get('/nurse/complete/{id}', [NurseController::class, 'completeVisit']);
+
+    Route::get('/nurse/users/create', [RegisterController::class, 'create'])->name('nurse.users.create');
+
+    Route::post('/nurse/users', [RegisterController::class, 'store'])->name('nurse.users.store');
 });
 
 // Student + Staff Module
@@ -77,7 +80,7 @@ Route::post('/reset-password', function () {
     return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
 })->name('password.reset');
 
-// Medicine Inventory Module (Accessible to Admin, Doctor, and Nurse roles)
+// Medicine Inventory Module (Accessible to Doctor and Nurse roles)
 Route::middleware(['medical.staff'])->group(function () {
     Route::get('/medicine-stock', [MedicineStockController::class, 'index'])->name('stock.index');
     Route::post('/medicine-stock', [MedicineStockController::class, 'store'])->name('stock.store');

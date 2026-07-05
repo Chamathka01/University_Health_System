@@ -44,18 +44,19 @@
             <thead><tr><th>#</th><th>Patient ID</th><th>Email</th><th>Role</th><th>Visit Date</th><th>Status</th><th>Action</th></tr></thead>
             <tbody>
             @foreach($visits as $visit)
+            @php $patient = $visit->patient; @endphp
             <tr>
                 <td style="color:#94a3b8;font-size:12px;">{{ $visit->id }}</td>
                 <td>
                     <div style="display:flex;align-items:center;gap:10px;">
                         <div style="width:34px;height:34px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#1d4ed8;font-weight:600;font-size:13px;flex-shrink:0;">
-                            {{ strtoupper(substr($visit->patient->display_id, 0, 1)) }}
+                            {{ strtoupper(substr($patient->display_id ?? 'N', 0, 1)) }}
                         </div>
-                        <code style="font-size:12.5px;background:#f1f5f9;padding:2px 8px;border-radius:5px;">{{ $visit->patient->display_id }}</code>
+                        <code style="font-size:12.5px;background:#f1f5f9;padding:2px 8px;border-radius:5px;">{{ $patient->display_id ?? 'N/A' }}</code>
                     </div>
                 </td>
-                <td style="font-size:12.5px;color:#475569;">{{ $visit->patient->email }}</td>
-                <td><span class="badge-status {{ $visit->patient->role }}">{{ ucfirst($visit->patient->role) }}</span></td>
+                <td style="font-size:12.5px;color:#475569;">{{ $patient->email ?? 'N/A' }}</td>
+                <td><span class="badge-status {{ $patient->role ?? '' }}">{{ $patient ? ucfirst($patient->role) : 'N/A' }}</span></td>
                 <td style="font-size:13px;color:#475569;">{{ \Carbon\Carbon::parse($visit->visit_date)->format('d M Y, h:i A') }}</td>
                 <td>
                     @if($visit->status=='waiting')
@@ -106,14 +107,15 @@
                         </thead>
                         <tbody>
                             @foreach($monthlyVisitsLog as $log)
+                                @php $patient = $log->patient; @endphp
                                 <tr>
                                     <td style="font-size:13px; color:#475569;">
                                         {{ \Carbon\Carbon::parse($log->visit_date)->format('d M Y') }}
                                         <div style="font-size:11px; color:#94a3b8;">{{ \Carbon\Carbon::parse($log->visit_date)->format('h:i A') }}</div>
                                     </td>
-                                    <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $log->patient->regno ?? $log->patient->staff_id ?? 'N/A' }}</code></td>
-                                    <td style="font-size:13px;">{{ $log->patient->email }}</td>
-                                    <td><span class="badge-status {{ $log->patient->role }}">{{ ucfirst($log->patient->role) }}</span></td>
+                                    <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $patient->display_id ?? 'N/A' }}</code></td>
+                                    <td style="font-size:13px;">{{ $patient->email ?? 'N/A' }}</td>
+                                    <td><span class="badge-status {{ $patient->role ?? '' }}">{{ $patient ? ucfirst($patient->role) : 'N/A' }}</span></td>
                                     <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $log->medicalRecord->diagnosis ?? '-' }}</td>
                                     <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $log->medicalRecord->prescription ?? '-' }}</td>
                                     <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:160px;">{{ $log->medicalRecord->notes ?? '-' }}</td>
