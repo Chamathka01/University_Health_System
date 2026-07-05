@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Register;
 use App\Models\Visit;
 use Illuminate\Support\Facades\Session;
 
@@ -31,28 +30,12 @@ class NurseController extends Controller
     public function scanPatient(Request $request)
     {
         $request->validate([
-            'email' => 'required|email'
+            'barcode' => 'required|string',
+            'detected_role' => 'required|in:student,staff',
         ]);
 
-        $value = strtolower($request->email);
-
-        $patient = Register::where('email', $value)
-            ->whereIn('role', ['student','staff'])
-            ->first();
-
-        if (!$patient) {
-            return response()->json([
-                'error' => 'Patient not found. Check the ID and try again.'
-            ]);
-        }
-
         return response()->json([
-            'patient' => [
-                'id'         => $patient->id,
-                'role'       => $patient->role,
-                'email'      => $patient->email,
-                'display_id' => $patient->email,
-            ]
+            'error' => 'Student/staff database is not connected yet.'
         ]);
     }
 

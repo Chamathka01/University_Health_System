@@ -4,7 +4,7 @@
 <div class="page-header">
     <div>
         <h4><i class="fa-solid fa-user-plus me-2 text-primary"></i>Create User</h4>
-        <div class="breadcrumb-text">Register Google email and assign system role</div>
+        <div class="breadcrumb-text">Register medical staff Google email and assign role</div>
     </div>
 </div>
 
@@ -45,8 +45,6 @@
                                 <option value="" disabled selected>Select role</option>
                                 <option value="nurse" {{ old('role') == 'nurse' ? 'selected' : '' }}>Nurse</option>
                                 <option value="doctor" {{ old('role') == 'doctor' ? 'selected' : '' }}>Doctor</option>
-                                <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>Staff</option>
-                                <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
                             </select>
                         </div>
 

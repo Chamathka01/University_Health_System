@@ -15,7 +15,7 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'role' => 'required|in:doctor,nurse,student,staff',
+            'role' => 'required|in:doctor,nurse',
             'email' => 'required|email|unique:registers,email',
         ]);
 

@@ -29,28 +29,13 @@
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fa-solid fa-camera" style="color:#1a6fc4;"></i> Email Scanner
-                </div>
-                <div class="card-body text-center">
-                    <div id="reader" style="width:100%; max-width:280px; margin:0 auto;"></div>
-                    <button class="btn btn-outline-primary btn-sm mt-3 px-4" onclick="startScanner()">
-                        <i class="fa-solid fa-qrcode me-1"></i> Start Camera
-                    </button>
-                    <button class="btn btn-outline-secondary btn-sm mt-3 ms-2 px-4" onclick="stopScanner()" id="stopBtn" style="display:none;">
-                        Stop
-                    </button>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-header">
                     <i class="fa-solid fa-magnifying-glass" style="color:#1a6fc4;"></i> Search Patient
                 </div>
                 <div class="card-body">
-                    <label class="form-label">Patient Email Address</label>
+                    <label class="form-label">Student Reg No or Staff NIC</label>
                     <div class="input-group">
                         <input type="text" id="searchInput" class="form-control"
-                               placeholder="e.g. student@gmail.com"
+                               placeholder="Scan external barcode or enter ID"
                                onkeydown="if(event.key==='Enter') searchPatient()">
                         <button class="btn btn-primary" onclick="searchPatient()">
                             <i class="fa-solid fa-search"></i>
@@ -69,7 +54,7 @@
                             </div>
                             <div style="font-size:13px;color:#475569;" id="patientInfo"></div>
                             <div class="mt-3">
-                                <a id="createVisitBtn" href="#" class="btn btn-success btn-sm w-100">
+                                <a id="createVisitBtn" href="#" class="btn btn-success btn-sm w-100 disabled" aria-disabled="true">
                                     <i class="fa-solid fa-plus me-1"></i> Create Visit
                                 </a>
                             </div>
@@ -257,50 +242,7 @@
 @endsection
 
 @section('scripts')
-<script src="https://unpkg.com/html5-qrcode"></script>
 <script>
-let scanner = new Html5Qrcode("reader", {
-    formatsToSupport: [
-        Html5QrcodeSupportedFormats.QR_CODE,
-        Html5QrcodeSupportedFormats.CODE_128,
-        Html5QrcodeSupportedFormats.CODE_39,
-        Html5QrcodeSupportedFormats.EAN_13,
-        Html5QrcodeSupportedFormats.EAN_8,
-        Html5QrcodeSupportedFormats.UPC_A,
-        Html5QrcodeSupportedFormats.UPC_E,
-        Html5QrcodeSupportedFormats.ITF
-    ]
-});
-let scannerActive = false;
-
-function startScanner() {
-    Html5Qrcode.getCameras().then(devices => {
-        if (devices.length) {
-            scanner.start(
-                devices[0].id,
-                {
-                    fps: 15, qrbox: { width: 250, height: 150 }
-                },
-                (text) => {
-                    document.getElementById('searchInput').value = text;
-                    scanner.stop().then(() => { scannerActive = false; document.getElementById('stopBtn').style.display='none'; });
-                    searchPatient();
-                }
-                ).catch(err => {
-                console.error("Scanner failed to start: ", err);
-            });
-            scannerActive = true;
-            document.getElementById('stopBtn').style.display = 'inline-block';
-        }
-    }).catch(err => {
-        console.error("No camera devices found: ", err);
-    });
-}
-
-function stopScanner() {
-    if (scannerActive) scanner.stop().then(() => { scannerActive = false; document.getElementById('stopBtn').style.display='none'; });
-}
-
 function searchPatient() {
     const val = document.getElementById('searchInput').value.trim();
     if (!val) return;
@@ -308,29 +250,34 @@ function searchPatient() {
     document.getElementById('patientBox').style.display = 'none';
     document.getElementById('patientError').style.display = 'none';
 
+    const detectedRole = val.includes('/') ? 'student' : 'staff';
+    const detectedLabel = detectedRole.charAt(0).toUpperCase() + detectedRole.slice(1);
+
     fetch('/nurse/scan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-        body: JSON.stringify({ email: val })
+        body: JSON.stringify({ barcode: val, detected_role: detectedRole })
     })
     .then(r => r.json())
     .then(data => {
     if (data.error) {
-        document.getElementById('patientError').innerText = data.error;
+        document.getElementById('patientError').innerText = `${detectedLabel} detected: ${val}. ${data.error}`;
         document.getElementById('patientError').style.display = 'block';
     } else {
         const p = data.patient;
 
-        document.getElementById('patientName').innerText  = p.email;
+        document.getElementById('patientName').innerText  = p.display_id;
         document.getElementById('patientId').innerText    = p.display_id;
-        document.getElementById('patientAvatar').innerText = p.email.charAt(0).toUpperCase();
-        document.getElementById('patientInfo').innerHTML = `<i class="fa-solid fa-envelope me-1"></i> Email: ${p.display_id}`;
+        document.getElementById('patientAvatar').innerText = p.display_id.charAt(0).toUpperCase();
+        document.getElementById('patientInfo').innerHTML = `<i class="fa-solid fa-barcode me-1"></i> Barcode: ${p.display_id}`;
 
         const badge = document.getElementById('patientRoleBadge');
         badge.innerText = p.role.charAt(0).toUpperCase() + p.role.slice(1);
         badge.className = `badge-status ${p.role}`;
 
         document.getElementById('createVisitBtn').href = `/nurse/visit/create/${p.id}`;
+        document.getElementById('createVisitBtn').classList.remove('disabled');
+        document.getElementById('createVisitBtn').removeAttribute('aria-disabled');
         document.getElementById('patientBox').style.display = 'block';
     }
 });
