@@ -165,22 +165,22 @@
                                 <tbody>
                                     @foreach($todaysVisits as $v)
                                         <tr>
-                                            <td style="font-size:13px; color:#475569;">{{ \Carbon\Carbon::parse($v->visit_date)->format('h:i A') }}</td>
-                                            <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $v->patient->display_id ?? 'N/A' }}</code></td>
-                                            <td style="font-size:13px;">{{ $v->patient->name ?? '-' }}</td>
-                                            <td><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
-                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">
+                                            <td style="font-size:13px; color:#475569; vertical-align:top;">{{ \Carbon\Carbon::parse($v->visit_date)->format('h:i A') }}</td>
+                                            <td style="vertical-align:top;"><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $v->patient->display_id ?? 'N/A' }}</code></td>
+                                            <td style="font-size:13px; vertical-align:top;">{{ $v->patient->name ?? '-' }}</td>
+                                            <td style="vertical-align:top;"><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
+                                            <td style="font-size:12.5px; color:#475569; min-width:220px; vertical-align:top;">
                                                 @if($v->medicalRecord && $v->medicalRecord->icd10_code)
-                                                    <div style="margin-bottom:4px;">
+                                                    <div style="margin-bottom:6px; line-height:1.5;">
                                                         <code style="background:#eff6ff;color:#1d4ed8;padding:2px 6px;border-radius:4px;">{{ $v->medicalRecord->icd10_code }}</code>
-                                                        <span style="color:#64748b;">{{ $v->medicalRecord->icd10_description }}</span>
+                                                        <span style="color:#64748b;display:block;margin-top:3px;">{{ $v->medicalRecord->icd10_description }}</span>
                                                     </div>
                                                 @endif
-                                                {{ $v->medicalRecord->diagnosis ?? '-' }}
+                                                <div style="white-space:pre-wrap;line-height:1.5;">{{ $v->medicalRecord->diagnosis ?? '-' }}</div>
                                             </td>
-                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->prescription ?? '-' }}</td>
-                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:160px;">{{ $v->medicalRecord->notes ?? '-' }}</td>
-                                            <td>
+                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:220px; vertical-align:top; line-height:1.5;">{{ $v->medicalRecord->prescription ?? '-' }}</td>
+                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:160px; vertical-align:top; line-height:1.5;">{{ $v->medicalRecord->notes ?? '-' }}</td>
+                                            <td style="vertical-align:top;">
                                                 @if($v->medicalRecord && $v->medicalRecord->report_path)
                                                     <a href="{{ asset('storage/'.$v->medicalRecord->report_path) }}" target="_blank" class="btn btn-outline-primary btn-sm">
                                                         <i class="fa-solid fa-file-pdf me-1"></i>View
@@ -189,7 +189,7 @@
                                                     <span style="font-size:12.5px;color:#94a3b8;">-</span>
                                                 @endif
                                             </td>
-                                            <td>
+                                            <td style="vertical-align:top;">
     @if($v->status == 'waiting')
         <span class="badge bg-secondary-subtle text-secondary px-2 py-1" style="border-radius: 6px; font-size: 12px; background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1;">
             <i class="fa-solid fa-clock me-1 text-muted"></i> Waiting in Queue
