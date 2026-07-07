@@ -285,7 +285,6 @@
             <div class="ms-auto d-flex align-items-center">
                 <a href="#services" class="nav-link-home">Services</a>
                 <a href="#workflow" class="nav-link-home">Workflow</a>
-                <a href="#roles" class="nav-link-home">Access</a>
                 <a href="/login" class="btn btn-primary px-4 fw-medium" style="background: #1a6fc4; border-radius: 8px; font-size: 17px;">
                     <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
                 </a>
@@ -390,13 +389,6 @@
             <div class="row g-4">
                 <div class="col-md-3">
                     <div class="role-panel">
-                        <i class="fa-solid fa-user-graduate"></i>
-                        <h5 class="fw-bold" style="font-size:16px;">Students & Staff</h5>
-                        <p class="text-muted small mb-0">Access visit records from the patient dashboard.</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="role-panel">
                         <i class="fa-solid fa-user-nurse"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Nurses</h5>
                         <p class="text-muted small mb-0">Scan patient IDs, create visits, monitor daily queues, and dispense prescriptions.</p>
@@ -406,7 +398,7 @@
                     <div class="role-panel">
                         <i class="fa-solid fa-user-doctor"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Doctors</h5>
-                        <p class="text-muted small mb-0">Review medicalhistory of patients, record diagnosis, consultation, and attach clinical reports.</p>
+                        <p class="text-muted small mb-0">Review medical history of patients, record diagnosis, consultation, and attach clinical reports.</p>
                     </div>
                 </div>
                 <div class="col-md-3">
