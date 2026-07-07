@@ -11,6 +11,8 @@ class MedicalRecord extends Model
     protected $fillable = [
         'visit_id',
         'diagnosis',
+        'icd10_code',
+        'icd10_description',
         'prescription',
         'notes',
         'report_path',

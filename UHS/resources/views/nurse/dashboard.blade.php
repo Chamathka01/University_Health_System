@@ -115,7 +115,7 @@
                                     onclick="viewPrescription(
                                         '{{ $visit->patient->name ?? 'Patient Not Found' }}',
                                         '{{ $visit->patient->display_id ?? 'N/A' }}',
-                                        `{{ addslashes($visit->medicalRecord->diagnosis ?? '-') }}`,
+                                        `{{ addslashes($visit->medicalRecord ? (($visit->medicalRecord->icd10_code ? $visit->medicalRecord->icd10_code . ' - ' . $visit->medicalRecord->icd10_description . "\n" : '') . $visit->medicalRecord->diagnosis) : '-') }}`,
                                         `{{ addslashes($visit->medicalRecord->prescription ?? '-') }}`,
                                         `{{ addslashes($visit->medicalRecord->notes ?? '-') }}`,
                                         '{{ $visit->medicalRecord->report_path ? asset("storage/".$visit->medicalRecord->report_path) : "" }}'
@@ -169,7 +169,15 @@
                                             <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $v->patient->display_id ?? 'N/A' }}</code></td>
                                             <td style="font-size:13px;">{{ $v->patient->name ?? '-' }}</td>
                                             <td><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
-                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->diagnosis ?? '-' }}</td>
+                                            <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">
+                                                @if($v->medicalRecord && $v->medicalRecord->icd10_code)
+                                                    <div style="margin-bottom:4px;">
+                                                        <code style="background:#eff6ff;color:#1d4ed8;padding:2px 6px;border-radius:4px;">{{ $v->medicalRecord->icd10_code }}</code>
+                                                        <span style="color:#64748b;">{{ $v->medicalRecord->icd10_description }}</span>
+                                                    </div>
+                                                @endif
+                                                {{ $v->medicalRecord->diagnosis ?? '-' }}
+                                            </td>
                                             <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->prescription ?? '-' }}</td>
                                             <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:160px;">{{ $v->medicalRecord->notes ?? '-' }}</td>
                                             <td>

@@ -62,6 +62,8 @@ class DoctorController extends Controller
     $request->validate([
         'visit_id'       => 'required',
         'diagnosis'      => 'required',
+        'icd10_code' => 'nullable|string|max:20',
+        'icd10_description' => 'nullable|string|max:255',
         'medicine_id'    => 'required|array|min:1',
         'medicine_id.*'  => 'required|exists:medicines,id',
         'quantity_per_dose' => 'required|array|min:1',
@@ -119,6 +121,8 @@ class DoctorController extends Controller
             $medicalRecord = MedicalRecord::create([
                 'visit_id'     => $request->visit_id,
                 'diagnosis'    => $request->diagnosis,
+                'icd10_code' => $request->icd10_code,
+                'icd10_description' => $request->icd10_description,
                 'prescription' => $prescriptionString,
                 'notes'        => $request->notes,
                 'report_path'  => $reportPath,

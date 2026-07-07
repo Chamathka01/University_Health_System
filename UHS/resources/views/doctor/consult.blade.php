@@ -54,6 +54,12 @@
                         <span class="badge-status completed ms-1" style="font-size:10px;">Done</span>
                     </div>
                     @if($h->medicalRecord)
+                        @if($h->medicalRecord->icd10_code)
+                            <div style="font-size:11.5px;color:#1a6fc4;margin-bottom:3px;">
+                                <code style="background:#eff6ff;padding:1px 5px;border-radius:4px;">{{ $h->medicalRecord->icd10_code }}</code>
+                                {{ Str::limit($h->medicalRecord->icd10_description, 50) }}
+                            </div>
+                        @endif
                         <div style="font-size:12.5px;font-weight:500;">{{ Str::limit($h->medicalRecord->diagnosis, 60) }}</div>
                         <div style="font-size:12px;color:#475569;">{{ Str::limit($h->medicalRecord->prescription, 80) }}</div>
                         @if($h->medicalRecord->report_path)
@@ -76,6 +82,24 @@
                 <form method="POST" action="/doctor/save-consultation" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="visit_id" value="{{ $visit->id }}">
+                    <input type="hidden" name="icd10_code" id="icd10Code" value="{{ old('icd10_code') }}">
+                    <input type="hidden" name="icd10_description" id="icd10Description" value="{{ old('icd10_description') }}">
+
+                    <div class="mb-3 position-relative">
+                        <label class="form-label">ICD-10 Code</label>
+                        <input type="text" id="icd10Search" class="form-control"
+                               value="{{ old('icd10_code') && old('icd10_description') ? old('icd10_code') . ' - ' . old('icd10_description') : '' }}"
+                               placeholder="Type disease name or ICD-10 code...">
+                        <div id="icd10Results" class="list-group"
+                             style="display:none;position:absolute;left:0;right:0;z-index:20;max-height:220px;overflow-y:auto;border:1px solid #dbe3ee;border-radius:8px;box-shadow:0 12px 24px rgba(15,23,42,0.12);"></div>
+                        <div id="icd10Selected" class="mt-2" style="{{ old('icd10_code') ? '' : 'display:none;' }}">
+                            <span class="badge bg-primary-subtle text-primary" style="font-size:12px;border-radius:6px;padding:6px 10px;">
+                                <i class="fa-solid fa-code me-1"></i>
+                                <span id="icd10SelectedText">{{ old('icd10_code') }}{{ old('icd10_description') ? ' - ' . old('icd10_description') : '' }}</span>
+                            </span>
+                            <button type="button" id="clearIcd10" class="btn btn-link btn-sm p-0 ms-2" style="font-size:12px;text-decoration:none;">Clear</button>
+                        </div>
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label">Diagnosis <span style="color:#ef4444;">*</span></label>
@@ -268,6 +292,103 @@
             $(this).closest('.medicine-row').find('.searchable-medicine').select2('destroy');
             $(this).closest('.medicine-row').remove();
             updateRemoveButtons();
+        });
+
+        const icd10Search = document.getElementById('icd10Search');
+        const icd10Results = document.getElementById('icd10Results');
+        const icd10Code = document.getElementById('icd10Code');
+        const icd10Description = document.getElementById('icd10Description');
+        const icd10Selected = document.getElementById('icd10Selected');
+        const icd10SelectedText = document.getElementById('icd10SelectedText');
+        const clearIcd10 = document.getElementById('clearIcd10');
+        let icd10Timer = null;
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function hideIcd10Results() {
+            icd10Results.style.display = 'none';
+            icd10Results.innerHTML = '';
+        }
+
+        function selectIcd10(code, description) {
+            icd10Code.value = code;
+            icd10Description.value = description;
+            icd10Search.value = `${code} - ${description}`;
+            icd10SelectedText.innerText = `${code} - ${description}`;
+            icd10Selected.style.display = 'block';
+            hideIcd10Results();
+        }
+
+        icd10Search.addEventListener('input', function() {
+            const term = this.value.trim();
+            icd10Code.value = '';
+            icd10Description.value = '';
+            icd10Selected.style.display = 'none';
+
+            clearTimeout(icd10Timer);
+
+            if (term.length < 2) {
+                hideIcd10Results();
+                return;
+            }
+
+            icd10Timer = setTimeout(function() {
+                fetch(`https://clinicaltables.nlm.nih.gov/api/icd10cm/v3/search?sf=code,name&df=code,name&maxList=8&terms=${encodeURIComponent(term)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const rows = data[3] || [];
+
+                        if (!rows.length) {
+                            icd10Results.innerHTML = '<div class="list-group-item text-muted" style="font-size:13px;">No ICD-10 matches found</div>';
+                            icd10Results.style.display = 'block';
+                            return;
+                        }
+
+                        icd10Results.innerHTML = rows.map(row => {
+                            const code = row[0];
+                            const description = row[1];
+                            return `<button type="button" class="list-group-item list-group-item-action icd10-option" data-code="${encodeURIComponent(code)}" data-description="${encodeURIComponent(description)}" style="font-size:13px;">
+                                <strong>${escapeHtml(code)}</strong>
+                                <span class="text-muted ms-2">${escapeHtml(description)}</span>
+                            </button>`;
+                        }).join('');
+                        icd10Results.style.display = 'block';
+                    })
+                    .catch(() => {
+                        icd10Results.innerHTML = '<div class="list-group-item text-danger" style="font-size:13px;">Unable to load ICD-10 codes</div>';
+                        icd10Results.style.display = 'block';
+                    });
+            }, 300);
+        });
+
+        icd10Results.addEventListener('click', function(event) {
+            const option = event.target.closest('.icd10-option');
+            if (!option) {
+                return;
+            }
+
+            selectIcd10(decodeURIComponent(option.dataset.code), decodeURIComponent(option.dataset.description));
+        });
+
+        clearIcd10.addEventListener('click', function() {
+            icd10Search.value = '';
+            icd10Code.value = '';
+            icd10Description.value = '';
+            icd10Selected.style.display = 'none';
+            hideIcd10Results();
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('#icd10Search') && !event.target.closest('#icd10Results')) {
+                hideIcd10Results();
+            }
         });
     });
 </script>
