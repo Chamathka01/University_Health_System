@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Visit;
+use App\Models\PrescriptionItem;
 
 class MedicalRecord extends Model
 {
@@ -18,6 +19,11 @@ class MedicalRecord extends Model
     public function visit()
     {
         return $this->belongsTo(Visit::class);
+    }
+
+    public function prescriptionItems()
+    {
+        return $this->hasMany(PrescriptionItem::class);
     }
 
     // Returns full public URL for the PDF

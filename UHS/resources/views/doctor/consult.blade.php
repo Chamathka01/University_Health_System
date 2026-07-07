@@ -86,7 +86,10 @@
 
                     @php
                         $oldMedicineIds = old('medicine_id', ['']);
-                        $oldQuantities = old('quantity_given', ['']);
+                        $oldQuantities = old('quantity_per_dose', ['']);
+                        $oldFrequencies = old('frequency', ['']);
+                        $oldMealTimings = old('meal_timing', ['']);
+                        $oldDurationDays = old('duration_days', ['']);
                     @endphp
 
                     <div class="mb-3">
@@ -94,7 +97,7 @@
                         <div id="medicineRows">
                             @foreach($oldMedicineIds as $index => $oldMedicineId)
                             <div class="medicine-row row g-2 mb-2 align-items-start">
-                                <div class="col-md-7">
+                                <div class="col-md-4">
                                     <select name="medicine_id[]" class="form-select searchable-medicine" required>
                                         <option value="" disabled {{ $oldMedicineId ? '' : 'selected' }}>-- Select Stock Medicine --</option>
                                         @foreach($availableMedicines as $med)
@@ -104,11 +107,28 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="col-md-3">
-                                    <input type="number" name="quantity_given[]" class="form-control"
-                                           placeholder="Quantity" min="1" value="{{ $oldQuantities[$index] ?? '' }}" required>
+                                <div class="col-md-2">
+                                    <input type="number" name="quantity_per_dose[]" class="form-control"
+                                           placeholder="Qty / meal" min="1" value="{{ $oldQuantities[$index] ?? '' }}" required>
                                 </div>
                                 <div class="col-md-2">
+                                    <select name="frequency[]" class="form-select" required>
+                                        <option value="" disabled {{ ($oldFrequencies[$index] ?? '') ? '' : 'selected' }}>Frequency</option>
+                                        @foreach(['OD', 'BD', 'TDS', 'QID'] as $frequency)
+                                            <option value="{{ $frequency }}" {{ ($oldFrequencies[$index] ?? '') === $frequency ? 'selected' : '' }}>{{ $frequency }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="meal_timing[]" class="form-select" required>
+                                        <option value="" disabled {{ ($oldMealTimings[$index] ?? '') ? '' : 'selected' }}>Meal</option>
+                                        <option value="AC" {{ ($oldMealTimings[$index] ?? '') === 'AC' ? 'selected' : '' }}>AC</option>
+                                        <option value="PC" {{ ($oldMealTimings[$index] ?? '') === 'PC' ? 'selected' : '' }}>PC</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="number" name="duration_days[]" class="form-control mb-2"
+                                           placeholder="Days" min="1" value="{{ $oldDurationDays[$index] ?? '' }}" required>
                                     <button type="button" class="btn btn-outline-danger w-100 remove-medicine-row" title="Remove medicine">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
@@ -123,7 +143,7 @@
 
                     <template id="medicineRowTemplate">
                         <div class="medicine-row row g-2 mb-2 align-items-start">
-                            <div class="col-md-7">
+                            <div class="col-md-4">
                                 <select name="medicine_id[]" class="form-select searchable-medicine" required>
                                     <option value="" disabled selected>-- Select Stock Medicine --</option>
                                     @foreach($availableMedicines as $med)
@@ -133,11 +153,29 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-md-3">
-                                <input type="number" name="quantity_given[]" class="form-control"
-                                       placeholder="Quantity" min="1" required>
+                            <div class="col-md-2">
+                                <input type="number" name="quantity_per_dose[]" class="form-control"
+                                       placeholder="Qty / meal" min="1" required>
                             </div>
                             <div class="col-md-2">
+                                <select name="frequency[]" class="form-select" required>
+                                    <option value="" disabled selected>Frequency</option>
+                                    <option value="OD">OD</option>
+                                    <option value="BD">BD</option>
+                                    <option value="TDS">TDS</option>
+                                    <option value="QID">QID</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <select name="meal_timing[]" class="form-select" required>
+                                    <option value="" disabled selected>AC/PC</option>
+                                    <option value="AC">AC</option>
+                                    <option value="PC">PC</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="number" name="duration_days[]" class="form-control mb-2"
+                                       placeholder="Days" min="1" required>
                                 <button type="button" class="btn btn-outline-danger w-100 remove-medicine-row" title="Remove medicine">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>

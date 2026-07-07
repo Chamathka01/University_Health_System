@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Visit;
 use App\Models\MedicalRecord;
 use App\Models\Medicine;
+use App\Models\PrescriptionItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -63,8 +64,14 @@ class DoctorController extends Controller
         'diagnosis'      => 'required',
         'medicine_id'    => 'required|array|min:1',
         'medicine_id.*'  => 'required|exists:medicines,id',
-        'quantity_given' => 'required|array|min:1',
-        'quantity_given.*' => 'required|integer|min:1',
+        'quantity_per_dose' => 'required|array|min:1',
+        'quantity_per_dose.*' => 'required|integer|min:1',
+        'frequency' => 'required|array|min:1',
+        'frequency.*' => 'required|in:OD,BD,TDS,QID',
+        'meal_timing' => 'required|array|min:1',
+        'meal_timing.*' => 'required|in:AC,PC',
+        'duration_days' => 'required|array|min:1',
+        'duration_days.*' => 'required|integer|min:1',
         'report'         => 'nullable|file|mimes:pdf|max:5120',
     ]);
 
@@ -80,9 +87,15 @@ class DoctorController extends Controller
         DB::transaction(function () use ($request, $reportPath, $doctor) {
 
             $prescriptionLines = [];
+            $prescriptionItems = [];
 
             foreach ($request->medicine_id as $index => $medicineId) {
-                $quantityGiven = (int) ($request->quantity_given[$index] ?? 0);
+                $quantityPerDose = (int) ($request->quantity_per_dose[$index] ?? 0);
+                $frequency = $request->frequency[$index] ?? '';
+                $mealTiming = $request->meal_timing[$index] ?? '';
+                $durationDays = (int) ($request->duration_days[$index] ?? 0);
+                $dosesPerDay = $this->dosesPerDay($frequency);
+                $quantityGiven = $quantityPerDose * $dosesPerDay * $durationDays;
                 $medicine = Medicine::findOrFail($medicineId);
 
                 if ($medicine->stock_quantity < $quantityGiven) {
@@ -90,18 +103,32 @@ class DoctorController extends Controller
                 }
 
                 $medicine->decrement('stock_quantity', $quantityGiven);
-                $prescriptionLines[] = $medicine->name . " - " . $quantityGiven . " units";
+                $prescriptionLines[] = "{$medicine->name} - {$quantityPerDose} per meal, {$frequency}, {$mealTiming}, {$durationDays} days";
+                $prescriptionItems[] = [
+                    'medicine_id' => $medicine->id,
+                    'quantity_per_dose' => $quantityPerDose,
+                    'frequency' => $frequency,
+                    'meal_timing' => $mealTiming,
+                    'duration_days' => $durationDays,
+                    'quantity_given' => $quantityGiven,
+                ];
             }
 
             $prescriptionString = implode("\n", $prescriptionLines);
 
-            MedicalRecord::create([
+            $medicalRecord = MedicalRecord::create([
                 'visit_id'     => $request->visit_id,
                 'diagnosis'    => $request->diagnosis,
                 'prescription' => $prescriptionString,
                 'notes'        => $request->notes,
                 'report_path'  => $reportPath,
             ]);
+
+            foreach ($prescriptionItems as $item) {
+                PrescriptionItem::create($item + [
+                    'medical_record_id' => $medicalRecord->id,
+                ]);
+            }
 
             $visit = Visit::find($request->visit_id);
             $visit->doctor_id = $doctor['id'];
@@ -120,5 +147,16 @@ class DoctorController extends Controller
         return back()->with('error', $e->getMessage())->withInput();
     }
 }
+
+    private function dosesPerDay(string $frequency): int
+    {
+        return match ($frequency) {
+            'OD' => 1,
+            'BD' => 2,
+            'TDS' => 3,
+            'QID' => 4,
+            default => 1,
+        };
+    }
 
 }
