@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientSearchController;
 use App\Http\Controllers\MedicineStockController;
 
 //Auth pages
@@ -82,6 +83,7 @@ Route::post('/reset-password', function () {
 
 // Medicine Inventory Module (Accessible to Doctor and Nurse roles)
 Route::middleware(['medical.staff'])->group(function () {
+    Route::get('/patients/search', [PatientSearchController::class, 'index'])->name('patients.search');
     Route::get('/medicine-stock', [MedicineStockController::class, 'index'])->name('stock.index');
     Route::post('/medicine-stock', [MedicineStockController::class, 'store'])->name('stock.store');
     Route::post('/medicine-stock/update/{id}', [MedicineStockController::class, 'update'])->name('stock.update');
