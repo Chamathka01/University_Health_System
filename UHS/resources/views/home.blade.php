@@ -387,24 +387,24 @@
                 <h2 class="section-title">One system for everyone</h2>
             </div>
             <div class="row g-4">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="role-panel">
                         <i class="fa-solid fa-user-nurse"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Nurses</h5>
                         <p class="text-muted small mb-0">Scan patient IDs, create visits, monitor daily queues, and dispense prescriptions.</p>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="role-panel">
                         <i class="fa-solid fa-user-doctor"></i>
                         <h5 class="fw-bold" style="font-size:16px;">Doctors</h5>
                         <p class="text-muted small mb-0">Review medical history of patients, record diagnosis, consultation, and attach clinical reports.</p>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="role-panel">
                         <i class="fa-solid fa-prescription-bottle-medical"></i>
-                        <h5 class="fw-bold" style="font-size:16px;">Dispensary</h5>
+                        <h5 class="fw-bold" style="font-size:16px;">Stock Management</h5>
                         <p class="text-muted small mb-0">Track stock quantity, low-volume alerts, batch details, and expiry risk from one inventory view.</p>
                     </div>
                 </div>
