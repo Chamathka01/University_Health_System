@@ -40,11 +40,6 @@ class Register extends Model
         return $this->display_id;
     }
 
-    public function patientvisits()
-    {
-    return $this->hasMany(Visit::class, 'patient_id');
-    }
-
     public function nurseVisits()
     {
     return $this->hasMany(Visit::class, 'nurse_id');

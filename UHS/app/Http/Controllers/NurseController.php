@@ -69,7 +69,6 @@ class NurseController extends Controller
         $patient = StudentStaff::where('nic', $patient_nic)->firstOrFail();
 
         Visit::create([
-            'patient_id' => null,
             'patient_nic' => $patient->nic,
             'nurse_id' => $nurse['id'],
             'doctor_id' => null,
