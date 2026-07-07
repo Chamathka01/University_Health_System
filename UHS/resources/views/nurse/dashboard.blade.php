@@ -86,7 +86,7 @@
                     <thead>
                         <tr>
                             <th>Patient</th>
-                            <th>Email</th>
+                            <th>Patient ID</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -96,13 +96,13 @@
                         <tr>
                             <td>
                                 <div style="font-weight:500;font-size:13.5px;">
-                                    {{ $visit->patient->email ?? 'No Email Provided' }}
+                                    {{ $visit->patient->name ?? 'Patient Not Found' }}
                                 </div>
                                 <div style="font-size:12px;color:#64748b;">{{ ucfirst($visit->patient->role ?? 'N/A') }}</div>
                             </td>
                             <td>
                                 <code style="font-size:12px;background:#f1f5f9;padding:2px 7px;border-radius:5px;">
-                                    {{ $visit->patient->display_id ?? 'No Email' }}
+                                    {{ $visit->patient->display_id ?? 'N/A' }}
                                 </code>
                             </td>
                             <td>
@@ -113,7 +113,7 @@
                             <td>
                                 <button class="btn btn-outline-primary btn-sm me-1"
                                     onclick="viewPrescription(
-                                        '{{ $visit->patient->firstname }} {{ $visit->patient->lastname }}',
+                                        '{{ $visit->patient->name ?? 'Patient Not Found' }}',
                                         '{{ $visit->patient->display_id ?? 'N/A' }}',
                                         `{{ addslashes($visit->medicalRecord->diagnosis ?? '-') }}`,
                                         `{{ addslashes($visit->medicalRecord->prescription ?? '-') }}`,
@@ -152,8 +152,8 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>Time</th>
-                                        <th>Patient Email</th>
-                                        <th>Email Address</th>
+                                        <th>Patient ID</th>
+                                        <th>Patient Name</th>
                                         <th>Type</th>
                                         <th>Diagnosis</th>
                                         <th>Prescription</th>
@@ -167,7 +167,7 @@
                                         <tr>
                                             <td style="font-size:13px; color:#475569;">{{ \Carbon\Carbon::parse($v->visit_date)->format('h:i A') }}</td>
                                             <td><code style="font-size:12px; background:#f1f5f9; padding:2px 6px; border-radius:4px;">{{ $v->patient->display_id ?? 'N/A' }}</code></td>
-                                            <td style="font-size:13px;">{{ $v->patient->email ?? '—' }}</td>
+                                            <td style="font-size:13px;">{{ $v->patient->name ?? '-' }}</td>
                                             <td><span class="badge-status {{ $v->patient->role ?? '' }}">{{ ucfirst($v->patient->role ?? 'N/A') }}</span></td>
                                             <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->diagnosis ?? '-' }}</td>
                                             <td style="font-size:12.5px; color:#475569; white-space:pre-wrap; min-width:180px;">{{ $v->medicalRecord->prescription ?? '-' }}</td>
@@ -266,10 +266,10 @@ function searchPatient() {
     } else {
         const p = data.patient;
 
-        document.getElementById('patientName').innerText  = p.display_id;
+        document.getElementById('patientName').innerText  = p.name;
         document.getElementById('patientId').innerText    = p.display_id;
-        document.getElementById('patientAvatar').innerText = p.display_id.charAt(0).toUpperCase();
-        document.getElementById('patientInfo').innerHTML = `<i class="fa-solid fa-barcode me-1"></i> Barcode: ${p.display_id}`;
+        document.getElementById('patientAvatar').innerText = p.name.charAt(0).toUpperCase();
+        document.getElementById('patientInfo').innerHTML = `<i class="fa-solid fa-id-card me-1"></i> NIC: ${p.nic}`;
 
         const badge = document.getElementById('patientRoleBadge');
         badge.innerText = p.role.charAt(0).toUpperCase() + p.role.slice(1);

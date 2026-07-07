@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@php $patient = $visit->patient; @endphp
 <div class="page-header">
     <div>
         <h4><i class="fa-solid fa-stethoscope me-2 text-primary"></i>Consultation</h4>
@@ -19,11 +20,11 @@
             <div class="card-header"><i class="fa-solid fa-user" style="color:#1a6fc4;"></i> Patient Info</div>
             <div class="card-body text-center">
                 <div style="width:60px;height:60px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;color:#1d4ed8;font-size:22px;font-weight:700;margin:0 auto 10px;">
-                    {{ strtoupper(substr($visit->patient->display_id, 0, 1)) }}
+                    {{ strtoupper(substr($patient->name ?? 'N', 0, 1)) }}
                 </div>
-                <div style="font-weight:600;font-size:15px;">{{ $visit->patient->display_id }}</div>
-                <div style="font-size:12px;color:#64748b;margin:4px 0;">{{ $visit->patient->email }}</div>
-                <span class="badge-status {{ $visit->patient->role }}">{{ ucfirst($visit->patient->role) }}</span>
+                <div style="font-weight:600;font-size:15px;">{{ $patient->name ?? 'Patient Not Found' }}</div>
+                <div style="font-size:12px;color:#64748b;margin:4px 0;">{{ $patient->display_id ?? 'N/A' }}</div>
+                <span class="badge-status {{ $patient->role ?? '' }}">{{ ucfirst($patient->role ?? 'N/A') }}</span>
 
                 <div class="section-divider"></div>
 

@@ -42,7 +42,7 @@ class DoctorController extends Controller
     }
 
     $history = Visit::with('medicalRecord')
-                ->where('patient_id', $visit->patient_id)
+                ->where('patient_nic', $visit->patient_nic)
                 ->where('id', '!=', $visit->id)
                 ->whereNotNull('doctor_id')
                 ->orderBy('visit_date', 'desc')

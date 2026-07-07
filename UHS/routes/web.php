@@ -48,7 +48,7 @@ Route::middleware('role:nurse')->group(function () {
 
     Route::post('/nurse/scan', [NurseController::class, 'scanPatient']);
 
-    Route::get('/nurse/visit/create/{patient_id}', [NurseController::class, 'createVisit']);
+    Route::get('/nurse/visit/create/{patient_nic}', [NurseController::class, 'createVisit']);
 
     Route::get('/nurse/complete/{id}', [NurseController::class, 'completeVisit']);
 
