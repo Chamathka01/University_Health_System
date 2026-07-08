@@ -11,11 +11,11 @@ use App\Http\Controllers\MedicineStockController;
 
 //Auth pages
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('home');
-});
+});*/
 
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('login');
 });
 
