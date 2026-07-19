@@ -48,10 +48,6 @@ class LoginController extends Controller
             return redirect('/nurse/dashboard');
         }
 
-        if ($user->role == 'student' || $user->role == 'staff') {
-            return redirect('/patient/dashboard');
-        }
-
         return redirect('/login')->with('error', 'Unknown role.');
     }
 

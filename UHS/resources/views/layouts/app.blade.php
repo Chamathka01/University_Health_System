@@ -534,11 +534,6 @@
             </a>
         @endif
 
-        @if($user && in_array($user['role'], ['student','staff']))
-            <a href="/patient/dashboard" class="{{ request()->is('patient/dashboard') ? 'active' : '' }}">
-                <i class="fa-solid fa-notes-medical"></i> My Records
-            </a>
-        @endif
     </nav>
 
     @if($user)

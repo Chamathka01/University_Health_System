@@ -5,17 +5,16 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NurseController;
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientSearchController;
 use App\Http\Controllers\MedicineStockController;
 
 //Auth pages
 
-/*Route::get('/', function () {
-    return view('home');
-});*/
-
 Route::get('/', function () {
+    return view('login');
+});
+
+Route::get('/login', function () {
     return view('login');
 });
 
@@ -57,29 +56,6 @@ Route::middleware('role:nurse')->group(function () {
 
     Route::post('/nurse/users', [RegisterController::class, 'store'])->name('nurse.users.store');
 });
-
-// Student + Staff Module
-
-Route::middleware('role:student,staff')->group(function () {
-
-    Route::get('/patient/dashboard', [PatientController::class, 'dashboard']);
-});
-
-Route::get('/forgot-password', function () {
-    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
-});
-
-Route::post('/forgot-password', function () {
-    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
-})->name('password.send');
-
-Route::get('/reset-password', function () {
-    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
-});
-
-Route::post('/reset-password', function () {
-    return redirect('/login')->with('error', 'Password reset is disabled. Please sign in with Google.');
-})->name('password.reset');
 
 // Medicine Inventory Module (Accessible to Doctor and Nurse roles)
 Route::middleware(['medical.staff'])->group(function () {
